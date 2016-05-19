@@ -1,0 +1,43 @@
+.portalMessage {
+    position: fixed;
+    top: 1.81em;
+    right: 1.81em;
+    padding: 1.81em;
+    color: red;
+    border: 3px solid lightgreen;
+    border-radius: 50%;
+}
+#edit-bar {
+    background: yellow;
+    height: 1.5em;
+    width: 1.5em;
+    overflow: hidden;
+    position: absolute;
+    right: -1em;
+    top: -2em;
+    z-index: 2;
+}
+#edit-bar:hover {
+    height: auto;
+    width: auto;
+    overflow: visible;
+}
+#content-views {
+    margin-top: 7em;
+}
+#edit-bar:hover #content-views {
+    margin-top: 0;
+}
+#edit-bar > ul > li,
+#edit-bar dd li,
+#edit-bar dd {
+    display: inline-block;
+}
+/* Override keywordwidget.css hardcoded in atct_edit-template: */
+.newTagsSection { margin-left: 0 !important; }               /*/
+.suppressVisualEditor, /* 'Edit without visual editor'       */
+#atrb_relatedItems,   /*  'Close'                           */
+.managePortletsLink, /*    Opinionated UI-design-decision  */
+.hiddenStructure {  /*     The class-name says it all     */
+    display: none;
+}

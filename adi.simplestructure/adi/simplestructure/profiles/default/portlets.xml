@@ -1,0 +1,23 @@
+<?xml version ="1.0"?>
+<portlets>
+ <assignment name="top" category="context" key="/"
+    manager="ContentWellPortlets.InHeaderPortletManager1"
+    type="plone.portlet.static.Static" visible="True">
+  <property
+     name="text">&lt;a href="/Plone">Go home&lt;a> - &lt;a class="internal-link" href="manage-portletsinheader">Edit this&lt;/a></property>
+  <property name="more_url"/>
+  <property name="omit_border">True</property>
+  <property name="header">Top</property>
+  <property name="footer"/>
+ </assignment>
+ <assignment name="footer" category="context" key="/"
+    manager="ContentWellPortlets.FooterPortletManager1"
+    type="plone.portlet.static.Static" visible="True">
+  <property
+     name="text">This is the end my friend, but you can &lt;a class="internal-link" href="manage-portletsfooter"&gt;edit&lt;/a&gt; me.</property>
+  <property name="more_url"/>
+  <property name="omit_border">True</property>
+  <property name="header">Footer</property>
+  <property name="footer"/>
+ </assignment>
+</portlets>

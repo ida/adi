@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="adi.tickets">
+
+  <include package="plone.app.contentmenu" />
+
+  <!-- Resolve component-lookup-error triggered of `cmf.setOwnPassword`: -->
+  <include package="Products.CMFCore" file="permissions.zcml" />
+
+	<!-- Views -->
+    <browser:page
+      for="*"
+      name="my_tickets"
+      template="my_tickets.pt"
+      permission="cmf.SetOwnPassword" 
+     />
+	<!-- Nota: setOwnPassword = isLoggedIn -->
+    <browser:page
+      for="*"
+      name="tickets_view_helper"
+      class=".tickets_view_helper.View"
+      permission="cmf.SetOwnPassword"
+     />
+    <include package="plone.app.registry" />
+    <!-- Control panel -->
+    <browser:page
+        name="tickets-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.TicketsSettingsControlPanel"
+        permission="cmf.ManagePortal"
+        />
+    <!-- Resources -->
+    <browser:resource
+        name="adi_tickets.css"
+        file="adi_tickets.css"
+        layer=".interfaces.IAdiTickets"
+    />
+
+</configure>

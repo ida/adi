@@ -1,0 +1,51 @@
+body {
+    font-family: Helvetica;
+    line-height: 1.61em;
+    background: #fffdc9;
+    color: #333;
+/* nightsight:
+background:#111;
+color: #e2e2e2;
+outline: 1px solid;
+*/
+}
+.documentDescription,
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5em;
+}
+h1 {
+    font-size: 2.1em;
+}
+h2 {
+    font-size: 1.61em;
+}
+h3 {
+    font-size: 1.25em;
+}
+h4, h5, h6 {
+    font-size: 1.15em;
+}
+ul ul {
+    margin-left: 0.85em;
+}
+#visual-portal-wrapper {
+    width: 90%;
+    margin: 2.77em auto;
+    max-width: 999px;
+background:#222;
+    background: #f1f1f1;
+}
+#visual-portal-wrapper > div {
+    padding: 0.81em;
+}
+div.position-0 {
+    margin-left: -99.99%;
+}
+.documentDescription {
+    color: #333;
+}
+.managePortletsLink,
+.hiddenStructure {
+    display: none;
+}
+

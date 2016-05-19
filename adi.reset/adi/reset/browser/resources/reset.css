@@ -1,0 +1,40 @@
+a,
+body,
+div,
+dd,
+dl,
+dt,
+fieldset,
+h1, h2, h3, h4, h5, h6,
+input,
+legend,
+li,
+p,
+ol,
+option,
+ul,
+table,
+tbody,
+td,
+th,
+thead,
+tr,
+textarea,
+select {
+    background: inherit;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    list-style: none;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+    vertical-align: top;
+}
+a { color: blue; }
+input[type=text], textarea { outline: 1px solid; }

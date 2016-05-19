@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+ <javascript authenticated="False" bundle="jquery" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="True"
+    expression="" id="++resource++plone.app.jquery.js" inline="False"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="jquery-integration.js" inline="False"
+    insert-after="++resource++plone.app.jquery.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="event-registration.js" inline="False"
+    insert-after="jquery-integration.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="register_function.js" inline="False"
+    insert-after="event-registration.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="plone_javascript_variables.js" inline="False"
+    insert-after="register_function.js"/>
+
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="True"
+    expression="" id="++resource++plone.app.jquerytools.js" inline="False"
+    insert-after="plone_javascript_variables.js"/>
+
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.form.js"
+    inline="False" insert-after="++resource++plone.app.jquerytools.js"/>
+
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="True"
+    expression="" id="++resource++plone.app.jquerytools.overlayhelpers.js"
+    inline="False" insert-after="++resource++plone.app.jquerytools.form.js"/>
+
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.dateinput.js"
+    inline="False"
+    insert-after="++resource++plone.app.jquerytools.overlayhelpers.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.rangeinput.js"
+    inline="False"
+    insert-after="++resource++plone.app.jquerytools.dateinput.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.validator.js"
+    inline="False"
+    insert-after="++resource++plone.app.jquerytools.rangeinput.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.plugins.js"
+    inline="False"
+    insert-after="++resource++plone.app.jquerytools.validator.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.tooltip.js"
+    inline="False"
+    insert-after="++resource++plone.app.jquerytools.plugins.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="none" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++plone.app.jquerytools.tooltip.plugins.js"
+    inline="False"
+    insert-after="++resource++plone.app.jquerytools.tooltip.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="nodeutilities.js" inline="False"
+    insert-after="++resource++plone.app.jquerytools.tooltip.plugins.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="cookie_functions.js" inline="False"
+    insert-after="nodeutilities.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="modernizr.js" inline="False"
+    insert-after="cookie_functions.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="full" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="livesearch.js" inline="False"
+    insert-after="modernizr.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="++resource++search.js" inline="False"
+    insert-after="livesearch.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="fullscreenmode.js" inline="False"
+    insert-after="++resource++search.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="select_all.js" inline="False"
+    insert-after="fullscreenmode.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="dragdropreorder.js" inline="False"
+    insert-after="select_all.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="mark_special_links.js" inline="False"
+    insert-after="dragdropreorder.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="full" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="collapsiblesections.js" inline="False"
+    insert-after="mark_special_links.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="form_tabbing.js" inline="False"
+    insert-after="collapsiblesections.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="popupforms.js" inline="False"
+    insert-after="form_tabbing.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="jquery.highlightsearchterms.js" inline="False"
+    insert-after="popupforms.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="first_input_focus.js" inline="False"
+    insert-after="jquery.highlightsearchterms.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="full" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="accessibility.js" inline="False"
+    insert-after="first_input_focus.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="styleswitcher.js" inline="False"
+    insert-after="accessibility.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="toc.js" inline="False" insert-after="styleswitcher.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="collapsibleformfields.js" inline="False"
+    insert-after="toc.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression=""
+    id="++resource++plone.app.discussion.javascripts/comments.js"
+    inline="False" insert-after="collapsibleformfields.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="dropdown.js" inline="False"
+    insert-after="++resource++plone.app.discussion.javascripts/comments.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="inline_validation.js" inline="False"
+    insert-after="dropdown.js"/>
+ <javascript authenticated="False" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="kss-bbb.js" inline="False"
+    insert-after="inline_validation.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="table_sorter.js" inline="False"
+    insert-after="kss-bbb.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="calendar_formfield.js" inline="False"
+    insert-after="table_sorter.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="formUnload.js" inline="False"
+    insert-after="calendar_formfield.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="formsubmithelpers.js" inline="False"
+    insert-after="formUnload.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="unlockOnFormUnload.js" inline="False"
+    insert-after="formsubmithelpers.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="jquery.tinymce.js" inline="False"
+    insert-after="unlockOnFormUnload.js"/>
+ <javascript authenticated="True" bundle="default" cacheable="True"
+    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    expression="" id="tiny_mce_gzip.js" inline="False"
+    insert-after="jquery.tinymce.js"/>
+</object>

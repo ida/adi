@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+     <object name="adi_tickets_files"
+      meta_type="Filesystem Directory View"
+     directory="adi.tickets:skins/adi_tickets_files"/>
+     <skin-path name="*" based-on="Sunburst Theme">
+         <layer name="adi_tickets_files" insert-after="custom"/>
+     </skin-path>
+</object>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<object name="portal_actions">
+	<object name="user" meta_type="CMF Action Category">
+		<object name="mytickets" meta_type="CMF Action">
+			<property name="title">My Tickets</property>
+			<!-- Assumes an old-style-collection in siteroot named my-tickets -->
+			<property name="url_expr">string:${globals_view/navigationRootUrl}/my_tickets</property>
+
+			<property name="available_expr">python:member is not None</property>
+			<property name="visible">True</property>
+		</object>
+	</object>
+</object>

@@ -1,0 +1,14 @@
+<configure
+ xmlns="http://namespaces.zope.org/zope"
+ xmlns:five="http://namespaces.zope.org/five"
+ xmlns:browser="http://namespaces.zope.org/browser"
+ i18n_domain="adi.basetheme">
+
+    <include package="plone.app.contentmenu" />
+    <browser:resourceDirectory
+        name="adi.basetheme.resources"
+        directory="resources"
+      />
+
+
+</configure>

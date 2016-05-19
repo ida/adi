@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+<metal:content fill-slot="content">
+<div id="content">
+	<h1>My tickets</h1>
+	<div class="documentDescription">
+	All tickets, I am responsible of:
+	</div>
+</div>
+<div id="content-core">
+	<ul tal:define="my_tickets nocall: context/@@tickets_view_helper/my_tickets;">
+		<li style="display:block" tal:repeat="ticket my_tickets">
+			<a tal:attributes="href ticket/absolute_url">
+				<span tal:replace="ticket/Title" />
+			</a>
+		</li>
+	</ul>
+</div>
+</metal:content></body></html>

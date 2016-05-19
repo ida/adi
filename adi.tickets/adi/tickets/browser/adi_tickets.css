@@ -1,0 +1,75 @@
+.edit-buttons {
+    float: right;
+}
+.edit-buttons > * {
+    margin-left: .5em;
+}
+.state-active {
+    color: green;
+    color: blue;
+}
+.state-blocked {
+    color: red;
+}
+.state-closed {
+    color: #207207;
+}
+.state-new {
+    color: #272727;
+}
+.state-waiting {
+    color: orange;
+}
+.children {
+    margin-top: 0.5em;
+}
+.children-header {
+    font-style: italic;
+}
+#archetypes-fieldname-priority,
+#archetypes-fieldname-responsiblePerson {
+    position: absolute;
+    top: 0;
+    left: 80%;
+    margin-left: 1em;
+}
+#archetypes-fieldname-responsiblePerson {
+    top: 2.77em;
+}
+.portaltype-ticket input[type=text],
+.portaltype-ticket textarea {
+    width: 80%;
+}
+.template-atct_edit.portaltype-ticket
+#edit-bar,
+.template-atct_edit.portaltype-ticket
+.fieldUploadFile,
+.template-atct_edit.portaltype-ticket
+#text_text_format,
+.template-atct_edit.portaltype-ticket
+.label,
+.template-atct_edit.portaltype-ticket
+label,
+.template-atct_edit.portaltype-ticket
+.documentFirstHeading,
+.template-atct_edit.portaltype-ticket
+#content div:nth-child(2),
+.template-atct_edit.portaltype-ticket
+#fieldsetlegend-default,
+.template-atct_edit.portaltype-ticket
+#fieldset-categorization,
+.template-atct_edit.portaltype-ticket
+#fieldset-dates,
+.template-atct_edit.portaltype-ticket
+#fieldset-creators,
+.template-atct_edit.portaltype-ticket
+#fieldset-categorization,
+.template-atct_edit.portaltype-ticket
+#fieldset-settings,
+.template-atct_edit.portaltype-ticket
+#cmfeditions_version_comment_block,
+.section-tickets .documentByLine,
+.portaltype-ticket .navTree img {
+    display: none;
+}
+

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<object name="portal_css">
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="reset.css" media="screen"
+    rel="stylesheet" rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="True"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="member.css"
+    insert-after="reset.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="base.css"
+    insert-after="member.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="public.css"
+    insert-after="base.css" media="screen" rel="stylesheet" rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="True" expression="" id="columns.css"
+    insert-after="public.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="authoring.css"
+    insert-after="columns.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="portlets.css"
+    insert-after="authoring.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="controlpanel.css"
+    insert-after="portlets.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="deprecated.css"
+    insert-after="controlpanel.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="navtree.css"
+    insert-after="deprecated.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="invisibles.css"
+    insert-after="navtree.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="forms.css"
+    insert-after="invisibles.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression=""
+    id="++resource++plone.app.discussion.stylesheets/discussion.css"
+    insert-after="forms.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression=""
+    id="++resource++tinymce.stylesheets/tinymce.css"
+    insert-after="++resource++plone.app.discussion.stylesheets/discussion.css"
+    media="screen" rel="stylesheet" rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="print.css"
+    insert-after="++resource++tinymce.stylesheets/tinymce.css" media="print"
+    rel="stylesheet" rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression="" id="mobile.css"
+    insert-after="print.css"
+    media="handheld, screen and (max-device-width: 480px)" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False"
+    expression="python:portal.restrictedTraverse('@@plone_portal_state').is_rtl()"
+    id="RTL.css" insert-after="mobile.css" media="screen" rel="stylesheet"
+    rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression=""
+    id="++resource++plone.app.jquerytools.overlays.css" insert-after="RTL.css"
+    media="screen" rel="stylesheet" rendering="link"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
+    cookable="True" enabled="False" expression=""
+    id="++resource++plone.app.jquerytools.dateinput.css"
+    insert-after="++resource++plone.app.jquerytools.overlays.css"
+    media="screen" rel="stylesheet" rendering="import"/>
+ <stylesheet title="" applyPrefix="False" authenticated="False"
+    bundle="default" cacheable="True" compression="safe"
+    conditionalcomment="lt IE 8" cookable="True" enabled="False" expression=""
+    id="IEFixes.css"
+    insert-after="++resource++plone.app.jquerytools.dateinput.css"
+    media="screen" rel="stylesheet" rendering="link"/>
+ <stylesheet id="ploneCustom.css" enabled="False" />
+<stylesheet title=""
+    id="++resource++adi.reset.resources/reset.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+</object>
