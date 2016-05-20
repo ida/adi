@@ -1,12 +1,23 @@
-.edit-buttons {
-    float: right;
+/*
+ *
+ *    SUBTICKETS
+ *
+ */
+body.portaltype-ticket ol {
+    list-style: decimal;
+    margin-left: 2.3em;
 }
-.edit-buttons > * {
-    margin-left: .5em;
+body.portaltype-ticket ol {
+    list-style: decimal;
+    margin-left: 2.3em;
 }
+/*
+ *
+ *    WORKFLOW-STATES
+ *
+ */
 .state-active {
-    color: green;
-    color: blue;
+    color: #90C3D4;
 }
 .state-blocked {
     color: red;
@@ -15,16 +26,18 @@
     color: #207207;
 }
 .state-new {
-    color: #272727;
+    color: #223772;
 }
 .state-waiting {
     color: orange;
 }
-.children {
-    margin-top: 0.5em;
-}
-.children-header {
-    font-style: italic;
+/*
+ *
+ *    TICKET-VIEW
+ *
+ */
+.add span {
+    font-size: 77%;
 }
 #archetypes-fieldname-priority,
 #archetypes-fieldname-responsiblePerson {
@@ -36,9 +49,23 @@
 #archetypes-fieldname-responsiblePerson {
     top: 2.77em;
 }
+/*
+ *
+ *    EDIT-VIEW
+ *
+ */
+.portaltype-ticket input[type=submit],
+.portaltype-ticket input[type=password],
 .portaltype-ticket input[type=text],
 .portaltype-ticket textarea {
     width: 80%;
+    outline: none;
+    border: 1px dashed #90C3D4;
+}
+.portaltype-ticket input[type=submit] {
+    width: auto;
+    min-width: 1.61em;
+    border-radius: 27%;
 }
 .template-atct_edit.portaltype-ticket
 #edit-bar,
@@ -72,4 +99,13 @@ label,
 .portaltype-ticket .navTree img {
     display: none;
 }
-
+.template-atct_edit.portaltype-ticket
+input[name="responsiblePerson"] ~ label {
+    display: inline-block;
+outline: 1px solid;
+}
+.template-atct_edit.portaltype-ticket
+input[name="responsiblePerson"] {
+    margin-top: -1em;
+outline: 1px solid;
+}

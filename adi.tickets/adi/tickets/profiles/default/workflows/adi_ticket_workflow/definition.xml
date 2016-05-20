@@ -8,6 +8,7 @@
   <exit-transition transition_id="block"/>
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="pause"/>
+  <exit-transition transition_id="reset"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
@@ -27,6 +28,7 @@
  <state state_id="blocked" title="">
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="pause"/>
+  <exit-transition transition_id="reset"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
@@ -44,6 +46,7 @@
   </permission-map>
  </state>
  <state state_id="closed" title="">
+  <exit-transition transition_id="reset"/>
   <exit-transition transition_id="start"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Editor</permission-role>
@@ -63,6 +66,7 @@
   </permission-map>
  </state>
  <state state_id="new" title="">
+  <exit-transition transition_id="block"/>
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="start"/>
   <permission-map name="Access contents information" acquired="False">
@@ -85,6 +89,7 @@
  <state state_id="waiting" title="">
   <exit-transition transition_id="block"/>
   <exit-transition transition_id="close"/>
+  <exit-transition transition_id="reset"/>
   <exit-transition transition_id="start"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Editor</permission-role>
@@ -115,6 +120,11 @@
  </transition>
  <transition transition_id="pause" title="" new_state="waiting" trigger="USER" before_script="" after_script="">
   <action url="%(content_url)s/content_status_modify?workflow_action=pause" category="workflow" icon="">Pause</action>
+  <guard>
+  </guard>
+ </transition>
+ <transition transition_id="reset" title="" new_state="new" trigger="USER" before_script="" after_script="">
+  <action url="%(content_url)s/content_status_modify?workflow_action=reset" category="workflow" icon="">Reset</action>
   <guard>
   </guard>
  </transition>

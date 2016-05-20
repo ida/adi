@@ -1,19 +1,21 @@
 <?xml version="1.0"?>
 <portlets>
+<!--
  <assignment name="sitemap" category="content_type" key="Ticket"
     manager="plone.leftcolumn" type="portlets.Navigation" visible="True">
   <property name="topLevel">0</property>
   <property name="currentFolderOnly">False</property>
   <property name="includeTop">False</property>
+  <property name="name"></property>
+  <property name="bottomLevel">0</property>
+  <property name="root"></property>
+ </assignment>
+-->
 <!--
   <property name="currentFolderOnly">True</property>
   <property name="includeTop">True</property>
   <property name="name">Sitemap</property>
 -->
-  <property name="name"></property>
-  <property name="bottomLevel">0</property>
-  <property name="root"></property>
- </assignment>
 <!--
  <assignment name="search" category="content_type" key="Ticket"
     manager="plone.rightcolumn" type="portlets.Search" visible="True">

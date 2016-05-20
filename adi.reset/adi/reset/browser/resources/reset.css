@@ -36,5 +36,12 @@ select {
     text-decoration: none;
     vertical-align: top;
 }
-a { color: blue; }
-input[type=text], textarea { outline: 1px solid; }
+a {
+    color: blue;
+}
+input[type="password"],
+input[type="submit"],
+input[type="text"],
+textarea {
+    outline: 1px solid;
+}

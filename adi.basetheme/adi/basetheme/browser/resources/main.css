@@ -11,6 +11,7 @@ outline: 1px solid;
 }
 .documentDescription,
 h1, h2, h3, h4, h5, h6 {
+    line-height: 1.61em;
     margin-bottom: .5em;
 }
 h1 {
@@ -44,6 +45,29 @@ div.position-0 {
 .documentDescription {
     color: #333;
 }
+/* CONTENT AREA */
+#content ul li {
+    list-style: disc;
+}
+#content ol li {
+    list-style: decimal;
+}
+
+/* SELECTED ELEMENTS */
+.navTreeCurrentItem {
+    font-weight: bold;
+}
+/* Opinionated UI-design decisions: */
+.portaltype-plone-site.template-folder_listing .discreet {
+    color: transparent;
+}
+.portaltype-plone-site.template-folder_listing .discreet:after {
+    content: 'Nothing to see here move on, move on...';
+    color: #333;
+}
+.portaltype-plone-site.template-folder_listing #portal-column-one,
+.portaltype-plone-site.template-folder_listing h1,
+.template-folder_listing .documentByLine,
 .managePortletsLink,
 .hiddenStructure {
     display: none;
