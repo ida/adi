@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+    <layers>
+        <layer name="adi.loader.layer"
+                   interface="adi.loader.interfaces.IAdiLoader" />
+    </layers>

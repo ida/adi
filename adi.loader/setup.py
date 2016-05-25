@@ -7,9 +7,9 @@ long_description = ''
 if os.path.exists("README.rst"):
     long_description = open("README.rst").read()
 
-setup(name='adi.samplesite',
+setup(name='adi.loader',
       version=version,
-      description="",
+      description="Give an ele the class loader, set its id to be a rel-url, and #content of url will be loaded into the ele.",
       long_description=long_description,
       classifiers=[
         "Framework :: Plone",
@@ -26,10 +26,8 @@ setup(name='adi.samplesite',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'collective.portlet.sitemap',
-          'adi.info',
-          'adi.tickets',
-          'adi.basetheme',
+          'adi.noviewlets',
+          'adi.reset',
       ],
       entry_points="""
       # -*- Entry points: -*-

@@ -9,7 +9,7 @@ if os.path.exists("README.rst"):
 
 setup(name='adi.reset',
       version=version,
-      description="",
+      description="Disable Plone's default JS and CSS, except for 'jquery.js' and 'column.css'.",
       long_description=long_description,
       classifiers=[
         "Framework :: Plone",

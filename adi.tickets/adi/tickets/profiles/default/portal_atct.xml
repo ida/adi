@@ -3,6 +3,15 @@
 <atcttool>
 
  <topic_indexes>
+
+  <index
+    name="getDependsOn"
+    description=""
+    enabled="True"
+    friendlyName="Depends on">
+   <criteria>ATSimpleStringCriterion</criteria>
+  </index>
+
   <index
     name="getPriority"
     description=""
@@ -10,6 +19,15 @@
     friendlyName="Priority">
    <criteria>ATSimpleStringCriterion</criteria>
   </index>
+
+  <index
+    name="getIsDependencyOf"
+    description=""
+    enabled="True"
+    friendlyName="Is dependency of">
+   <criteria>ATSimpleStringCriterion</criteria>
+  </index>
+
   <index
     name="getResponsiblePerson"
     description=""
@@ -24,15 +42,29 @@
  <topic_metadata>
 
   <metadata
+    name="getIsDependencyOf"
+        description=""
+        enabled="True"
+        friendlyName="Is dependency of" />
+
+  <metadata
     name="getPriority"
         description=""
         enabled="True"
         friendlyName="Priority" />
+
   <metadata
     name="getResponsiblePerson"
         description=""
         enabled="True"
         friendlyName="Responsible person" />
 
+  <metadata
+    name="getIsDependencyOf"
+        description=""
+        enabled="True"
+        friendlyName="Is dependency of" />
+
  </topic_metadata>
+
 </atcttool>

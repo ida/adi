@@ -7,9 +7,10 @@ long_description = ''
 if os.path.exists("README.rst"):
     long_description = open("README.rst").read()
 
-setup(name='adi.samplesite',
+setup(name='adi.info',
       version=version,
-      description="",
+      description="Let info-messages in the UI vanish after seven seconds and \
+                   add a close-button to them.",
       long_description=long_description,
       classifiers=[
         "Framework :: Plone",
@@ -26,10 +27,6 @@ setup(name='adi.samplesite',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'collective.portlet.sitemap',
-          'adi.info',
-          'adi.tickets',
-          'adi.basetheme',
       ],
       entry_points="""
       # -*- Entry points: -*-

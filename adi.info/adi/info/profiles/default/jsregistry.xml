@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+<javascript authenticated="False" cacheable="True" compression="none"
+    conditionalcomment="" cookable="True" enabled="True" expression=""
+    id="++resource++adi.info.resources/main.js"
+    inline="False"/>
+</object>

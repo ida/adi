@@ -55,10 +55,7 @@
    </action>
   </actions>
  </rule>
- <assignment name="inform-responsible-persons" bubbles="True" enabled="True"
-    location="/sandbox"/>
- <assignment name="rule-1" bubbles="True" enabled="True" location="/sandbox"/>
- <assignment name="inform-responsible-persons" bubbles="True" enabled="True"
+ <assignment name="inform-responsible-persons" bubbles="True" enabled="False"
     location=""/>
- <assignment name="rule-1" bubbles="True" enabled="True" location=""/>
+ <assignment name="rule-1" bubbles="True" enabled="False" location=""/>
 </contentrules>

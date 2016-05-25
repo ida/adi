@@ -64,7 +64,15 @@ def setBlocker(obj, eve):
                     is_blocked_by = is_blocked_by[:-1] # remove last comma
                     blocked.setDependsOn(is_blocked_by) # set
                     # Now, set the blocker free (change state to 'waiting'):
-                    context.portal_workflow.doActionFor(blocked, 'pause')
+                    try:
+                        context.portal_workflow.doActionFor(blocked, 'pause')
+                    except:
+                        messages = IStatusMessage(self.request)
+                        messages.add(
+                        u"The pause-transisition is not available to the\
+                        current state, couldn't switch to state \
+                        'waiting'! You might want to adjust the workflow.",
+                        type=u'error')
                     # And don't forget to also remove the entry/reference in ourfself, of the 'isBlocking'-field:
                     blocked_nrs =  is_blocking.split(',')
                     is_blocking = ''

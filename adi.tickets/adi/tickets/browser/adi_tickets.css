@@ -1,45 +1,108 @@
-/*
- *
- *    SUBTICKETS
- *
- */
-body.portaltype-ticket ol {
-    list-style: decimal;
-    margin-left: 2.3em;
+/* DEV 
+.head {
+float:right    
 }
-body.portaltype-ticket ol {
-    list-style: decimal;
-    margin-left: 2.3em;
+body {
+background: #111;
+color: #e2e2e2;
 }
+#visual-portal-wrapper { 
+background: #223773;
+background: #111;
+margin:0 auto;
+width:90%; 
+max-width: none;
+} 
+ * */ 
 /*
  *
  *    WORKFLOW-STATES
+ *    AND -TRANSITIONS
  *
  */
-.state-active {
-    color: #90C3D4;
+.buttons a {
+    color: inherit;
+    opacity: 0.27;
+outline: 1px dotted;
 }
+
+
+.buttons .start,
+.state-active {
+    color: #207207; /* green */
+}
+.buttons .block,
 .state-blocked {
     color: red;
 }
+.buttons .close,
 .state-closed {
-    color: #207207;
+    color: #333;
 }
+.buttons .close,
 .state-new {
-    color: #223772;
+    color: #223772; /* darkblue */
 }
+.buttons .pause,
 .state-waiting {
     color: orange;
+}
+.closed .start, 
+.waiting .start,
+.new .start,
+.active .close,
+.active .pause, 
+.active .block {
+    opacity: 1;
 }
 /*
  *
  *    TICKET-VIEW
  *
  */
+/* Buttons: */
+.portaltype-ticket .head a {
+    display: inline-block;
+    height: 1.61em;
+    line-height: 1.61em;
+    text-align: center;
+    vertical-align: middle;
+    width: 1.61em;
+height: 18px;
+line-height: 18px;
+width: 18px;
+font-size: 12px;
+}
+/* Adjust icon-posis: */
+.portaltype-ticket
+.buttons .start {
+padding-bottom: 3px;
+}
+.portaltype-ticket
+.buttons .pause {
+padding-top: 2px;
+}
+.portaltype-ticket 
+.add {
+    opacity: 1;
+}
+.portaltype-ticket 
 .add span {
     font-size: 77%;
 }
-#archetypes-fieldname-priority,
+/* Subtickets-list: */
+body.portaltype-ticket ol {
+    list-style: decimal;
+}
+.portaltype-ticket 
+.substeps > span {
+    font-style: italic;
+}
+/*
+ *
+ *    BASE-VIEW
+ *
+ */
 #archetypes-fieldname-responsiblePerson {
     position: absolute;
     top: 0;
@@ -67,6 +130,11 @@ body.portaltype-ticket ol {
     min-width: 1.61em;
     border-radius: 27%;
 }
+/*
+ *
+ *    NON-DISPLAYS
+ *
+ */
 .template-atct_edit.portaltype-ticket
 #edit-bar,
 .template-atct_edit.portaltype-ticket
@@ -96,16 +164,13 @@ label,
 .template-atct_edit.portaltype-ticket
 #cmfeditions_version_comment_block,
 .section-tickets .documentByLine,
+#step-info,
 .portaltype-ticket .navTree img {
     display: none;
 }
+#step-info:target,
 .template-atct_edit.portaltype-ticket
 input[name="responsiblePerson"] ~ label {
     display: inline-block;
-outline: 1px solid;
-}
-.template-atct_edit.portaltype-ticket
-input[name="responsiblePerson"] {
-    margin-top: -1em;
 outline: 1px solid;
 }

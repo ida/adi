@@ -1,0 +1,23 @@
+<configure
+ xmlns="http://namespaces.zope.org/zope"
+ xmlns:five="http://namespaces.zope.org/five"
+ xmlns:browser="http://namespaces.zope.org/browser"
+ i18n_domain="adi.loader">
+
+    <include package="plone.app.contentmenu" />
+    <browser:resourceDirectory
+        name="adi.loader.resources"
+        directory="resources"
+      />
+
+
+
+    <browser:page
+        for="*"
+        name="adi_loader_main_view"
+        class=".resources.main.View"
+        permission="zope2.View"
+        layer="adi.loader.interfaces.IAdiLoader"
+      />
+
+</configure>

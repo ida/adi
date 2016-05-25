@@ -3,9 +3,8 @@
   <version>1000</version>
   <dependencies>
   <dependency>profile-adi.basetheme:default</dependency>
-  <dependency>profile-adi.simplestructure:default</dependency>
   <dependency>profile-adi.tickets:default</dependency>
-  <dependency>profile-collective.portlet.sitemap:default</dependency>
+  <dependency>profile-adi.info:default</dependency>
   <dependency>profile-collective.portlet.sitemap:default</dependency>
   </dependencies>
 </metadata>

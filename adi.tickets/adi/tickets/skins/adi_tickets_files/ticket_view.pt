@@ -3,120 +3,157 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="plone">
 <body>
-<tal:comment tal:replace="nothing">
-        <a href="./.." title="Go one level up" tal:content="string:up">
-up
-        </a>
-<a tal:attributes="href context/absolute_url">Re</a>
-This is the usual change-state-url:
-content_status_modify?workflow_action=
-If using wf.comments, we need:
-content_status_comment?workflow_action=
-
-The first two lines disable the green edit-bar:</tal:comment>
 <metal:block fill-slot="top_slot"
    tal:define="dummy python:request.set('disable_border',1)" />
 <metal:main fill-slot="main">
-<tal:definator
-  tal:define="wftool        python: context.portal_workflow;
-              Std           modules/Products.PythonScripts/standard;
-              newline_to_br nocall:Std/newline_to_br;
-              transis       python: wftool.getTransitionsFor(context);
-              status        context/plone_context_state/workflow_state;
-              trans_url     string:./content_status_comment?workflow_action=">
+<div
+  tal:define="
+      wftool        python: context.portal_workflow;
+      Std           modules/Products.PythonScripts/standard;
+      newline_to_br nocall:Std/newline_to_br;
+      transis       python: wftool.getTransitionsFor(context);
+      status        context/plone_context_state/workflow_state;
+      trans_url     string:./content_status_modify?workflow_action=;
+      trans_comment_url string:./content_status_comment?workflow_action=;"
+  tal:attributes="class status">
 
-  <h2 tal:attributes="class string:header state-${status}">
-    <a href="./edit" tal:content="context/Title" tal:attributes="class string:state-${status}">
-      Title
-    </a>
-  </h2><tal:comment tal:replace="nothing">EO .head</tal:comment>
+  <div class="head"
+       tal:define="person context/getResponsiblePerson;">
 
-  <div class="head">
-    <tal:kondinator tal:condition="python:context.id!='refugio'">
-    Is
-    <span tal:condition="context/isDependencyOf">
-      blocking
-      <span tal:content="context/isDependencyOf">
+    <div class="blockers"
+       tal:define="dependency_of context/getIsDependencyOf;
+                   depends_on context/getDependsOn;"
+       tal:condition="python: dependency_of + depends_on != ''">
+
+      <span tal:condition="dependency_of"
+            tal:content="string:Is blocking #${dependency_of} !!! ">
+        Is blocking #42 !!!
       </span>
-      and is
-    </span>
-    <span tal:content="string:${status}"
-          tal:attributes="class string:state-${status}">
-      new/active/waiting/blocked/closed
-    </span>
-    <span tal:condition="python: status == 'blocked'">
-      by #<a tal:attributes="href context/getDependsOn" tal:content="context/getDependsOn" />
-    </span>
-    <span tal:condition="context/getResponsiblePerson"
-          tal:define="person context/getResponsiblePerson"
-          tal:content="string:and assigned to ${person}">
-      Responsible person
-    </span>
-    <tal:repetator tal:repeat="trans transis">
-      <tal:definatus tal:define="id trans/id">
-        <a tal:condition="python:id !='block' and id !='start' and id !='pause' and id != 'close'"
-           tal:attributes="href string:./content_status_modify?workflow_action=${id};"
-           tal:content="id">
-any unknown state
-        </a>
-      </tal:definatus>
-    </tal:repetator>
-    <tal:repetator tal:repeat="trans transis">
-      <tal:definatus tal:define="id trans/id">
-        <a tal:condition="python:id=='block'"
-           tal:attributes="href string:${trans_url}${id}"
-           tal:content="id">
-block
-        </a>
-      </tal:definatus>
-    </tal:repetator>
-    <tal:repetator tal:repeat="trans transis">
-      <tal:definatus tal:define="id trans/id">
-        <a tal:condition="python:id=='close'"
-           tal:attributes="href string:./content_status_modify?workflow_action=${id}"
-           tal:content="id">
-close
-        </a>
-      </tal:definatus>
-    </tal:repetator>
-    <tal:repetator tal:repeat="trans transis">
-      <tal:definatus tal:define="id trans/id">
-        <a tal:condition="python:id=='start' or id=='pause'"
-           tal:attributes="href string:./content_status_modify?workflow_action=${id}"
-           tal:content="id">
-          start or pause
-        </a>
-      </tal:definatus>
-    </tal:repetator>
+
+      <span tal:condition="depends_on"
+            tal:content="string:Is blocked by #${depends_on} !!! ">
+        Is blocked by #27 !!!
+      </span>
+    </div><tal:comment tal:replace="nothing">EO .blockers</tal:comment>
+  
+
+    <div class="buttons">
+
+      <a tal:content="string:&#9654;"
+         tal:condition="python:status!='active'"
+         tal:attributes="href string:${trans_url}start;
+                         class string:start;
+                         title string:start">
+        start
+      </a>
+
+      <a tal:content="string:&#9208;"
+         tal:condition="python:status=='active'"
+         tal:attributes="href string:${trans_url}pause;
+                         class string:pause;
+                         title string:pause">
+        pause
+      </a>
+
+      <a tal:content="string:&#11035;"
+         tal:attributes="href string:${trans_url}close;
+                         class string:close;
+                         title string:close">
+        close
+      </a>
+
+      <a tal:content="string:&#8416;"
+         tal:attributes="href string:${trans_comment_url}block;
+                         class string:block;
+                         title string:block">
+        block
+      </a>
 
 
-    <a class="add" href="../createObject?type_name=Ticket" title="Add next step">
-      +
-      <span>
-        Add next step
-      </span>
-    </a>
-    </tal:kondinator>
-    <a class="add sub" href="./createObject?type_name=Ticket" title="Add substep">
-      +
-      <span>
-        Add substep
-      </span>
-    </a>
+      <a class="add"
+         href="../createObject?type_name=Ticket"
+         title="Add next-step"
+         tal:content="string:&rarr;">
+        Add next-step 
+      </a>
+
+      <a class="add sub"
+         href="./createObject?type_name=Ticket"
+         title="Add sub-step"
+         tal:content="string:&darr;">
+        Add sub-step
+      </a>
+
+      <div class="info" style="display:inline-block;"
+        tal:define="info string:Is ${status} an">
+        <div tal:condition="context/getResponsiblePerson"
+          tal:define="resp context/getResponsiblePerson;
+          info python:info + 'd ' + resp + ' is responsible'">
+          <a href="#step-info"
+             tal:attributes="title info"
+             tal:content="string:i">
+            See/hide meta-info of step
+          </a>
+          <!--
+          -->
+          <div id="step-info" tal:content="info">
+          </div>
+        </div>
+        <div tal:condition="not:context/getResponsiblePerson"
+          tal:define="info python:info + 'nobody is responsible.'">
+          <a href="#step-info"
+             tal:attributes="title info"
+             tal:content="string:i">
+            See/hide meta-info of step
+          </a>
+          <!--
+          -->
+          <div id="step-info" tal:content="info">
+          </div>
+        </div>
+        
+        <div class="meta" style="visibility:hidden;display:inline-block;heighth:0;overflow:hidden;">
+          <span tal:content="string:Is ${status} and ">
+            Is new/active/waiting/closed/blocked and
+          </span>
+          <span tal:condition="context/getResponsiblePerson"
+                tal:attributes="title string:${person} is responsible"
+                tal:content="string:${person} is responsible">
+            bob is responsible.
+          </span>
+          <span tal:condition="not:context/getResponsiblePerson">
+            nobody is responsible.
+          </span>
+        </div><tal:comment tal:replace="nothing">EO .meta</tal:comment>
+      </div><tal:comment tal:replace="nothing">EO .info</tal:comment>
+
+    </div><tal:comment tal:replace="nothing">EO .buttons</tal:comment>
 
   </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
 
+
+  <h2 tal:attributes="class string:state-${status}">
+    <a href="./edit"
+       tal:content="context/Title"
+       tal:attributes="class string:state-${status};
+       title string:Click the title to edit this step">
+      Title
+    </a>
+  </h2>
   <div class="body"
        tal:content="structure python:newline_to_br(context.getText())">
     Text
   </div>
 
   <ol class="substeps" tal:condition="context/getFolderContents">
-      <li tal:repeat="item context/getFolderContents">
-        <a tal:define="item_status item/review_state" tal:content="item/Title"
-           tal:attributes="href python: context.absolute_url() + '/' + item.id;
-                           class string:state-${item_status}">
-          Substep title
+    <span>
+      Substeps:
+    </span>
+    <li tal:repeat="item context/getFolderContents">
+      <a tal:define="item_status item/review_state" tal:content="item/Title"
+         tal:attributes="href python: context.absolute_url() + '/' + item.id;
+                         class string:state-${item_status}">
+        Substep title
       </a>
       <div class="body"
            tal:content="structure python:newline_to_br(item.getObject().getText())">
@@ -125,4 +162,4 @@ close
     </li>
   </ol>
 
-</tal:definator></metal:main></body></html>
+</div></metal:main></body></html>
