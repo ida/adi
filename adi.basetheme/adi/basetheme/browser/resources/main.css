@@ -54,18 +54,17 @@ div.position-0 {
 }
 
 /* SELECTED ELEMENTS */
-.navTreeCurrentItem {
-    font-weight: bold;
+.navTreeCurrentNode {
+    list-style: disc;
 }
 /* Opinionated UI-design decisions: */
 .portaltype-plone-site.template-folder_listing .discreet {
     color: transparent;
 }
 .portaltype-plone-site.template-folder_listing .discreet:after {
-    content: 'Nothing to see here move on, move on...';
+    content: 'Nothing to see here move on, move on ...';
     color: #333;
 }
-.portaltype-plone-site.template-folder_listing #portal-column-one,
 .portaltype-plone-site.template-folder_listing h1,
 .template-folder_listing .documentByLine,
 .managePortletsLink,

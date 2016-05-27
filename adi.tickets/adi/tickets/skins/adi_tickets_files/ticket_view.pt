@@ -40,7 +40,6 @@
     <div class="buttons">
 
       <a tal:content="string:&#9654;"
-         tal:condition="python:status!='active'"
          tal:attributes="href string:${trans_url}start;
                          class string:start;
                          title string:start">
@@ -48,7 +47,6 @@
       </a>
 
       <a tal:content="string:&#9208;"
-         tal:condition="python:status=='active'"
          tal:attributes="href string:${trans_url}pause;
                          class string:pause;
                          title string:pause">
