@@ -16,7 +16,7 @@
     expression="" id="register_function.js" inline="False"
     insert-after="event-registration.js"/>
  <javascript authenticated="False" bundle="default" cacheable="True"
-    compression="safe" conditionalcomment="" cookable="True" enabled="False"
+    compression="safe" conditionalcomment="" cookable="True" enabled="True"
     expression="" id="plone_javascript_variables.js" inline="False"
     insert-after="register_function.js"/>
 

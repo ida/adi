@@ -12,14 +12,153 @@
       Std           modules/Products.PythonScripts/standard;
       newline_to_br nocall:Std/newline_to_br;
       transis       python: wftool.getTransitionsFor(context);
+      status        context/plone_portal_state/portal_url;
       status        context/plone_context_state/workflow_state;
       trans_url     string:./content_status_modify?workflow_action=;
       trans_comment_url string:./content_status_comment?workflow_action=;"
   tal:attributes="class status">
 
+
   <div class="head"
        tal:define="person context/getResponsiblePerson;">
 
+    <div class="buttons">
+
+      <a tal:content="string:&#9654;"
+         tal:attributes="href string:${trans_url}start;
+                         class string:start;
+                         title string:Start">
+        Start
+      </a>
+
+      <a tal:content="string:&#9208;"
+         tal:attributes="href string:${trans_url}pause;
+                         class string:pause;
+                         title string:Pause">
+        Pause
+      </a>
+
+      <a tal:content="string:&#11035;"
+         tal:attributes="href string:${trans_url}close;
+                         class string:close;
+                         title string:Stop">
+        Stop
+      </a>
+      <a tal:content="string:&#8416;"
+         tal:attributes="href string:${trans_comment_url}block;
+                         class string:block;
+                         title string:Block">
+        Block
+      </a>
+      <a class="add"
+         href="./.."
+         title="Step up"
+         tal:content="string:&uarr;">
+        Step up
+      </a>
+      <tal:kondinator tal:condition="python:len(context.getFolderContents()) > 0">
+        <tal:definator tal:define="first_child_id python:context.getFolderContents()[0].id">
+          <a class="add sub"
+             tal:attributes="href python:context.absolute_url() + '/' + first_child_id"
+             title="Step down"
+             tal:content="string:&darr;">
+            Step down
+          </a>
+        </tal:definator>
+      </tal:kondinator>
+      <tal:kondinator tal:condition="python:len(context.getFolderContents()) < 1">
+        <a class="add sub"
+           href="#"
+           title="Step down"
+           tal:content="string:&darr;">
+          Step down
+        </a>
+      </tal:kondinator>
+
+<tal:comment tal:replace="nothing">prev/next</tal:comment>
+<tal:siblings tal:define="
+  siblings python: context.aq_parent.getFolderContents();">
+<tal:sibling tal:repeat="sibling siblings">
+<tal:this tal:condition="python: sibling['id']==context.getId()"
+             tal:define="index repeat/sibling/index;
+                         hasPrev python: index > 0;
+                         hasNext python: index < len(siblings) - 1;">
+
+  <tal:prev tal:condition="hasPrev" tal:define="
+  href python:'../' + context.aq_parent.getFolderContents()[index - 1]['id']">
+    <a tal:attributes="href href; title string:Step back;"
+       tal:content="string:&larr;">
+      Step back
+    </a>
+  </tal:prev>
+  <a tal:condition="not: hasPrev"
+     title="Step back dummy"
+     disabled
+     tal:content="string:&larr;">
+      Step back dummy
+  </a>
+
+  <tal:next tal:condition="hasNext">
+  <a tal:define="
+  href python:'../' + context.aq_parent.getFolderContents()[index + 1]['id']"
+     tal:attributes="href href; title string:Step forward;"
+     tal:content="string:&rarr;"
+     >
+      Step forward
+    </a>
+  </tal:next>
+  <a tal:condition="not: hasNext"
+     title="Step forward dummy"
+     disabled
+     tal:content="string:&rarr;">
+      Step forward dummy
+  </a>
+</tal:this>
+</tal:sibling>
+</tal:siblings>
+<!-- EO prev/next -->
+
+      <a class="add"
+         href="../createObject?type_name=Ticket"
+         title="Add next-step"
+         tal:content="string:+">
+        Add next-step 
+      </a>
+      <a class="add sub"
+         href="./createObject?type_name=Ticket"
+         title="Add sub-step"
+         tal:content="string:++">
+        Add sub-step
+      </a>
+      <a class="edit"
+         href="./edit"
+         title="Edit this step">&#9998;<tal:comment tal:replace="nothing">
+         <img src="edit.png" />
+         Edit this step
+      </tal:comment></a>
+      <a href="./folder_contents"
+         title="Change order and more"
+         alt="Tetragram for centre"
+         tal:content="string:&#119558;">
+        Folder contents
+      </a>
+    </div><tal:comment tal:replace="nothing">EO .buttons</tal:comment>
+    <div class="info"
+      tal:define="person python:context.getResponsiblePerson() or 'nobody';">
+      Is
+      <span tal:content="status"
+            tal:attributes="class string:state-${status}">
+        new/active/waiting/closed/blocked
+      </span>
+      and
+      <a tal:attributes="href string:${portal_url}/author/${person};
+                         class string:owner;
+                         title string:See all steps ${person} is responsible of"
+         tal:content="person">
+        nobody
+      </a>
+       is responsible.
+    </div><tal:comment tal:replace="nothing">EO .info</tal:comment>
     <div class="blockers"
        tal:define="dependency_of context/getIsDependencyOf;
                    depends_on context/getDependsOn;"
@@ -35,118 +174,20 @@
         Is blocked by #27 !!!
       </span>
     </div><tal:comment tal:replace="nothing">EO .blockers</tal:comment>
-  
-
-    <div class="buttons">
-
-      <a tal:content="string:&#9654;"
-         tal:attributes="href string:${trans_url}start;
-                         class string:start;
-                         title string:start">
-        start
-      </a>
-
-      <a tal:content="string:&#9208;"
-         tal:attributes="href string:${trans_url}pause;
-                         class string:pause;
-                         title string:pause">
-        pause
-      </a>
-
-      <a tal:content="string:&#11035;"
-         tal:attributes="href string:${trans_url}close;
-                         class string:close;
-                         title string:close">
-        close
-      </a>
-
-      <a tal:content="string:&#8416;"
-         tal:attributes="href string:${trans_comment_url}block;
-                         class string:block;
-                         title string:block">
-        block
-      </a>
-
-
-      <a class="add"
-         href="../createObject?type_name=Ticket"
-         title="Add next-step"
-         tal:content="string:&rarr;">
-        Add next-step 
-      </a>
-
-      <a class="add sub"
-         href="./createObject?type_name=Ticket"
-         title="Add sub-step"
-         tal:content="string:&darr;">
-        Add sub-step
-      </a>
-
-      <div class="info" style="display:inline-block;"
-        tal:define="info string:Is ${status} an">
-        <div tal:condition="context/getResponsiblePerson"
-          tal:define="resp context/getResponsiblePerson;
-          info python:info + 'd ' + resp + ' is responsible'">
-          <a href="#step-info"
-             tal:attributes="title info"
-             tal:content="string:i">
-            See/hide meta-info of step
-          </a>
-          <!--
-          -->
-          <div id="step-info" tal:content="info">
-          </div>
-        </div>
-        <div tal:condition="not:context/getResponsiblePerson"
-          tal:define="info python:info + 'nobody is responsible.'">
-          <a href="#step-info"
-             tal:attributes="title info"
-             tal:content="string:i">
-            See/hide meta-info of step
-          </a>
-          <!--
-          -->
-          <div id="step-info" tal:content="info">
-          </div>
-        </div>
-        
-        <div class="meta" style="visibility:hidden;display:inline-block;heighth:0;overflow:hidden;">
-          <span tal:content="string:Is ${status} and ">
-            Is new/active/waiting/closed/blocked and
-          </span>
-          <span tal:condition="context/getResponsiblePerson"
-                tal:attributes="title string:${person} is responsible"
-                tal:content="string:${person} is responsible">
-            bob is responsible.
-          </span>
-          <span tal:condition="not:context/getResponsiblePerson">
-            nobody is responsible.
-          </span>
-        </div><tal:comment tal:replace="nothing">EO .meta</tal:comment>
-      </div><tal:comment tal:replace="nothing">EO .info</tal:comment>
-
-    </div><tal:comment tal:replace="nothing">EO .buttons</tal:comment>
-
   </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
-
-
-  <h2 tal:attributes="class string:state-${status}">
-    <a href="./edit"
-       tal:content="context/Title"
-       tal:attributes="class string:state-${status};
-       title string:Click the title to edit this step">
-      Title
-    </a>
+  <h2 tal:content="context/Title" tal:attributes="class string:state-${status}">
+    Title
   </h2>
   <div class="body"
        tal:content="structure python:newline_to_br(context.getText())">
     Text
   </div>
-
   <ol class="substeps" tal:condition="context/getFolderContents">
+      <!--
     <span>
       Substeps:
     </span>
+      -->
     <li tal:repeat="item context/getFolderContents">
       <a tal:define="item_status item/review_state" tal:content="item/Title"
          tal:attributes="href python: context.absolute_url() + '/' + item.id;
@@ -154,10 +195,11 @@
         Substep title
       </a>
       <div class="body"
-           tal:content="structure python:newline_to_br(item.getObject().getText())">
+       tal:content="structure python:newline_to_br(item.getObject().getText())">
         Substep text
       </div>
     </li>
   </ol>
+
 
 </div></metal:main></body></html>

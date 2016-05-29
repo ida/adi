@@ -11,8 +11,9 @@ outline: 1px solid;
 }
 .documentDescription,
 h1, h2, h3, h4, h5, h6 {
-    line-height: 1.61em;
     margin-bottom: .5em;
+    background: inherit;
+    color: inherit;
 }
 h1 {
     font-size: 2.1em;
@@ -29,6 +30,7 @@ h4, h5, h6 {
 ul ul {
     margin-left: 0.85em;
 }
+/* STRUCTURE */
 #visual-portal-wrapper {
     width: 90%;
     margin: 2.77em auto;
@@ -42,17 +44,20 @@ background:#222;
 div.position-0 {
     margin-left: -99.99%;
 }
+/* CONTENT AREA */
+#content ul li {
+    list-style: inside none disc;
+}
+#content ol li {
+    list-style: inside none decimal;
+}
 .documentDescription {
     color: #333;
 }
-/* CONTENT AREA */
-#content ul li {
-    list-style: disc;
+.discreet {
+    font-size: 77%;
+    line-height: 1.61em;
 }
-#content ol li {
-    list-style: decimal;
-}
-
 /* SELECTED ELEMENTS */
 .navTreeCurrentNode {
     list-style: disc;

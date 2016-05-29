@@ -67,7 +67,7 @@ def setBlocker(obj, eve):
                     try:
                         context.portal_workflow.doActionFor(blocked, 'pause')
                     except:
-                        messages = IStatusMessage(self.request)
+                        messages = IStatusMessage(context.REQUEST)
                         messages.add(
                         u"The pause-transisition is not available to the\
                         current state, couldn't switch to state \

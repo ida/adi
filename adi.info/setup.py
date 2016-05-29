@@ -10,7 +10,7 @@ if os.path.exists("README.rst"):
 setup(name='adi.info',
       version=version,
       description="Let info-messages in the UI vanish after seven seconds and \
-                   add a close-button to them.",
+                   add a close-button and a keep-sticky-button to them.",
       long_description=long_description,
       classifiers=[
         "Framework :: Plone",

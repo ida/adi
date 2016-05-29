@@ -47,7 +47,7 @@ outline: 1px dotted;
 .state-waiting {
     color: orange;
 }
-.buttons .info a,
+.buttons .info a:hover,
 .closed .start, 
 .waiting .start,
 .new .start,

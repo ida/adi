@@ -37,4 +37,9 @@
         layer=".interfaces.IAdiTickets"
     />
 
+    <browser:resourceDirectory
+        name="adi.tickets.resources"
+        directory="resources"
+    />
+
 </configure>
