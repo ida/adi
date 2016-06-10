@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+    <layers>
+        <layer name="adi.clock.layer"
+                   interface="adi.clock.interfaces.IAdiClock" />
+    </layers>

@@ -41,7 +41,7 @@ TicketSchema = folder.ATFolderSchema.copy() + atapi.Schema((
     ),
 
     atapi.StringField('responsiblePerson',
-#		default_method = 'wireGetCurrentUser',
+		default_method = 'wireGetCurrentUser',
         vocabulary = "wireGetEditors",
         widget = atapi.SelectionWidget(
         ),

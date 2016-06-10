@@ -1,0 +1,13 @@
+.children {
+    border-bottom: 1px dotted;
+    border-right: 1px dotted;
+}
+.children,
+.children .children {
+    margin-left: 0.85em;
+}
+.child {
+    border-top: 1px dotted;
+    border-left: 1px dotted;
+}
+

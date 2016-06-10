@@ -1,0 +1,23 @@
+<configure
+ xmlns="http://namespaces.zope.org/zope"
+ xmlns:five="http://namespaces.zope.org/five"
+ xmlns:browser="http://namespaces.zope.org/browser"
+ i18n_domain="adi.vox">
+
+    <include package="plone.app.contentmenu" />
+    <browser:resourceDirectory
+        name="adi.vox.resources"
+        directory="resources"
+      />
+
+
+
+    <browser:page
+        for="*"
+        name="adi_vox_main_view"
+        class=".resources.main.View"
+        permission="zope2.View"
+        layer="adi.vox.interfaces.IAdiVox"
+      />
+
+</configure>

@@ -4,9 +4,9 @@ body {
     background: #fffdc9;
     color: #333;
 /* nightsight:
+outline: 1px solid;
 background:#111;
 color: #e2e2e2;
-outline: 1px solid;
 */
 }
 .documentDescription,
@@ -27,6 +27,7 @@ h3 {
 h4, h5, h6 {
     font-size: 1.15em;
 }
+ol ol,
 ul ul {
     margin-left: 0.85em;
 }
@@ -35,8 +36,10 @@ ul ul {
     width: 90%;
     margin: 2.77em auto;
     max-width: 999px;
-background:#222;
     background: #f1f1f1;
+/* nightsight:
+background:#222;
+*/
 }
 #visual-portal-wrapper > div {
     padding: 0.81em;
@@ -45,10 +48,19 @@ div.position-0 {
     margin-left: -99.99%;
 }
 /* CONTENT AREA */
-#content ul li {
+#content ul,
+#content-core ul,
+#content ol,
+#content-core ol {
+    margin-top: 0.85em;
+    margin-bottom: 0.85em;
+}
+#content ul li,
+#content-core ul li {
     list-style: inside none disc;
 }
-#content ol li {
+#content ol li,
+#content-core ol li {
     list-style: inside none decimal;
 }
 .documentDescription {
@@ -59,8 +71,11 @@ div.position-0 {
     line-height: 1.61em;
 }
 /* SELECTED ELEMENTS */
-.navTreeCurrentNode {
-    list-style: disc;
+.navTreeItem span {
+    opacity: 0.5;
+}
+.navTreeItem.navTreeCurrentNode > div span {
+    opacity: 1;
 }
 /* Opinionated UI-design decisions: */
 .portaltype-plone-site.template-folder_listing .discreet {

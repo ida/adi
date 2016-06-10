@@ -3,12 +3,21 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="adi.tickets">
 
-  <include package="plone.app.contentmenu" />
+    <include package="plone.app.contentmenu" />
+    <include package="plone.app.registry" />
 
-  <!-- Resolve component-lookup-error triggered of `cmf.setOwnPassword`: -->
-  <include package="Products.CMFCore" file="permissions.zcml" />
+    <!-- Resolve component-lookup-error triggered of `cmf.setOwnPassword`: -->
+    <include package="Products.CMFCore" file="permissions.zcml" />
 
 	<!-- Views -->
+    <browser:page
+        for="*"
+        name="adi_tickets_main_view"
+        class=".resources.main.View"
+        permission="zope2.View"
+        layer="adi.tickets.browser.interfaces.IAdiTickets"
+      />
+
     <browser:page
       for="*"
       name="my_tickets"
@@ -22,24 +31,24 @@
       class=".tickets_view_helper.View"
       permission="cmf.SetOwnPassword"
      />
-    <include package="plone.app.registry" />
+
+
     <!-- Control panel -->
+
     <browser:page
         name="tickets-settings"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         class=".controlpanel.TicketsSettingsControlPanel"
         permission="cmf.ManagePortal"
         />
+
+
     <!-- Resources -->
-    <browser:resource
-        name="adi_tickets.css"
-        file="adi_tickets.css"
-        layer=".interfaces.IAdiTickets"
-    />
 
     <browser:resourceDirectory
         name="adi.tickets.resources"
         directory="resources"
     />
+
 
 </configure>

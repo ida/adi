@@ -1,0 +1,23 @@
+<configure
+ xmlns="http://namespaces.zope.org/zope"
+ xmlns:five="http://namespaces.zope.org/five"
+ xmlns:browser="http://namespaces.zope.org/browser"
+ i18n_domain="adi.clock">
+
+    <include package="plone.app.contentmenu" />
+    <browser:resourceDirectory
+        name="adi.clock.resources"
+        directory="resources"
+      />
+
+
+
+    <browser:page
+        for="*"
+        name="adi_clock_main_view"
+        class=".resources.main.View"
+        permission="zope2.View"
+        layer="adi.clock.interfaces.IAdiClock"
+      />
+
+</configure>

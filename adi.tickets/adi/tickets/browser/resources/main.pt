@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="context/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+  <metal:block fill-slot="content">
+    <div id="content"
+         tal:define="std modules/Products.PythonScripts/standard;
+                     newline_to_br nocall:std/newline_to_br;
+                     text context/getText;
+                     text python:newline_to_br(text);
+                     state context/plone_context_state/workflow_state;
+                     state_class string:state-${state};
+                     nr nocall: view/getPosNr;
+                     ">
+
+      <tal:comment tal:replace="nothing">EO #content-core
+      Keeping for reference:
+      <span tal:content="string:${nr}.">
+      1.)
+      </span>
+      </tal:comment>
+      <a tal:attributes="class string:${state_class} title loadLink;
+                         href context/absolute_url"
+         tal:content="context/title">
+        Title
+      </a>
+      <div id="content-core">
+        <div class="text" tal:content="structure text">
+          Text
+        </div>
+        <ol class="children"
+             tal:define="children context/getFolderContents"
+             tal:condition="python:len(children) > 0">
+          <li class="child"
+               tal:repeat="child children">
+            <a tal:define="obj python:child.getObject();
+                           title obj/title;
+                           state context/plone_context_state/workflow_state;
+                           class string:state-${state} loadLink;
+                           alt string:Go to substep;
+                           href obj/absolute_url;"
+               tal:attributes="href href; alt alt; class class"
+               tal:content="string:${repeat/child/number}. ${title}">
+              Child title
+            </a>
+            <div class="linkLoader">
+            </div>
+          </li>
+        </ol>
+      </div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
+    </div><tal:comment tal:replace="nothing">EO #content</tal:comment>
+  </metal:block>
+</html>

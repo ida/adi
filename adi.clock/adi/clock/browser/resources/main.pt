@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+<head>
+<style>
+body {
+/*
+  background: #111;
+  color: #e2e2e2;
+}
+*/
+</style>
+</head>
+<body>
+<div tal:define="dates nocall: view/dates"
+     tal:content="structure dates">
+</div>
+</body>
+</html>
