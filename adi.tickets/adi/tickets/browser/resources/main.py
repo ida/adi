@@ -49,13 +49,13 @@ class View(BrowserView):
         """
         Expects human_redable to be in this format:
         yy:mo:dd:hh:mi:ss
-        Returns 00yr00mo23dy14hr02mi33sc
+        Returns 00yr 00mo 23dy 14hr 02mi 33sc
         """
+        pass
 
     def computeAge(self):
         """ Return age of item in milliseconds. """
         created = self.context.created().millis()
-        print str(created)
         created = DateTime().millis() - created
         return created
 
@@ -75,7 +75,7 @@ class View(BrowserView):
         for i, story in enumerate(history):
             end_time = 0
             start_time = 0
-            if story['state_title'] == 'active':
+            if story['state_title'] == 'Active':
                 start_time = story['time'].millis()
                 if i == 0:
                     end_time = DateTime().millis()
@@ -94,10 +94,4 @@ class View(BrowserView):
         active_time = self.computeActiveTime()
         active_time = self.msToHumanReadable(active_time)
         return active_time
-
-    def getPosNr(self):
-        parent = aq_parent(aq_inner(self.context))
-        ordered = IOrderedContainer(parent, None)
-        pos = ordered.getObjectPosition(self.context.getId())
-        return pos + 1
 

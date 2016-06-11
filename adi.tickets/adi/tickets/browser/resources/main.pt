@@ -4,52 +4,78 @@
       metal:use-macro="context/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="plone">
-  <metal:block fill-slot="content">
-    <div id="content"
-         tal:define="std modules/Products.PythonScripts/standard;
-                     newline_to_br nocall:std/newline_to_br;
-                     text context/getText;
-                     text python:newline_to_br(text);
-                     state context/plone_context_state/workflow_state;
-                     state_class string:state-${state};
-                     nr nocall: view/getPosNr;
-                     ">
-
-      <tal:comment tal:replace="nothing">EO #content-core
-      Keeping for reference:
-      <span tal:content="string:${nr}.">
-      1.)
-      </span>
-      </tal:comment>
-      <a tal:attributes="class string:${state_class} title loadLink;
-                         href context/absolute_url"
-         tal:content="context/title">
-        Title
-      </a>
-      <div id="content-core">
-        <div class="text" tal:content="structure text">
-          Text
+<metal:block fill-slot="top_slot"
+   tal:define="dummy python:request.set('disable_border',1)" />
+<metal:block fill-slot="main">
+<div id="content"
+     tal:define="std modules/Products.PythonScripts/standard;
+                 newline_to_br nocall:std/newline_to_br;
+                 href context/absolute_url;
+                 text context/getText;
+                 text python:newline_to_br(text);
+                 state context/plone_context_state/workflow_state;
+                 state_class string:state-${state};
+                 trans_url string:${href}/content_status_modify?workflow_action=;
+                 trans_comment_url string:${href}/content_status_comment?workflow_action=;
+                 person context/getResponsiblePerson;
+                 age nocall:view/getAge;
+                 activity nocall:view/getActiveTime;
+                 ">
+<a tal:attributes="href href; class string:title ${state_class};"
+   tal:content="context/title">
+  Title
+</a>
+<a tal:attributes="href string:${portal_url}/author/${person};
+                   title string:See all steps ${person} is responsible of;"
+   tal:content="person">
+  nobody
+</a>
+<div metal:use-macro="here/blockers/macros/blockers" />
+<div class="buttons">
+  <div metal:use-macro="here/transitions/macros/transitions" />
+  <div metal:use-macro="here/navigator/macros/navigator" />
+  <div metal:use-macro="here/editables/macros/editables" />
+</div>
+<div metal:use-macro="here/head/macros/head" />
+<tal:comment tal:replace="nothing">Note: Everything in #content-core will be
+loaded, when clicking on arrow-down of a substep.</tal:comment>
+<div id="content-core">
+  <div class="text" tal:content="structure text">
+    Text
+  </div>
+  <ol class="children"
+       tal:define="children context/getFolderContents;
+       hasChildren python:len(children) > 0;"
+       tal:condition="hasChildren">
+    <li class="child"
+         tal:repeat="child children">
+      <tal:definator tal:define="child python:child.getObject();
+      title child/title;
+      text child/getText;
+      href child/absolute_url;
+      hasText python:text != '';
+      hasChildren python:len(child.getFolderContents()) > 0;
+      showArrow python: hasChildren or hasText;
+      ">
+        <a class="loadLink" tal:attributes="href href"
+           tal:content="string:&darr;">
+          Arrow down
+        </a>
+        <a tal:define="
+                       state child/plone_context_state/workflow_state;
+                       class string:state-${state};
+                       alt string:Go to substep;
+                      "
+           tal:attributes="href href; alt alt; class class"
+           tal:content="title">
+          Child title
+        </a>
+        <div class="linkLoader">
         </div>
-        <ol class="children"
-             tal:define="children context/getFolderContents"
-             tal:condition="python:len(children) > 0">
-          <li class="child"
-               tal:repeat="child children">
-            <a tal:define="obj python:child.getObject();
-                           title obj/title;
-                           state context/plone_context_state/workflow_state;
-                           class string:state-${state} loadLink;
-                           alt string:Go to substep;
-                           href obj/absolute_url;"
-               tal:attributes="href href; alt alt; class class"
-               tal:content="string:${repeat/child/number}. ${title}">
-              Child title
-            </a>
-            <div class="linkLoader">
-            </div>
-          </li>
-        </ol>
-      </div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
-    </div><tal:comment tal:replace="nothing">EO #content</tal:comment>
-  </metal:block>
+      </tal:definator>
+    </li>
+  </ol>
+</div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
+</div><tal:comment tal:replace="nothing">EO #content</tal:comment>
+</metal:block>
 </html>

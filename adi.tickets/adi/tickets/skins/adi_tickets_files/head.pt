@@ -1,0 +1,57 @@
+<div class="head" metal:define-macro="head">
+  <div class="fields">
+    <div class="fieldset main">
+      <div class="field state">
+        <div class="name">
+          State:
+        </div>
+        <div tal:attributes="class string:value ${state_class};"
+             tal:content="state">
+          active
+        </div>
+      </div>
+      <div class="field responsible">
+        <div class="name">
+          Responsible:
+        </div>
+        <div class="value">
+          <a tal:attributes="href string:${portal_url}/author/${person};
+                             title string:See all steps ${person} is responsible of;">
+            <span tal:condition="not: person" tal:replace="string:  Nobody" />
+            <span tal:condition="person" tal:replace="person" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="field creator">
+      <div class="name">
+        Reporter:
+      </div>
+      <div class="value">
+        <a tal:attributes="href string:${portal_url}/author/${person};
+                           title string:See all steps ${person} is responsible of;"
+           tal:content="context/Creator">
+          nobody
+        </a>
+      </div>
+    </div>
+    <div class="fieldset times">
+      <div class="field age">
+        <div class="name">
+          Age:
+        </div>
+        <div class="value" tal:content="age">
+          00:27:13
+        </div>
+      </div>
+      <div class="field activity">
+        <div class="name">
+          Activity:
+        </div>
+        <div class="value" tal:content="activity">
+          00:27:13
+        </div>
+      </div>
+    </div>
+  </div><tal:comment tal:replace="nothing">EO .fields</tal:comment>
+</div><tal:comment tal:replace="nothing">EO .head</tal:comment>

@@ -1,13 +1,61 @@
-.children {
-    border-bottom: 1px dotted;
-    border-right: 1px dotted;
+body {
+    font-family: "Times New Roman";
+/*
+    background: #111;
+    color: #c3c3c3;
+*/
 }
-.children,
+#visual-portal-wrapper {
+    padding: 1em;
+}
+ul ul { 
+    margin-left: 0.85em;
+}
+#content ol {
+    margin-left: 0.85em;
+}
+#content-core {
+    border: 1px solid silver;
+}
+.title {
+    font-size: 127%;
+}
+.buttons > div,
+.buttons a,
+.buttons {
+    float: right;
+}
+.head {
+    float: right;
+    font-size: 77%;
+}
+.creator .value::first-letter,
+.responsible .value::first-letter,
+.state .value::first-letter {
+    text-transform: uppercase;
+}
+.field .name,
+.field .value {
+    display: inline-block;
+    width: 47%;
+}
+.field .name {
+    text-align: right;
+}
 .children .children {
     margin-left: 0.85em;
 }
 .child {
-    border-top: 1px dotted;
-    border-left: 1px dotted;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
 }
-
+.portletNavigationTree img {
+    display: none;
+}
+.portletNavigationTree li a:before {
+    content: '-';
+}
+.portletNavigationTree li.navTreeCurrentItem a:before {
+    font-weight: bold;
+    content: 'X';
+}

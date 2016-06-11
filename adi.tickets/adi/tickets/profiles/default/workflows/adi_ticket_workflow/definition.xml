@@ -4,7 +4,7 @@
  <permission>Change portal events</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
- <state state_id="active" title="">
+ <state state_id="active" title="Active">
   <exit-transition transition_id="block"/>
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="pause"/>
@@ -25,7 +25,7 @@
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
- <state state_id="blocked" title="">
+ <state state_id="blocked" title="Blocked">
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="pause"/>
   <exit-transition transition_id="reset"/>
@@ -45,7 +45,7 @@
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
- <state state_id="closed" title="">
+ <state state_id="closed" title="Closed">
   <exit-transition transition_id="reset"/>
   <exit-transition transition_id="start"/>
   <permission-map name="Access contents information" acquired="False">
@@ -65,7 +65,7 @@
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
- <state state_id="new" title="">
+ <state state_id="new" title="New">
   <exit-transition transition_id="block"/>
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="start"/>
@@ -86,7 +86,7 @@
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
- <state state_id="waiting" title="">
+ <state state_id="waiting" title="Waiting">
   <exit-transition transition_id="block"/>
   <exit-transition transition_id="close"/>
   <exit-transition transition_id="reset"/>

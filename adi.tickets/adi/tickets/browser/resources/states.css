@@ -1,0 +1,20 @@
+.start,
+.state-active {
+    color: #207207; /* green */
+}
+.block,
+.state-blocked {
+    color: red;
+}
+.close,
+.state-closed {
+    color: inherit;
+}
+.close,
+.state-new {
+    color: #223772; /* darkblue */
+}
+.pause,
+.state-waiting {
+    color: orange;
+}

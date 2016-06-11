@@ -1,0 +1,38 @@
+<div class="blockers" metal:define-macro="blockers"
+   tal:define="dependency_of context/getIsDependencyOf;
+               depends_on context/getDependsOn;"
+   tal:condition="python: dependency_of + depends_on != ''">
+
+  <span tal:condition="depends_on"
+        tal:define="
+        results python:context.portal_catalog.searchResults(id = depends_on);
+        ">
+    <span tal:condition="python:len(results) > 0"
+          tal:define="
+          theObject python: results[0].getObject();
+          ">
+      Is blocked by
+      <a tal:attributes="href theObject/absolute_url"
+         tal:content="string:#${depends_on}">
+        #27
+      </a>
+      !!!
+    </span>
+  </span>
+  <span tal:condition="dependency_of"
+        tal:define="
+        results python:context.portal_catalog.searchResults(id = dependency_of);
+        ">
+    <span tal:condition="python:len(results)>0"
+          tal:define="
+          theObject python: results[0].getObject();
+          ">
+        Is blocking
+      <a tal:attributes="href theObject/absolute_url"
+         tal:content="string:#${dependency_of}">
+        #42
+      </a>
+      !!!
+    </span>
+  </span>
+</div><tal:comment tal:replace="nothing">EO .blockers</tal:comment>

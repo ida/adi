@@ -10,20 +10,21 @@ function listenLoadLinks(loaderParent) {
       var href = link.attr('href')
       // #content-core is loaded already ...
       if(loader.find('> #content-core').length > 0) {
-      console.log('// schon loaded')
         // ... hide, respectively show it:
-        if( $(loader.find('> #content-core')[0]).hasClass('loaded') &&
-            $(loader.find('> #content-core')[0]).css('height') === undefined ||
-            $(loader.find('> #content-core')[0]).css('height') == '0px') {
-              $(loader.find('> #content-core')[0]).css({'height':'auto'});
+        if( 
+            $(loader.find('> #content-core')[0]).css('display') != 'none') {
+              $(loader.find('> #content-core')[0]).css({'display':'none'});
+              // Switch arrow-symbol of load-link from up to down:
+              link.html('&darr;')
         }
         else {
-          $(loader.find('> #content-core')[0]).css({'height':'0', 'overflow':'hidden'});
+          $(loader.find('> #content-core')[0]).css({'display':'block'});
+              // Switch arrow-symbol of load-link from down to up:
+              link.html('&uarr;')
         }
       }
       // #content-core is not loaded, yet ...
       else {
-      console.log('// #content is not loaded, yet...')
         // ... load it:
         loader.load(
           href + ' #content-core',
@@ -31,6 +32,8 @@ function listenLoadLinks(loaderParent) {
           function() {
             loaderParent = $(loader.find('ol')[0])
             listenLoadLinks(loaderParent)
+            // And swith arrow-down to up:
+            link.html('&uarr;')
           }
         );
       }
@@ -62,4 +65,11 @@ function manipulateAuthorTemplate() {
       var loaderParent = $('#content ol')[0]
       listenLoadLinks(loaderParent)
   }
+// DEV:
+$($('.portletHeader')[0]).click(function(eve) {
+  eve.preventDefault()
+  $('#portal-column-one').remove()
+});
+// autoload:
+//$('.loadLink').click()
 }); })(jQuery);

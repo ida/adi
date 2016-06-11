@@ -3,10 +3,10 @@ body {
     line-height: 1.61em;
     background: #fffdc9;
     color: #333;
-/* nightsight:
 outline: 1px solid;
 background:#111;
 color: #e2e2e2;
+/* nightsight:
 */
 }
 .documentDescription,
@@ -38,16 +38,22 @@ ul ul {
     max-width: 999px;
     background: #f1f1f1;
 /* nightsight:
-background:#222;
 */
+background:#222;
 }
 #visual-portal-wrapper > div {
+/*
     padding: 0.81em;
+*/
 }
 div.position-0 {
     margin-left: -99.99%;
 }
+div.width-full {
+    width: 99.99%;
+}
 /* CONTENT AREA */
+/*
 #content ul,
 #content-core ul,
 #content ol,
@@ -55,6 +61,7 @@ div.position-0 {
     margin-top: 0.85em;
     margin-bottom: 0.85em;
 }
+*/
 #content ul li,
 #content-core ul li {
     list-style: inside none disc;

@@ -1,57 +1,5 @@
-/* DEV
-.navTreeCurrentNode {
-outline: 1px dotted #e2e2e2!important;    
-}
-.navTreeCurrentNode .navTreeCurrentNode {
-outline: none!important;
-}
-.navTreeCurrentNode ul {
-    display: none;
-}
-.navTreeCurrentNode:hover ul {
-    display: block;
-}
-body {
-background: #111;
-color: #e2e2e2;
-}
-#visual-portal-wrapper { 
-background: #223773;
-background: #111;
-margin:0 auto;
-width:90%; 
-max-width: none;
-} 
-*/ 
-/*
- *
- *    WORKFLOW-STATES
- *    AND -TRANSITIONS
- *
- */
 .buttons a {
-    color: inherit;
 outline: 1px dotted;
-}
-.buttons .start,
-.state-active {
-    color: #207207; /* green */
-}
-.buttons .block,
-.state-blocked {
-    color: red;
-}
-.buttons .close,
-.state-closed {
-    color: #333;
-}
-.buttons .close,
-.state-new {
-    color: #223772; /* darkblue */
-}
-.buttons .pause,
-.state-waiting {
-    color: orange;
 }
 /*
  *
@@ -66,6 +14,7 @@ outline: 1px dotted;
     text-align: center;
     vertical-align: middle;
     width: 1.61em;
+    color: inherit;
 height: 18px;
 line-height: 18px;
 width: 18px;

@@ -5,9 +5,11 @@
 <body>
 <metal:block fill-slot="top_slot"
    tal:define="dummy python:request.set('disable_border',1)" />
-<metal:main fill-slot="main">
+<metal:main fill-slot="content-core">
+<div metal:use-macro="here/navigator/macros/navigator" />
 <div
   tal:define="
+      huhu view/getActiveTime;
       wftool        python: context.portal_workflow;
       Std           modules/Products.PythonScripts/standard;
       newline_to_br nocall:Std/newline_to_br;
@@ -107,6 +109,7 @@ expHasPassed
   python: now_to_exp_ms < 0;
   "
   tal:attributes="class status">
+<tal:tal tal:content="huhu" />
 <tal:tal tal:content="now" />
 <tal:tal tal:content="expires" />
 
@@ -428,40 +431,37 @@ minutes
             tal:define="
             results python:context.portal_catalog.searchResults(id = depends_on);
             ">
-      <span tal:condition="python:len(results) > 0">
-      <span
-            tal:define="
-            theObject python: results[0].getObject();
-            ">
-        Is blocked by
-        <a tal:attributes="href theObject/absolute_url"
-           tal:content="string:#${depends_on}">
-          #27
-        </a>
-        !!!
-      </span>
-      </span>
+        <span tal:condition="python:len(results) > 0">
+          <span
+                tal:define="
+                theObject python: results[0].getObject();
+                ">
+            Is blocked by
+            <a tal:attributes="href theObject/absolute_url"
+               tal:content="string:#${depends_on}">
+              #27
+            </a>
+            !!!
+          </span>
+        </span>
       </span>
       <span tal:condition="dependency_of"
             tal:define="
             results python:context.portal_catalog.searchResults(id = dependency_of);
             ">
-      <span tal:condition="python:len(results)>0"
-            tal:define="
-            theObject python: results[0].getObject();
-            ">
-          Is blocking
-        <a tal:attributes="href theObject/absolute_url"
-           tal:content="string:#${dependency_of}">
-          #42
-        </a>
+        <span tal:condition="python:len(results)>0"
+              tal:define="
+              theObject python: results[0].getObject();
+              ">
+            Is blocking
+          <a tal:attributes="href theObject/absolute_url"
+             tal:content="string:#${dependency_of}">
+            #42
+          </a>
+        </span>
       </span>
-      </span>
-
     </div><tal:comment tal:replace="nothing">EO .blockers</tal:comment>
-
   </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
-
 <a href=".">
   <h2 tal:attributes="class string:state-${status}">
     <span id="title" tal:content="context/Title">
