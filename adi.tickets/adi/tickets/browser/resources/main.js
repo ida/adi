@@ -30,7 +30,7 @@ function listenLoadLinks(loaderParent) {
           href + ' #content-core',
           // After loading, re-apply listeners to new loaded links:
           function() {
-            loaderParent = $(loader.find('ol')[0])
+            loaderParent = $(loader.find('.children')[0])
             listenLoadLinks(loaderParent)
             // And swith arrow-down to up:
             link.html('&uarr;')
@@ -61,15 +61,22 @@ function manipulateAuthorTemplate() {
 (function($) { $(document).ready(function() {
   manipulateAuthorTemplate()
   if($('.template-adi_tickets_main_view').length > 0
-    && $('#content ol').length > 0) {
-      var loaderParent = $('#content ol')[0]
+    && $('#content .children').length > 0) {
+      var loaderParent = $('#content .children')[0]
       listenLoadLinks(loaderParent)
   }
-// DEV:
+/* DEV:
 $($('.portletHeader')[0]).click(function(eve) {
   eve.preventDefault()
   $('#portal-column-one').remove()
 });
+*/
 // autoload:
-//$('.loadLink').click()
+function autoLoad() {
+$('.loadLink').each(function() {
+  if($(this).find('#content-core').length < 1) {
+    $(this).click()
+  }
+});
+}
 }); })(jQuery);

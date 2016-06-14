@@ -1,0 +1,17 @@
+<div class="fieldset times" metal:define-macro="times">
+  <div class="field age">
+    <div class="name" tal:content="string:Ageee">
+      Age:
+    </div><div class="value" tal:content="age">
+      00:27:13
+    </div>
+  </div>
+  <div class="field activity">
+    <div class="name">
+      Activity:
+    </div><div class="value" tal:content="activity">
+      00:27:13
+    </div>
+  </div>
+</div>
+

@@ -1,14 +1,21 @@
 body {
-    font-family: Helvetica;
+    font-family: "Arial sans", "Helvetica";
     line-height: 1.61em;
-    background: #fffdc9;
+    background: #f1f1f1;
     color: #333;
+}
+/* nightsight:
+body {
 outline: 1px solid;
 background:#111;
-color: #e2e2e2;
-/* nightsight:
-*/
+color: #a3a3a3;
+height: 99%;
+overflow: hidden;
 }
+#visual-portal-wrapper {
+    background: #222;
+}
+*/
 .documentDescription,
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: .5em;
@@ -33,25 +40,24 @@ ul ul {
 }
 /* STRUCTURE */
 #visual-portal-wrapper {
-    width: 90%;
-    margin: 2.77em auto;
+    width: 98%;
+    margin: .5em auto 0;
     max-width: 999px;
-    background: #f1f1f1;
-/* nightsight:
-*/
-background:#222;
+    background: #fffdc9;
 }
 #visual-portal-wrapper > div {
 /*
     padding: 0.81em;
 */
 }
+/*
 div.position-0 {
     margin-left: -99.99%;
 }
 div.width-full {
     width: 99.99%;
 }
+*/
 /* CONTENT AREA */
 /*
 #content ul,
@@ -64,11 +70,11 @@ div.width-full {
 */
 #content ul li,
 #content-core ul li {
-    list-style: inside none disc;
+    list-style: outside none disc;
 }
 #content ol li,
 #content-core ol li {
-    list-style: inside none decimal;
+    list-style: outside none decimal;
 }
 .documentDescription {
     color: #333;
@@ -78,11 +84,13 @@ div.width-full {
     line-height: 1.61em;
 }
 /* SELECTED ELEMENTS */
-.navTreeItem span {
-    opacity: 0.5;
-}
 .navTreeItem.navTreeCurrentNode > div span {
-    opacity: 1;
+outline: 1px solid;
+}
+.navTreeItem.navTreeCurrentNode:before {
+    content: '!';
+    position: absolute;
+    left: -1em;
 }
 /* Opinionated UI-design decisions: */
 .portaltype-plone-site.template-folder_listing .discreet {

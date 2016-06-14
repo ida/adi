@@ -45,9 +45,9 @@ class View(BrowserView):
 
         return string
 
-    def humanReadableToPrettified(self, human_redable):
+    def humanReadableToPrettified(self, human_readable):
         """
-        Expects human_redable to be in this format:
+        Expects human_readable to be in this format:
         yy:mo:dd:hh:mi:ss
         Returns 00yr 00mo 23dy 14hr 02mi 33sc
         """
@@ -94,4 +94,10 @@ class View(BrowserView):
         active_time = self.computeActiveTime()
         active_time = self.msToHumanReadable(active_time)
         return active_time
+
+    def getPosNr(self):
+        """Return position of item in parent as a number."""
+        parent = self.context.aq_parent
+        sibling_ids = parent.objectIds()
+        return '27'
 

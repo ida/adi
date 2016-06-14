@@ -14,12 +14,14 @@
     Pause
   </a>
   <a tal:content="string:&#11035;"
+     tal:condition="python: state == 'active'"
      tal:attributes="href string:${trans_url}close;
                      class string:close;
                      title string:Stop">
     Stop
   </a>
   <a tal:content="string:&#8416;"
+     tal:condition="python: state == 'active'"
      tal:attributes="href string:${trans_comment_url}block;
                      class string:block;
                      title string:Block">

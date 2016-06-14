@@ -16,10 +16,10 @@
     </tal:definator>
   </tal:kondinator>
   <a tal:condition="python:len(context.getFolderContents()) < 1"
-     title="Step down dummy"
+     title="No child-steps available"
      disabled
      tal:content="string:&darr;">
-     Step down dummy
+     No child-steps available
   </a>
   <tal:siblings tal:define="
     siblings python: context.aq_parent.getFolderContents();">
@@ -39,10 +39,10 @@
           </a>
         </tal:prev>
         <a tal:condition="not: hasPrev"
-           title="Step back dummy"
+           title="No previous steps available"
            disabled
            tal:content="string:&larr;">
-            Step back dummy
+            No previous steps available
         </a>
 
         <tal:next tal:condition="hasNext">

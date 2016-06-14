@@ -2,7 +2,11 @@
 <object name="portal_types">
   <object name="Arena"
     meta_type="Factory-based Type Information with dynamic views"/>
-  <object name="Argument"
+  <object name="Pro"
+    meta_type="Factory-based Type Information with dynamic views"/>
+  <object name="Contra"
+    meta_type="Factory-based Type Information with dynamic views"/>
+  <object name="Votable"
     meta_type="Factory-based Type Information with dynamic views"/>
 </object>
 

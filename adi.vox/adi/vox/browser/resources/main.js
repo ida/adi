@@ -1,7 +1,8 @@
 (function($) { $(document).ready(function() {
 // Abuse #portal-column-one for showing the history of an argument
 // when viewing it:
-if($('.template-document_view.portaltype-argument').length > 0) {
+if($('.template-document_view.portaltype-pro').length > 0
+  || $('.template-document_view.portaltype-contra').length > 0) {
   var history_url = document.location.href + 
     '/@@contenthistorypopup?ajax_load=' +
     Date.now()

@@ -13,8 +13,8 @@
     width: 1.5em;
     overflow: hidden;
     position: absolute;
-    right: -1em;
-    top: -2em;
+    right: 0;
+    top: 0;
     z-index: 2;
 }
 #edit-bar:hover {
@@ -34,7 +34,7 @@
     display: inline-block;
 }
 /* Override keywordwidget.css hardcoded in atct_edit-template: */
-.newTagsSection { margin-left: 0 !important; }               /*/
+.newTagsSection { margin-left: 0 !important; }             /* */
 .suppressVisualEditor, /* 'Edit without visual editor'       */
 #atrb_relatedItems,   /*  'Close'                           */
 .managePortletsLink, /*    Opinionated UI-design-decision  */

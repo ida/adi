@@ -1,13 +1,12 @@
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="context/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="plone">
-    <metal:block fill-slot="content">
+    <metal:block fill-slot="content-core">
         <div tal:define="hello nocall: view/hello">
-            <span tal:content="hello" />
+            <span tal:content="structure hello" />
         </div>
     </metal:block>
 </html>

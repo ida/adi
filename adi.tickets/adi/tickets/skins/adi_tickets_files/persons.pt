@@ -1,0 +1,63 @@
+<div class="fieldset persons" metal:define-macro="persons">
+  <div class="field responsers">
+      <div class="name">
+        Responsible:
+      </div><div class="value"
+           tal:define="responsers python:context.Rights().split('\n');
+                       isGroup python:len(responsers) > 1;">
+        <tal:repetator tal:repeat="responser responsers"
+           tal:condition="python:''.join(responsers) != ''">
+          <tal:definator tal:define="
+            responser python: responser.strip();
+            isLast python: repeat['responser'].index == len(responsers) -1;
+            comma python: isGroup and not isLast;
+            dot python: isGroup and isLast;">
+            <span tal:condition="not:responser" tal:content="string:nobody">
+              nobody
+            </span>
+            <a tal:content="responser" tal:attributes="
+              href string:${portal_url}/author/${responser};
+              title string:See all steps ${responser} is responsible of;">
+              somebody
+            </a><span tal:condition="comma" tal:replace="string:,">
+              ,
+            </span><span tal:condition="dot" tal:replace="string:.">
+              .
+            </span>
+          </tal:definator>
+        </tal:repetator>
+      </div>
+    </div><div class="field creator">
+      <div class="name">
+        Reporter:
+      </div><div class="value">
+        <a tal:define="reporter context/Creator"
+           tal:attributes="href string:${portal_url}/author/${reporter};
+                           title string:See all steps ${reporter} is responsible of;"
+           tal:content="reporter">
+          somebody
+        </a>
+      </div>
+    </div><div class="field creator" tal:condition="context/Contributors">
+      <div class="name" tal:content="string:Watchers:">
+        Watchers:
+      </div><div class="value"
+           tal:define="watchers context/Contributors">
+        <a tal:repeat="watcher watchers"
+           tal:attributes="href string:${portal_url}/author/${watcher};
+                           title string:See all steps ${watcher} is responsible of;">
+          <span tal:replace="watcher">
+            somebody
+          </span><span tal:condition="
+            python: len(watchers) > 1 and repeat['watcher'].index != len(watchers) -1"
+            tal:replace="string:,">
+            ,
+          </span><span tal:condition="
+            python: len(watchers) > 1 and repeat['watcher'].index == len(watchers) -1"
+            tal:replace="string:.">
+            .
+          </span>
+        </a>
+      </div>
+    </div>
+</div>

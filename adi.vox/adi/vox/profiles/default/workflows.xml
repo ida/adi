@@ -4,7 +4,13 @@
   <object name="adi_vox_workflow" meta_type="Workflow"/>
 
   <bindings>
-    <type type_id="Argument">
+    <type type_id="Pro">
+      <bound-workflow workflow_id="adi_vox_workflow"/>
+    </type>
+  </bindings>
+
+  <bindings>
+    <type type_id="Contra">
       <bound-workflow workflow_id="adi_vox_workflow"/>
     </type>
   </bindings>
