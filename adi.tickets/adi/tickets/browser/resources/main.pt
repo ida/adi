@@ -13,62 +13,77 @@
                  href context/absolute_url;
                  text context/getText;
                  text python:newline_to_br(text);
+                 title context/title;
                  state context/plone_context_state/workflow_state;
                  state_class string:state-${state};
                  trans_url string:${href}/content_status_modify?workflow_action=;
                  trans_comment_url string:${href}/content_status_comment?workflow_action=;
                  person context/getResponsiblePerson;
                  nr nocall:view/getPosNr;
+                 nrs nocall:view/getPosNrs;
                  age nocall:view/getAge;
                  activity nocall:view/getActiveTime;
+                 hasActivity python: view.computeActiveTime != 0;
                  ">
 <div class="buttons">
-  <div metal:use-macro="context/navigator/macros/navigator" />
-  <div metal:use-macro="context/editables/macros/editables" />
-  <div metal:use-macro="context/transitions/macros/transitions" />
-</div>
-<div class="number" tal:content="nr">
-</div>
-<div tal:content="context/title"
-     tal:attributes="class string:title ${state_class}">
-  Title
-</div>
-<div metal:use-macro="context/blockers/macros/blockers" />
-<div metal:use-macro="context/head/macros/head" />
-  <div class="text" tal:content="structure text">
-    Text
+  <div metal:use-macro="context/navigator/macros/navigator">
+  </div><div metal:use-macro="context/editables/macros/editables">
+  </div><div metal:use-macro="context/transitions/macros/transitions">
   </div>
+</div>
+<a tal:attributes="class string:title ${state_class}; href href; title string:This step's link, click to reload page.">
+  <span tal:replace="nrs">
+    2.7.7
+  </span>
+  <span tal:replace="title">
+    Title
+  </span>
+</a>
 <tal:comment tal:replace="nothing">Note: Everything in #content-core will be
 loaded, when clicking on arrow-down of a substep.</tal:comment>
 <div id="content-core">
+  <div metal:use-macro="context/blockers/macros/blockers" />
+  <div metal:use-macro="context/head/macros/head">
+    Metadata: State, persons and times.
+  </div>
+  <div class="text" tal:content="structure text">
+    Text
+  </div>
   <div class="children"
        tal:define="children context/getFolderContents;
        hasChildren python:len(children) > 0;"
        tal:condition="hasChildren">
     <div class="child"
          tal:repeat="child children">
-      <tal:definator tal:define="child python:child.getObject();
-      title child/title;
-      text child/getText;
-      href child/absolute_url;
-      hasText python:text != '';
-      hasChildren python:len(child.getFolderContents()) > 0;
+      <tal:definator tal:define="child_obj python:child.getObject();
+      title child_obj/title;
+      text child_obj/getText;
+      href child_obj/absolute_url;
+      hasText python: text != '';
+      hasChildren python:len(child_obj.getFolderContents()) > 0;
       showArrow python: hasChildren or hasText;
       ">
         <a tal:define="
-                       state child/plone_context_state/workflow_state;
+                       state child_obj/plone_context_state/workflow_state;
                        class string:state-${state};
                        alt string:Go to substep;
+                       nr python:view.getPosNr(child_obj);
                       "
-           tal:attributes="href href; alt alt; class class"
-           tal:content="title">
-          Child title
+           tal:attributes="href href; alt alt; class class">
+          <span tal:replace="nrs">
+            2.7.7.
+          </span><span tal:replace="string:.${nr}" />
+          <span tal:replace="title">
+            Child title
+          </span>
         </a>
         <a class="loadLink" tal:attributes="href href"
+            tal:condition="showArrow"
            tal:content="string:&darr;">
           Arrow down
         </a>
-        <span class="text"
+<!--
+        <span class="text cropped"
              tal:condition="python:len(text) > 207"
              tal:define="text_cropped python:text[:207] + ' ...'"
              tal:content="text_cropped">
@@ -79,6 +94,7 @@ loaded, when clicking on arrow-down of a substep.</tal:comment>
              tal:content="structure text">
           Text
         </span>
+-->
         <div class="linkLoader">
         </div>
       </tal:definator>

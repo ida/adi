@@ -1,20 +1,29 @@
-<div class="fieldset persons" metal:define-macro="persons">
-  <div class="field responsers">
-      <div class="name">
-        Responsible:
-      </div><div class="value"
-           tal:define="responsers python:context.Rights().split('\n');
-                       isGroup python:len(responsers) > 1;">
+<div class="fieldset persons" metal:define-macro="persons"
+     tal:define="responsers python:context.Rights().split('\n');
+                 isEmptyStr python:''.join(responsers).strip() == '';
+                 isGroup python:len(responsers) > 1;">
+  <div class="field creator">
+    <div class="name" tal:content="string:Reporter">
+      Reporter
+    </div><div class="value">
+      <a tal:define="reporter context/Creator"
+         tal:attributes="href string:${portal_url}/author/${reporter};
+                         title string:See all steps ${reporter} is responsible of;"
+         tal:content="reporter">
+        somebody
+      </a>
+    </div>
+  </div><div class="field responsers"  tal:condition="not: isEmptyStr">
+      <div class="name" tal:content="string:Responsible">
+        Responsible
+      </div><div class="value">
         <tal:repetator tal:repeat="responser responsers"
-           tal:condition="python:''.join(responsers) != ''">
+           tal:condition="not: isEmptyStr">
           <tal:definator tal:define="
             responser python: responser.strip();
             isLast python: repeat['responser'].index == len(responsers) -1;
             comma python: isGroup and not isLast;
             dot python: isGroup and isLast;">
-            <span tal:condition="not:responser" tal:content="string:nobody">
-              nobody
-            </span>
             <a tal:content="responser" tal:attributes="
               href string:${portal_url}/author/${responser};
               title string:See all steps ${responser} is responsible of;">
@@ -26,22 +35,16 @@
             </span>
           </tal:definator>
         </tal:repetator>
+        <span tal:condition="isEmptyStr" tal:replace="string:nobody">
+          nobody
+        </span>
       </div>
-    </div><div class="field creator">
-      <div class="name">
-        Reporter:
-      </div><div class="value">
-        <a tal:define="reporter context/Creator"
-           tal:attributes="href string:${portal_url}/author/${reporter};
-                           title string:See all steps ${reporter} is responsible of;"
-           tal:content="reporter">
-          somebody
-        </a>
+    </div>
+    <div class="field watchers" tal:condition="context/Contributors">
+      <div class="name" tal:content="string:Watchers">
+        Watchers
       </div>
-    </div><div class="field creator" tal:condition="context/Contributors">
-      <div class="name" tal:content="string:Watchers:">
-        Watchers:
-      </div><div class="value"
+      <div class="value"
            tal:define="watchers context/Contributors">
         <a tal:repeat="watcher watchers"
            tal:attributes="href string:${portal_url}/author/${watcher};

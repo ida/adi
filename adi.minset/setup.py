@@ -7,10 +7,9 @@ long_description = ''
 if os.path.exists("README.rst"):
     long_description = open("README.rst").read()
 
-setup(name='adi.samplesite',
+setup(name='adi.minset',
       version=version,
-      description="This addon does nothing but and shouldn't do anything else \
-than install other addons for having a sample set of addons.",
+      description="",
       long_description=long_description,
       classifiers=[
         "Framework :: Plone",
@@ -27,11 +26,6 @@ than install other addons for having a sample set of addons.",
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'adi.noviewlets',
-          'adi.reset',
-          'adi.minset',
-          'adi.info',
-          'adi.tickets',
       ],
       entry_points="""
       # -*- Entry points: -*-

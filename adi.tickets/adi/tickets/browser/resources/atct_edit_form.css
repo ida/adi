@@ -12,6 +12,18 @@
     border-radius: 27%;
 }
 .template-atct_edit.portaltype-ticket
+#archetypes-fieldname-contributors:before {
+    content: 'Watchers';
+}
+.template-atct_edit.portaltype-ticket
+#archetypes-fieldname-rights:before {
+    content: 'Responsers';
+}
+/* NON-DISPLAYS: 
+.template-atct_edit.portaltype-ticket
+#fieldset-creators,
+*/
+.template-atct_edit.portaltype-ticket
 #edit-bar,
 .template-atct_edit.portaltype-ticket
 .fieldUploadFile,
@@ -19,6 +31,8 @@
 #text_text_format,
 .template-atct_edit.portaltype-ticket
 .label,
+.template-atct_edit.portaltype-ticket
+legend,
 .template-atct_edit.portaltype-ticket
 label,
 .template-atct_edit.portaltype-ticket
@@ -31,8 +45,6 @@ label,
 #fieldset-categorization,
 .template-atct_edit.portaltype-ticket
 #fieldset-dates,
-.template-atct_edit.portaltype-ticket
-#fieldset-creators,
 .template-atct_edit.portaltype-ticket
 #fieldset-categorization,
 .template-atct_edit.portaltype-ticket

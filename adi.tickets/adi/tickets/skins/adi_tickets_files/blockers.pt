@@ -9,10 +9,10 @@
         ">
     <span tal:condition="python:len(results) > 0"
           tal:define="
-          theObject python: results[0].getObject();
+          obj python: results[0].getObject();
           ">
       Is blocked by
-      <a tal:attributes="href theObject/absolute_url"
+      <a tal:attributes="href obj/absolute_url"
          tal:content="string:#${depends_on}">
         #27
       </a>
@@ -25,10 +25,10 @@
         ">
     <span tal:condition="python:len(results)>0"
           tal:define="
-          theObject python: results[0].getObject();
+          obj python: results[0].getObject();
           ">
         Is blocking
-      <a tal:attributes="href theObject/absolute_url"
+      <a tal:attributes="href obj/absolute_url"
          tal:content="string:#${dependency_of}">
         #42
       </a>

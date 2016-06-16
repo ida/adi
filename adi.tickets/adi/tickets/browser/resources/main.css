@@ -1,3 +1,17 @@
+/* DEV:
+#visual-portal-wrapper,
+body {
+background: #000;
+color: #a1a1a1;
+height: 100%;
+overflow: hidden;
+}
+*/
+.portaltype-ticket
+#content-core:first-of-type {
+    border: 1px solid silver;
+border-color: #333;
+}
 .portaltype-ticket
 .title {
     font-size: 127%;
@@ -5,27 +19,30 @@
 .portaltype-ticket
 .head {
     font-size: 77%;
+    color: #555;
+}
+.portaltype-ticket
+.children {
+    margin-left: 1em;
+}
+.portaltype-ticket
+.children:first-child {
 }
 .portaltype-ticket
 .child {
-    margin-left: 0.85em;
-    border-top: 1px solid silver;
-}
-.portaltype-ticket
-#content-core > .children {
     border-bottom: 1px solid silver;
+border-color: #333;
 }
-/* DISPLAY */
+/* BUTTONS */
 .portaltype-ticket
 .buttons div {
     display: inline;
 }
-/*
 .portaltype-ticket
-.number,
-.portaltype-ticket
-.title,
-*/
+.buttons a {
+    min-width: 1.61em;
+}
+/* FIELDS */
 .portaltype-ticket
 .fieldset,
 .portaltype-ticket
@@ -36,21 +53,20 @@
 .field .value {
     display: inline-block;
 }
-/* NAV-PORTLET */
 .portaltype-ticket
-.portletNavigationTree img {
-    display: none;
+.field {
+    margin-right: 1em;
 }
 .portaltype-ticket
-.portletNavigationTree li a:before {
-    content: '-';
+.field:not(:first-of-type):last-of-type {
+    margin-right: 0;
 }
-/* DEV 
-*{outline: 1px solid}
-.creator .value::first-letter,
-.responsible .value::first-letter,
-.state .value::first-letter {
-    text-transform: uppercase;
+.portaltype-ticket
+.field .name {
+    margin-right: 0.5em;
 }
-*/
-/* EO DEV */
+.portaltype-ticket
+.field .name:after {
+    content: ':';
+}
+

@@ -4,65 +4,44 @@
      title="Step up"
      tal:content="string:&uarr;">
     Step up
-  </a>
-  <tal:kondinator tal:condition="python:len(context.getFolderContents()) > 0">
-    <tal:definator tal:define="first_child_id python:context.getFolderContents()[0].id">
-      <a class="add sub"
+  </a><tal:kondinator tal:condition="python:len(context.getFolderContents()) > 0"><tal:definator tal:define="first_child_id python:context.getFolderContents()[0].id"><a class="add sub"
          tal:attributes="href python:context.absolute_url() + '/' + first_child_id"
          title="Step down"
          tal:content="string:&darr;">
         Step down
-      </a>
-    </tal:definator>
-  </tal:kondinator>
-  <a tal:condition="python:len(context.getFolderContents()) < 1"
+      </a></tal:definator></tal:kondinator><a tal:condition="python:len(context.getFolderContents()) < 1"
      title="No child-steps available"
      disabled
      tal:content="string:&darr;">
      No child-steps available
-  </a>
-  <tal:siblings tal:define="
-    siblings python: context.aq_parent.getFolderContents();">
-    <tal:sibling tal:repeat="sibling siblings">
-      <tal:this tal:condition="python: sibling['id']==context.getId()"
+  </a><tal:siblings tal:define="
+    siblings python: context.aq_parent.getFolderContents();"><tal:sibling
+                   tal:repeat="sibling siblings"><tal:this tal:condition="python: sibling['id']==context.getId()"
                    tal:define="index repeat/sibling/index;
                                hasPrev python: index > 0;
-                               hasNext python: index < len(siblings) - 1;">
-        <tal:prev tal:condition="hasPrev" tal:define="
+                               hasNext python: index < len(siblings) - 1;"><tal:prev tal:condition="hasPrev" tal:define="
           href
           python:
           '../' + context.aq_parent.getFolderContents()[index - 1]['id']
-          ">
-          <a tal:attributes="href href; title string:Step back;"
+          "><a tal:attributes="href href; title string:Step back;"
              tal:content="string:&larr;">
             Step back
-          </a>
-        </tal:prev>
-        <a tal:condition="not: hasPrev"
+          </a></tal:prev><a tal:condition="not: hasPrev"
            title="No previous steps available"
            disabled
            tal:content="string:&larr;">
             No previous steps available
-        </a>
-
-        <tal:next tal:condition="hasNext">
-        <a tal:define="
+        </a><tal:next tal:condition="hasNext"><a tal:define="
           href
           python:
           '../' + context.aq_parent.getFolderContents()[index + 1]['id']"
            tal:attributes="href href;
-                           title string:Go to next step;"
+                           title string:Step forward;"
            tal:content="string:&rarr;">
-            Go to next step
-          </a>
-        </tal:next>
-        <a tal:condition="not: hasNext"
+            Step forward
+          </a></tal:next><a tal:condition="not: hasNext"
            title="No next step available"
            disabled
            tal:content="string:&rarr;">
             No next step available
-        </a>
-      </tal:this>
-    </tal:sibling>
-  </tal:siblings>
-</div>
+        </a></tal:this></tal:sibling></tal:siblings></div>

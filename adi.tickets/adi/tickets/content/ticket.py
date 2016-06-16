@@ -30,7 +30,6 @@ TicketSchema = folder.ATFolderSchema.copy() + atapi.Schema((
     atapi.StringField('dependsOn',
         widget=atapi.StringWidget(
             visible={'edit':'hidden', 'view':'visible'},
-
         ),
     ),
  

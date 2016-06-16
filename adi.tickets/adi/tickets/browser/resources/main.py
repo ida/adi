@@ -1,10 +1,9 @@
-from plone.app.layout.viewlets.content import ContentHistoryView
-from Acquisition import aq_inner
 from Acquisition import aq_parent
 from DateTime import DateTime
-from OFS.interfaces import IOrderedContainer
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.app.layout.viewlets.content import ContentHistoryView
+from zope.site.hooks import getSite as portal
 
 
 class View(BrowserView):
@@ -95,9 +94,30 @@ class View(BrowserView):
         active_time = self.msToHumanReadable(active_time)
         return active_time
 
-    def getPosNr(self):
-        """Return position of item in parent as a number."""
-        parent = self.context.aq_parent
-        sibling_ids = parent.objectIds()
-        return '27'
+    def getPos(self, obj=None):
+        """Return position of item in parent."""
+        # If no obj is passed, default to context:
+        if not obj: obj = self.context
+        obj = obj.aq_inner
+        nr = 0
+        parent = obj.aq_parent
+        siblings = parent.getFolderContents()
+        for sibling in  siblings:
+            if sibling['id'] == obj.id:
+                return nr
+        return None
+
+    def getPosNrs(self, obj=None):
+        """
+        Return position of item in parent as a
+        dot-separated path of numbers, like: '2.7.7'
+        """
+        # If no obj is passed, default to context:
+        if not obj: obj = self.context
+        nrs = str( self.getPosNr(obj) )
+        parent = obj.aq_parent
+        while parent is not portal():
+            nrs = str( self.getPosNr(parent) ) + '.' + nrs
+            parent = parent.aq_parent
+        return nrs
 

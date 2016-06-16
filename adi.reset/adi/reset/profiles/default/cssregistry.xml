@@ -1,55 +1,41 @@
 <?xml version="1.0"?>
 <object name="portal_css">
  <stylesheet
-
     enabled="False" id="reset.css" 
      />
  <stylesheet title="" applyPrefix="False" authenticated="True"
-
     enabled="False" id="member.css"
-    insert-after="reset.css"  
     />
  <stylesheet
-
     enabled="False" id="base.css"
-    insert-after="member.css"  
     />
  <stylesheet
-
     enabled="False" id="public.css"
-    insert-after="base.css"   />
- <stylesheet
-
-    enabled="True" id="columns.css"
-    insert-after="public.css"  
     />
  <stylesheet
-
+    enabled="False" id="columns.css"
+    />
+ <stylesheet
     enabled="False" id="authoring.css"
     insert-after="columns.css"  
     />
  <stylesheet
-
     enabled="False" id="portlets.css"
     insert-after="authoring.css"  
     />
  <stylesheet
-
     enabled="False" id="controlpanel.css"
     insert-after="portlets.css"  
     />
  <stylesheet
-
     enabled="False" id="deprecated.css"
     insert-after="controlpanel.css"  
     />
  <stylesheet
-
     enabled="False" id="navtree.css"
     insert-after="deprecated.css"  
     />
  <stylesheet
-
     enabled="False" id="invisibles.css"
     insert-after="navtree.css"  
     />
@@ -60,20 +46,16 @@
  <stylesheet
     enabled="False"
     id="++resource++plone.app.discussion.stylesheets/discussion.css"
-    insert-after="forms.css"  
     />
  <stylesheet
     enabled="False"
     id="++resource++tinymce.stylesheets/tinymce.css"
-    insert-after="++resource++plone.app.discussion.stylesheets/discussion.css"
 />
  <stylesheet
     enabled="False" id="print.css"
-    insert-after="++resource++tinymce.stylesheets/tinymce.css" media="print"
      />
  <stylesheet
     enabled="False" id="mobile.css"
-    insert-after="print.css"
     />
  <stylesheet
     enabled="False"
@@ -86,17 +68,15 @@
  <stylesheet
     enabled="False"
     id="++resource++plone.app.jquerytools.dateinput.css"
-    insert-after="++resource++plone.app.jquerytools.overlays.css"
 />
  <stylesheet
     enabled="False"
     id="IEFixes.css"
-    insert-after="++resource++plone.app.jquerytools.dateinput.css"
 />
  <stylesheet id="ploneCustom.css" enabled="False" />
 <stylesheet title=""
     id="++resource++adi.reset.resources/reset.css"
     media="screen" rel="stylesheet" rendering="import"
     cacheable="True" compression="safe" cookable="True"
-    enabled="1"/>
+    enabled="1" insert-before="*"/>
 </object>

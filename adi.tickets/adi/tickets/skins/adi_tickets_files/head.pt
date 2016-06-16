@@ -2,32 +2,15 @@
   <div class="fields">
     <div class="fieldset main">
       <div class="field state">
-        <div class="name">
-          State:
+        <div class="name" tal:content="string:State">
+          State
         </div><div tal:attributes="class string:value ${state_class};"
              tal:content="state">
           active
         </div>
       </div>
-    </div><tal:comment tal:replace="nothing">EO .fieldset.main
-    </tal:comment><div metal:use-macro="context/persons/macros/persons">
-    </div><div class="fieldset times">
-      <div class="field age">
-        <div class="name">
-          Age:
-        </div>
-        <div class="value" tal:content="age">
-          00:27:13
-        </div>
-      </div>
-      <div class="field activity">
-        <div class="name">
-          Activity:
-        </div>
-        <div class="value" tal:content="activity">
-          00:27:13
-        </div>
-      </div>
+    </div><div metal:use-macro="context/persons/macros/persons">
+    </div><div metal:use-macro="context/times/macros/times">
     </div>
-  </div><tal:comment tal:replace="nothing">EO .fields</tal:comment>
-</div><tal:comment tal:replace="nothing">EO .head</tal:comment>
+  </div>
+</div>

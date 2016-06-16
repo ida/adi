@@ -1,41 +1,51 @@
+var max_loads = 10
+function loadStep(link, loader) {
+  if(max_loads > 0) {
+    // Asumes children aren't loaded, yet.
+    loader.load(
+      $(link).attr('href') + ' #content-core',
+      // After loading ...
+      function() {
+        loaderParent = $(loader.find('.children')[0])
+        // ... re-apply listeners to new loaded links:
+        listenLoadLinks(loaderParent)
+        // DEV: AUTOLOAD:
+        //setTimeout(function(){loaderParent.find('.loadLink').click()},1027)
+        loaderParent.find('.loadLink').click()
+      }
+    );
+  max_loads -= 1
+  }
+}
 function listenLoadLinks(loaderParent) {
-  // Expects a div containing a link with class 'loadLink',
+  // Looks for children of loaderParent with class 'loadLink',
   // and a next sibling with class 'linkLoader',
-  // loads the destination's #content-element into 'linkLoader'.
+  // loads the destination's '#content'-element into 'linkLoader'.
   $(loaderParent).find('.loadLink').each(function() {
     $(this).click(function(eve) {
+
       eve.preventDefault()
+
       var link = $(eve.target)
       var loader = $($(link).find('~ .linkLoader')[0])
-      var href = link.attr('href')
+
       // #content-core is loaded already ...
       if(loader.find('> #content-core').length > 0) {
-        // ... hide, respectively show it:
-        if( 
-            $(loader.find('> #content-core')[0]).css('display') != 'none') {
-              $(loader.find('> #content-core')[0]).css({'display':'none'});
-              // Switch arrow-symbol of load-link from up to down:
-              link.html('&darr;')
+        // ... it's visible, hide it:
+        if($(loader.find('> #content-core')[0]).css('display') != 'none') {
+          $(loader.find('> #content-core')[0]).css({'display':'none'});
+          link.html('&darr;') // arrow-down
         }
+        // ... it's invisible, show it:
         else {
           $(loader.find('> #content-core')[0]).css({'display':'block'});
-              // Switch arrow-symbol of load-link from down to up:
-              link.html('&uarr;')
+              link.html('&uarr;') // arrow-up
         }
       }
       // #content-core is not loaded, yet ...
       else {
         // ... load it:
-        loader.load(
-          href + ' #content-core',
-          // After loading, re-apply listeners to new loaded links:
-          function() {
-            loaderParent = $(loader.find('.children')[0])
-            listenLoadLinks(loaderParent)
-            // And swith arrow-down to up:
-            link.html('&uarr;')
-          }
-        );
+        loadStep(link, loader)
       }
     });
   });
@@ -65,18 +75,5 @@ function manipulateAuthorTemplate() {
       var loaderParent = $('#content .children')[0]
       listenLoadLinks(loaderParent)
   }
-/* DEV:
-$($('.portletHeader')[0]).click(function(eve) {
-  eve.preventDefault()
-  $('#portal-column-one').remove()
-});
-*/
-// autoload:
-function autoLoad() {
-$('.loadLink').each(function() {
-  if($(this).find('#content-core').length < 1) {
-    $(this).click()
-  }
-});
-}
+  $('.loadLink').click() // ini
 }); })(jQuery);
