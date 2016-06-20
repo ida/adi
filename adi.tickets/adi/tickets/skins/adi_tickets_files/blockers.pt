@@ -3,36 +3,49 @@
                depends_on context/getDependsOn;"
    tal:condition="python: dependency_of + depends_on != ''">
 
-  <span tal:condition="depends_on"
+  <tal:surpressors tal:condition="depends_on"
+    tal:define="surpressors python: depends_on.split(',')">
+    Is blocking
+    <tal:surpressor tal:repeat="surpressor surpressors">
+      <tal:getResults tal:condition="python: surpressor != ''"
         tal:define="
-        results python:context.portal_catalog.searchResults(id = depends_on);
-        ">
-    <span tal:condition="python:len(results) > 0"
-          tal:define="
-          obj python: results[0].getObject();
-          ">
-      Is blocked by
-      <a tal:attributes="href obj/absolute_url"
-         tal:content="string:#${depends_on}">
-        #27
-      </a>
-      !!!
-    </span>
-  </span>
-  <span tal:condition="dependency_of"
+        results python:context.portal_catalog.searchResults(id = surpressor);
+        hasResults python: len(results) > 0;">
+        <tal:hasResults tal:condition="hasResults">
+          <tal:getObjUrl tal:define="obj python: results[0].getObject();
+                                     obj_url obj/absolute_url;">
+            <a tal:attributes="href obj_url"
+               tal:content="string:#${surpressor}">
+              #27
+            </a>
+          </tal:getObjUrl>
+        </tal:hasResults>
+      </tal:getResults>
+    </tal:surpressor>
+    !!!
+  </tal:surpressors>
+
+  <tal:surpressing
+    tal:condition="dependency_of"
+    tal:define="surpressing python: dependency_of.split(',')"
+    >
+    Is blocked by
+    <tal:surpressed tal:repeat="surpressed surpressing">
+      <tal:getResults tal:condition="python: surpressed != ''"
         tal:define="
-        results python:context.portal_catalog.searchResults(id = dependency_of);
-        ">
-    <span tal:condition="python:len(results)>0"
-          tal:define="
-          obj python: results[0].getObject();
-          ">
-        Is blocking
-      <a tal:attributes="href obj/absolute_url"
-         tal:content="string:#${dependency_of}">
-        #42
-      </a>
-      !!!
-    </span>
-  </span>
+        results python:context.portal_catalog.searchResults(id = surpressed);
+        hasResults python: len(results) > 0;">
+        <tal:hasResults tal:condition="hasResults">
+          <tal:getObjUrl tal:define="obj python: results[0].getObject();
+                                     obj_url obj/absolute_url;">
+            <a tal:attributes="href obj_url"
+               tal:content="string:#${surpressed}">
+              #42
+            </a>
+          </tal:getObjUrl>
+        </tal:hasResults>
+      </tal:getResults>
+    </tal:surpressed>
+    !!!
+  </tal:surpressing>
 </div><tal:comment tal:replace="nothing">EO .blockers</tal:comment>

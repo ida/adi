@@ -7,25 +7,24 @@ long_description = ''
 if os.path.exists("README.rst"):
     long_description = open("README.rst").read()
 
-setup(name='adi.minset',
+setup(name='adi.stepbystep',
       version=version,
-      description="Register minimum JS and CSS for a Plone-site",
+      description="A Plone-addon to collaborative define and work on timed processes, step by step.",
       long_description=long_description,
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
         ],
       keywords='',
-      author='',
-      author_email='',
-      url='https://github.com/collective/',
+      author='Ida Ebkes',
+      author_email='contact@ida-ebkes.eu',
+      url='https://github.com/ida/adi.stepbystep/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['adi'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'adi.reset',
           'setuptools',
       ],
       entry_points="""

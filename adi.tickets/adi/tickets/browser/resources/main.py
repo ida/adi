@@ -2,8 +2,11 @@ from Acquisition import aq_parent
 from DateTime import DateTime
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.layout.viewlets.content import ContentHistoryView
+from plone.app.layout.viewlets.content import WorkflowHistoryViewlet
 from zope.site.hooks import getSite as portal
+
+from zope.publisher.browser import TestRequest
+from AccessControl.SecurityManagement import newSecurityManager
 
 
 class View(BrowserView):
@@ -12,6 +15,13 @@ class View(BrowserView):
 
     def __call__(self):
         return self.render()
+
+    def isRootTicket(self):
+        """
+        If a ticket lives in the siteroot, it is considered to be a root-ticket.
+        """
+        if self.context.aq_parent is portal(): return True
+        else: return False
 
     def render(self):
         return self.index()
@@ -58,29 +68,28 @@ class View(BrowserView):
         created = DateTime().millis() - created
         return created
 
-    def computeActiveTime(self):
+    def computeActiveTime(self, obj=None):
         """
         Look for wf-action 'Start' in wf-history
         and accumulate time until next wf-state-transition,
         return sum in milliseconds.
         """
+        context = self.context
+        if obj: context = obj.getObject()
         active_time = 0
         delta = 0
         end_time = 0
         start_time = 0
-        context = self.context
         request = context.REQUEST
-        history = ContentHistoryView(context, request).workflowHistory()
-        for i, story in enumerate(history):
-            end_time = 0
-            start_time = 0
-            if story['state_title'] == 'Active':
-                start_time = story['time'].millis()
-                if i == 0:
+        history = self.getWorkflowHistory(context)
+        for i, entry in enumerate(history):
+            if entry['state_title'] == 'Active':
+                start_time = entry['time'].millis()
+                if i is len(history)-1:
                     end_time = DateTime().millis()
                 else:
-                    end_time = history[i-1]['time'].millis()
-                delta = end_time - start_time
+                    end_time = history[i+1]['time'].millis()
+                    delta = start_time - end_time
                 active_time += delta
         return active_time
 
@@ -94,7 +103,20 @@ class View(BrowserView):
         active_time = self.msToHumanReadable(active_time)
         return active_time
 
-    def getPos(self, obj=None):
+    def getActiveTimes(self, obj=None):
+        """Get accumulated active time of all childrens, exclude self."""
+        print obj
+        if not obj: obj = self.context
+        print obj
+        active_time = 0
+        children = obj.getFolderContents()
+        for child in children:
+            active_time += self.computeActiveTime(child)
+            print 'act: ' + str(active_time)
+        active_time = self.msToHumanReadable(active_time)
+        return active_time
+
+    def getPosNr(self, obj=None):
         """Return position of item in parent."""
         # If no obj is passed, default to context:
         if not obj: obj = self.context
@@ -103,6 +125,7 @@ class View(BrowserView):
         parent = obj.aq_parent
         siblings = parent.getFolderContents()
         for sibling in  siblings:
+            nr += 1
             if sibling['id'] == obj.id:
                 return nr
         return None
@@ -120,4 +143,59 @@ class View(BrowserView):
             nrs = str( self.getPosNr(parent) ) + '.' + nrs
             parent = parent.aq_parent
         return nrs
+
+    def getTicketPosNr(self):
+        """
+        Like self.getPosNr(), but except tickets living in the siteroot,
+        return None in that case.
+        """
+        nr = None
+        if self.context.aq_parent is not portal():
+            nr = self.getPosNr()
+        return nr
+
+    def getTicketPosNrs(self):
+        """
+        Like self.getPosNrs(), but except tickets living in the siteroot,
+        meaning e.g. '3.2.7' becomes '2.7'.
+        """
+        nrs = self.getPosNrs().split('.')
+        nrs = '.'.join(nrs[1:])
+        return nrs
+
+    def getFullHistory(self, obj=None):
+        """
+        http://docs.plone.org/develop/plone/content/history.html
+        """
+        history = None
+        context = self.context
+        if obj: context = obj
+        admin = portal().acl_users.getUser('webmaster') # TODO: user must exist in plonsite!!!
+        request = TestRequest()
+        chv = ContentHistoryViewlet(context, request, None, None)
+        # These attributes are needed, the fullHistory() call fails otherwise
+        chv.navigation_root_url = chv.site_url = 'http://www.example.org'
+        history = chv.fullHistory()
+        return history
+
+    def getWorkflowHistory(self, obj=None):
+        """
+        In contrary to 'context.workflowHistory()', of
+        plone.app.viewlets, we can get the wf-history not
+        only of the given context, but of any passed obj,
+        by passing a fake REQUEST-var and overcome
+        permission-restrictions, see:
+        http://docs.plone.org/develop/plone/content/history.html
+        """
+        workflow_history = None
+        context = self.context
+        if obj: context = obj
+        admin = portal().acl_users.getUser('webmaster') # TODO: user must exist in plonsite!!!
+        request = TestRequest()
+        newSecurityManager(request, admin)
+        chv = WorkflowHistoryViewlet(context, request, None, None)
+        # These attributes are needed, the fullHistory() call fails otherwise
+        chv.navigation_root_url = chv.site_url = 'http://www.example.org'
+        workflow_history = chv.workflowHistory()
+        return workflow_history
 

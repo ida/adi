@@ -1,3 +1,7 @@
+#edit-bar {
+height: 1.61em;
+overflow: hidden;
+}
 /* DEV:
 #visual-portal-wrapper,
 body {
@@ -5,68 +9,83 @@ background: #000;
 color: #a1a1a1;
 height: 100%;
 overflow: hidden;
+font-family: 'Times New Roman';
+font-size: 127%;
 }
 */
+/* LINKS */
 .portaltype-ticket
-#content-core:first-of-type {
-    border: 1px solid silver;
-border-color: #333;
-}
+.head,
 .portaltype-ticket
-.title {
-    font-size: 127%;
-}
-.portaltype-ticket
-.head {
-    font-size: 77%;
-    color: #555;
-}
-.portaltype-ticket
-.children {
-    margin-left: 1em;
-}
-.portaltype-ticket
-.children:first-child {
-}
-.portaltype-ticket
-.child {
-    border-bottom: 1px solid silver;
-border-color: #333;
-}
-/* BUTTONS */
-.portaltype-ticket
-.buttons div {
-    display: inline;
+a[disabled] {
+    opacity: 0.27;
 }
 .portaltype-ticket
 .buttons a {
     min-width: 1.61em;
 }
-/* FIELDS */
+/* FONT */
+.portaltype-ticket
+#content {
+    font-family: 'Times New Roman';
+    color: #333;
+}
+.portaltype-ticket
+.header {
+    font-size: 127%;
+}
+.portaltype-ticket
+.children,
+.portaltype-ticket
+.head {
+    font-size: 77%;
+}
+.portaltype-ticket
+.numbersPath,
+.portaltype-ticket
+.head {
+    opacity: .5;
+}
+/* BORDERS */
+.portaltype-ticket
+.child,
+.portaltype-ticket
+#content {
+    border: 1px dotted lightblue;
+}
+/* SEPARATING SPACES AND CONTENT */
+.portaltype-ticket
+.fieldpair,
+.portaltype-ticket
+.buttons a {
+    margin-right: .5em;
+}
+.portaltype-ticket
+.fieldpair .name {
+    margin-right: .27em;
+}
+.portaltype-ticket
+.fieldpair .name:after {
+    content: ':';
+}
+.portaltype-ticket
+.children {
+    margin-left: 1em;
+}
+/* DISPLAY
+*/
+.portaltype-ticket
+.buttons div {
+    display: inline;
+}
 .portaltype-ticket
 .fieldset,
 .portaltype-ticket
-.field,
+.fieldpair,
 .portaltype-ticket
-.field .name,
+.fieldpair .name,
 .portaltype-ticket
-.field .value {
+.fieldpair .value {
     display: inline-block;
-}
-.portaltype-ticket
-.field {
-    margin-right: 1em;
-}
-.portaltype-ticket
-.field:not(:first-of-type):last-of-type {
-    margin-right: 0;
-}
-.portaltype-ticket
-.field .name {
-    margin-right: 0.5em;
-}
-.portaltype-ticket
-.field .name:after {
-    content: ':';
 }
 

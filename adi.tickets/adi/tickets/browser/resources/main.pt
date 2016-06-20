@@ -19,11 +19,14 @@
                  trans_url string:${href}/content_status_modify?workflow_action=;
                  trans_comment_url string:${href}/content_status_comment?workflow_action=;
                  person context/getResponsiblePerson;
-                 nr nocall:view/getPosNr;
-                 nrs nocall:view/getPosNrs;
+                 nr nocall:view/getTicketPosNr;
+                 nrs nocall:view/getTicketPosNrs;
                  age nocall:view/getAge;
                  activity nocall:view/getActiveTime;
+                 total_activity nocall:view/getActiveTimes;
                  hasActivity python: view.computeActiveTime != 0;
+                 children context/getFolderContents;
+                 hasChildren python:len(children) > 0;"
                  ">
 <div class="buttons">
   <div metal:use-macro="context/navigator/macros/navigator">
@@ -31,75 +34,90 @@
   </div><div metal:use-macro="context/transitions/macros/transitions">
   </div>
 </div>
-<a tal:attributes="class string:title ${state_class}; href href; title string:This step's link, click to reload page.">
-  <span tal:replace="nrs">
+<div metal:use-macro="context/blockers/macros/blockers">
+  If blocked or blocking, show info.
+</div>
+<div class="header">
+  <span class="numbersPath" tal:content="nrs">
     2.7.7
   </span>
-  <span tal:replace="title">
+  <span tal:content="title" tal:attributes="class state_class">
     Title
   </span>
-</a>
+</div><tal:comment tal:replace="nothing">EO .header</tal:comment>
+<div metal:use-macro="context/head/macros/head">
+  Metadata: State, persons and times.
+</div>
+<div class="text" tal:content="structure text">
+  Text
+</div>
 <tal:comment tal:replace="nothing">Note: Everything in #content-core will be
 loaded, when clicking on arrow-down of a substep.</tal:comment>
 <div id="content-core">
-  <div metal:use-macro="context/blockers/macros/blockers" />
-  <div metal:use-macro="context/head/macros/head">
-    Metadata: State, persons and times.
-  </div>
-  <div class="text" tal:content="structure text">
-    Text
-  </div>
   <div class="children"
-       tal:define="children context/getFolderContents;
-       hasChildren python:len(children) > 0;"
        tal:condition="hasChildren">
     <div class="child"
          tal:repeat="child children">
       <tal:definator tal:define="child_obj python:child.getObject();
       title child_obj/title;
-      text child_obj/getText;
+      text child_obj/getRawText;
       href child_obj/absolute_url;
       hasText python: text != '';
       hasChildren python:len(child_obj.getFolderContents()) > 0;
       showArrow python: hasChildren or hasText;
+      showArrow python: hasChildren;
       ">
+        <a class="loadLink" tal:attributes="href href"
+           tal:condition="showArrow"
+           tal:content="string:&darr;">
+          Arrow down
+        </a>
+        <a class="loadLinkDummy" tal:condition="not:showArrow" disabled tal:content="string:&darr;">
+          Arrow down dummy
+        </a>
         <a tal:define="
-                       state child_obj/plone_context_state/workflow_state;
-                       class string:state-${state};
-                       alt string:Go to substep;
-                       nr python:view.getPosNr(child_obj);
-                      "
-           tal:attributes="href href; alt alt; class class">
-          <span tal:replace="nrs">
-            2.7.7.
-          </span><span tal:replace="string:.${nr}" />
+           state child_obj/plone_context_state/workflow_state;
+           class string:state-${state};
+           alt string:Go to substep;
+           nr python:view.getPosNr(child_obj);
+           "
+           tal:attributes="
+           href href; alt alt; class class;
+           tabindex string:-1;
+           ">
+          <tal:comment tal:replace="nothing">
+          We take parent's nrs and add child nr to it, because we can't call getTicketPosNrs on a child
+          as it transforms to a view-obj inherited of the python-script's view-class.
+          </tal:comment>
+          <span class="numbersPath">
+            <span tal:replace="nrs">
+              2.7.7.
+            </span><span tal:condition="nrs" tal:replace="string:.">
+            </span><span tal:replace="nr">
+            </span>
+          </span>
           <span tal:replace="title">
             Child title
           </span>
         </a>
-        <a class="loadLink" tal:attributes="href href"
-            tal:condition="showArrow"
-           tal:content="string:&darr;">
-          Arrow down
-        </a>
-<!--
-        <span class="text cropped"
-             tal:condition="python:len(text) > 207"
-             tal:define="text_cropped python:text[:207] + ' ...'"
-             tal:content="text_cropped">
-          Text cropped...
-        </span>
-        <span class="text"
-             tal:condition="python:len(text) <= 207"
-             tal:content="structure text">
-          Text
-        </span>
--->
+        <tal:text-preview tal:define="max_chars python: 207">
+          <span class="text cropped"
+               tal:condition="python:len(text) > max_chars"
+               tal:define="text_cropped python:text[:max_chars] + ' ...'"
+               tal:content="text_cropped">
+            Text cropped...
+          </span>
+          <span class="text"
+               tal:condition="python:len(text) <= max_chars"
+               tal:content="structure text">
+            Text
+          </span>
+        </tal:text-preview>
         <div class="linkLoader">
         </div>
       </tal:definator>
-    </div>
-  </div>
+    </div><tal:comment tal:replace="nothing">EO .child</tal:comment>
+  </div><tal:comment tal:replace="nothing">EO .children</tal:comment>
 </div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
 </div><tal:comment tal:replace="nothing">EO #content</tal:comment>
 </metal:block>

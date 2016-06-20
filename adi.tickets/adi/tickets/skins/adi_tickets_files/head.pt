@@ -1,10 +1,10 @@
 <div class="head" metal:define-macro="head">
   <div class="fields">
     <div class="fieldset main">
-      <div class="field state">
+      <div class="fieldpair state">
         <div class="name" tal:content="string:State">
           State
-        </div><div tal:attributes="class string:value ${state_class};"
+        </div><div class="value"
              tal:content="state">
           active
         </div>

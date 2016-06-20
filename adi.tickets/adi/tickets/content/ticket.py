@@ -28,12 +28,14 @@ prio = ['low', 'medium', 'high', 'urgent' ]
 TicketSchema = folder.ATFolderSchema.copy() + atapi.Schema((
 
     atapi.StringField('dependsOn',
+        permission="cmf.ManagePortal",
         widget=atapi.StringWidget(
             visible={'edit':'hidden', 'view':'visible'},
         ),
     ),
  
     atapi.StringField('isDependencyOf',
+        permission="cmf.ManagePortal",
         widget = atapi.StringWidget(
             visible={'edit':'hidden', 'view':'visible'},
         ),
@@ -43,6 +45,7 @@ TicketSchema = folder.ATFolderSchema.copy() + atapi.Schema((
 		default_method = 'wireGetCurrentUser',
         vocabulary = "wireGetEditors",
         widget = atapi.SelectionWidget(
+            visible={'edit':'hidden', 'view':'visible'},
         ),
     ),
 
@@ -50,6 +53,7 @@ TicketSchema = folder.ATFolderSchema.copy() + atapi.Schema((
         vocabulary = prio,
 	    default = 'medium',
         widget = atapi.SelectionWidget(
+            visible={'edit':'hidden', 'view':'visible'},
         ),
     ),
 

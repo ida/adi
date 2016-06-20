@@ -2,7 +2,7 @@
      tal:define="responsers python:context.Rights().split('\n');
                  isEmptyStr python:''.join(responsers).strip() == '';
                  isGroup python:len(responsers) > 1;">
-  <div class="field creator">
+  <div class="fieldpair creator">
     <div class="name" tal:content="string:Reporter">
       Reporter
     </div><div class="value">
@@ -13,7 +13,7 @@
         somebody
       </a>
     </div>
-  </div><div class="field responsers"  tal:condition="not: isEmptyStr">
+  </div><div class="fieldpair responsers"  tal:condition="not: isEmptyStr">
       <div class="name" tal:content="string:Responsible">
         Responsible
       </div><div class="value">
@@ -39,12 +39,10 @@
           nobody
         </span>
       </div>
-    </div>
-    <div class="field watchers" tal:condition="context/Contributors">
+    </div><div class="fieldpair watchers" tal:condition="context/Contributors">
       <div class="name" tal:content="string:Watchers">
         Watchers
-      </div>
-      <div class="value"
+      </div><div class="value"
            tal:define="watchers context/Contributors">
         <a tal:repeat="watcher watchers"
            tal:attributes="href string:${portal_url}/author/${watcher};

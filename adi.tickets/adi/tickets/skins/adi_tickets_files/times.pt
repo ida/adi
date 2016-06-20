@@ -1,14 +1,20 @@
 <div class="fieldset times" metal:define-macro="times">
-  <div class="field age">
+  <div class="fieldpair age">
     <div class="name" tal:content="string:Age">
       Age
     </div><div class="value" tal:content="age">
       00:27:13
     </div>
-  </div><div class="field activity" tal:condition="python:hasActivity">
+  </div><div class="fieldpair activity" tal:condition="python:hasActivity">
     <div class="name" tal:content="string:Activity">
       Activity
     </div><div class="value" tal:content="activity">
+      00:27:13
+    </div>
+  </div><div class="fieldpair total_activity" tal:condition="python:hasChildren">
+    <div class="name" tal:content="string:Total activity">
+      Total activity
+    </div><div class="value" tal:content="total_activity">
       00:27:13
     </div>
   </div>

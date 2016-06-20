@@ -12,16 +12,50 @@
     border-radius: 27%;
 }
 .template-atct_edit.portaltype-ticket
+#fieldsetlegend-creators:before {
+    content: 'Persons';
+}
+.template-atct_edit.portaltype-ticket
 #archetypes-fieldname-contributors:before {
-    content: 'Watchers';
+    content: 'Responsible';
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-rights:before {
-    content: 'Responsers';
+    content: 'Watchers';
+}
+.template-atct_edit.portaltype-ticket
+#fieldsetlegend-default:before {
+    content: 'Text';
+}
+.template-atct_edit.portaltype-ticket
+#archetypes-fieldname-creators:before {
+    content: 'Reporter';
+}
+.template-atct_edit.portaltype-ticket
+#archetypes-fieldname-effectiveDate:before {
+    content: 'Due start-time';
+float:left
+}
+.template-atct_edit.portaltype-ticket
+#archetypes-fieldname-expirationDate:before {
+    content: 'Due end-time';
+}
+.template-atct_edit.portaltype-ticket
+#archetypes-fieldname-effectiveDate > span,
+.template-atct_edit.portaltype-ticket
+#archetypes-fieldname-expirationDate > span {
+}
+/* HIDE: */
+.template-atct_edit.portaltype-ticket
+#fieldsetlegend-default span, /* 'Default' */
+.template-atct_edit.portaltype-ticket
+#fieldsetlegend-creators span { /* 'Creators' */
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    display: inline-block;
 }
 /* NON-DISPLAYS: 
-.template-atct_edit.portaltype-ticket
-#fieldset-creators,
 */
 .template-atct_edit.portaltype-ticket
 #edit-bar,
@@ -38,23 +72,26 @@ label,
 .template-atct_edit.portaltype-ticket
 .documentFirstHeading,
 .template-atct_edit.portaltype-ticket
-#content div:nth-child(2),
-.template-atct_edit.portaltype-ticket
-#fieldsetlegend-default,
+#content > div:nth-child(2),
 .template-atct_edit.portaltype-ticket
 #fieldset-categorization,
 .template-atct_edit.portaltype-ticket
-#fieldset-dates,
+#fieldsetlegend-categorization,
 .template-atct_edit.portaltype-ticket
 #fieldset-categorization,
+.template-atct_edit.portaltype-ticket
+.suppressVisualEditor,
 .template-atct_edit.portaltype-ticket
 #fieldset-settings,
+.template-atct_edit.portaltype-ticket
+#fieldsetlegend-settings,
 .template-atct_edit.portaltype-ticket
 #cmfeditions_version_comment_block {
     display: none;
 }
 .template-atct_edit.portaltype-ticket
+#fieldset-dates ~ label,
+.template-atct_edit.portaltype-ticket
 input[name="responsiblePerson"] ~ label {
     display: inline-block;
-outline: 1px solid;
 }

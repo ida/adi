@@ -33,17 +33,19 @@ select {
     margin: 0;
     padding: 0;
     text-align: left;
-    text-decoration: none;
     vertical-align: top;
 }
 a {
-    color: blue;
+    text-decoration: none;
 }
 input[type="password"],
 input[type="submit"],
 input[type="text"],
 textarea {
-    outline: 1px solid;
+    border: 1px solid blue;
+}
+input:focus {
+    border-color: lightblue;
 }
 .hiddenStructure {
     height: 0;

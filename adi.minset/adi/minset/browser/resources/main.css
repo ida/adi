@@ -1,3 +1,13 @@
+a {
+    color: darkblue;
+}
+li {
+    display: inline-block;
+}
 #visual-portal-wrapper {
-    padding: 1.61em;
+    width: 90%;
+    margin: 1.61em auto 0;
+}
+.selected {
+    font-weight: bold;
 }

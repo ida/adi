@@ -4,29 +4,20 @@
                      class string:start;
                      title string:Start">
     Start
-<!--
   </a><a tal:content="string:&#9208;"
      tal:condition="python: state != 'waiting' and state != 'new' and state != 'closed'"
--->
-  </a><a tal:content="string:&#9208;"
      tal:attributes="href string:${trans_url}pause;
                      class string:pause;
                      title string:Pause">
     Pause
-<!--
   </a><a tal:content="string:&#11035;"
      tal:condition="python: state == 'active'"
--->
-  </a><a tal:content="string:&#11035;"
      tal:attributes="href string:${trans_url}close;
                      class string:close;
                      title string:Stop">
     Stop
-<!--
-  </a><a tal:content="string:&#8416;"
+  </a><a tal:content="string:B"
      tal:condition="python: state == 'active'"
--->
-  </a><a tal:content="string:&#8416;"
      tal:attributes="href string:${trans_comment_url}block;
                      class string:block;
                      title string:Block">
