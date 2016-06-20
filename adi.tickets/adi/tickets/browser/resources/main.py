@@ -85,11 +85,11 @@ class View(BrowserView):
         for i, entry in enumerate(history):
             if entry['state_title'] == 'Active':
                 start_time = entry['time'].millis()
-                if i is len(history)-1:
+                if i is 0:
                     end_time = DateTime().millis()
                 else:
-                    end_time = history[i+1]['time'].millis()
-                    delta = start_time - end_time
+                    end_time = history[i - 1]['time'].millis()
+                delta = end_time - start_time
                 active_time += delta
         return active_time
 
