@@ -26,7 +26,7 @@
                  total_activity nocall:view/getActiveTimes;
                  hasActivity python: view.computeActiveTime != 0;
                  children context/getFolderContents;
-                 hasChildren python:len(children) > 0;"
+                 hasChildren python:len(children) > 0;
                  ">
 <div class="buttons">
   <div metal:use-macro="context/navigator/macros/navigator">
@@ -64,7 +64,6 @@ loaded, when clicking on arrow-down of a substep.</tal:comment>
       href child_obj/absolute_url;
       hasText python: text != '';
       hasChildren python:len(child_obj.getFolderContents()) > 0;
-      showArrow python: hasChildren or hasText;
       showArrow python: hasChildren;
       ">
         <a class="loadLink" tal:attributes="href href"
