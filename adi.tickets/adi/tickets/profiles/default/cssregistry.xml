@@ -16,11 +16,6 @@
     cacheable="True" compression="safe" cookable="True"
     enabled="1" expression=""/>
 <stylesheet title=""
-    id="++resource++adi.tickets.resources/atct_edi_form.css"
-    media="screen" rel="stylesheet" rendering="import"
-    cacheable="True" compression="safe" cookable="True"
-    enabled="1" expression=""/>
-<stylesheet title=""
     id="++resource++adi.tickets.resources/atct_edit_form.css"
     media="screen" rel="stylesheet" rendering="import"
     cacheable="True" compression="safe" cookable="True"
