@@ -12,8 +12,8 @@
       00:27:13
     </div>
   </div><div class="fieldpair total_activity" tal:condition="python:hasChildren">
-    <div class="name" tal:content="string:Total activity">
-      Total activity
+    <div class="name" tal:content="string:Children's activity">
+      Children's activity
     </div><div class="value" tal:content="total_activity">
       00:27:13
     </div>
