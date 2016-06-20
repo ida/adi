@@ -105,14 +105,11 @@ class View(BrowserView):
 
     def getActiveTimes(self, obj=None):
         """Get accumulated active time of all childrens, exclude self."""
-        print obj
         if not obj: obj = self.context
-        print obj
         active_time = 0
         children = obj.getFolderContents()
         for child in children:
             active_time += self.computeActiveTime(child)
-            print 'act: ' + str(active_time)
         active_time = self.msToHumanReadable(active_time)
         return active_time
 
@@ -170,7 +167,9 @@ class View(BrowserView):
         history = None
         context = self.context
         if obj: context = obj
-        admin = portal().acl_users.getUser('webmaster') # TODO: user must exist in plonsite!!!
+        # TODO: user must exist in plonsite ! Zopeadmin can watch anyway.
+        #admin = portal().acl_users.getUser('siteadmin')
+        #newSecurityManager(request, admin)
         request = TestRequest()
         chv = ContentHistoryViewlet(context, request, None, None)
         # These attributes are needed, the fullHistory() call fails otherwise
@@ -190,9 +189,10 @@ class View(BrowserView):
         workflow_history = None
         context = self.context
         if obj: context = obj
-        admin = portal().acl_users.getUser('webmaster') # TODO: user must exist in plonsite!!!
         request = TestRequest()
-        newSecurityManager(request, admin)
+        # TODO: user must exist in plonsite ! Zopeadmin can watch anyway.
+        #admin = portal().acl_users.getUser('siteadmin')
+        #newSecurityManager(request, admin)
         chv = WorkflowHistoryViewlet(context, request, None, None)
         # These attributes are needed, the fullHistory() call fails otherwise
         chv.navigation_root_url = chv.site_url = 'http://www.example.org'
