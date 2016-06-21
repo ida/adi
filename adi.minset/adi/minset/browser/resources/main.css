@@ -1,12 +1,23 @@
+body{
+    background: #fff;    
+}
 a {
     color: darkblue;
 }
 li {
     display: inline-block;
 }
-#visual-portal-wrapper {
-    width: 90%;
-    margin: 1.61em auto 0;
+li a {
+    padding: 0 1em;
+}
+/* TODO: first- and last-child also apply on invisible eles, check if visible, also. */
+ol li:first-child a,
+ul li:first-child a {
+    padding-left: 0;
+}
+ol li:last-child a,
+ul li:last-child a {
+    padding-right: 0;
 }
 .selected {
     font-weight: bold;

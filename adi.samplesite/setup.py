@@ -27,6 +27,7 @@ than install other addons for having a sample set of addons.",
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'adi.enabletopics',
           'adi.noviewlets',
           'adi.reset',
           'adi.minset',

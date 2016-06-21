@@ -4,8 +4,9 @@
       <div class="fieldpair state">
         <div class="name" tal:content="string:State">
           State
-        </div><div class="value"
-             tal:content="state">
+        </div><div
+             tal:content="state"
+             tal:attributes="class string:value ${state_class}">
           active
         </div>
       </div>

@@ -17,6 +17,9 @@
   </tal:comment></a><a tal:attributes="href string:${url}/folder_contents"
      title="Change order and more"
      alt="Tetragram for centre"
-     tal:content="string:&#119558;">
+     tal:content="string:&equiv;">
     Folder contents
+    <!--
+     tal:content="string:&#119558;">
+     -->
   </a></div>

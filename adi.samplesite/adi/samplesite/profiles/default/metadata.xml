@@ -7,5 +7,6 @@
   <dependency>profile-adi.minset:default</dependency>
   <dependency>profile-adi.info:default</dependency>
   <dependency>profile-adi.tickets:default</dependency>
+  <dependency>profile-adi.enabletopics:default</dependency>
   </dependencies>
 </metadata>

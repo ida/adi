@@ -81,10 +81,16 @@ function main(max_autoload_depth=0) {
       var loaderParent = $('#content .children')[0]
       listenLoadLinks(loaderParent, max_autoload_depth)
   }
+  document.body.onkeypress = function(eve) {
+    if(eve.keyCode == 20) {
+      eve.preventDefault()
+      $(eve.target).click()
+    }
+  }
 }
 (function($) { $(document).ready(function() {
-  main()
-  //main(27)
-  //$('.loadLink').click() // ini autoload
-  //manipulateAuthorTemplate()
+  var max_autoload_depth = 0
+  main(max_autoload_depth)
+  //$('.loadLink').click() // 1st children autoload
+  manipulateAuthorTemplate()
 }); })(jQuery);

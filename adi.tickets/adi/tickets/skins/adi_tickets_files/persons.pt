@@ -2,13 +2,14 @@
      tal:define="responsers python:context.Rights().split('\n');
                  isEmptyStr python:''.join(responsers).strip() == '';
                  isGroup python:len(responsers) > 1;">
-  <div class="fieldpair creator">
+  <div class="fieldpair reporter">
     <div class="name" tal:content="string:Reporter">
       Reporter
     </div><div class="value">
       <a tal:define="reporter context/Creator"
          tal:attributes="href string:${portal_url}/author/${reporter};
-                         title string:See all steps ${reporter} is responsible of;"
+                         title string:See all steps ${reporter} is responsible of;
+                         tabindex string:-1"
          tal:content="reporter">
         somebody
       </a>
@@ -26,6 +27,7 @@
             dot python: isGroup and isLast;">
             <a tal:content="responser" tal:attributes="
               href string:${portal_url}/author/${responser};
+              tabindex string: -1;
               title string:See all steps ${responser} is responsible of;">
               somebody
             </a><span tal:condition="comma" tal:replace="string:,">
@@ -46,6 +48,7 @@
            tal:define="watchers context/Contributors">
         <a tal:repeat="watcher watchers"
            tal:attributes="href string:${portal_url}/author/${watcher};
+                           tabindex string: -1;
                            title string:See all steps ${watcher} is responsible of;">
           <span tal:replace="watcher">
             somebody

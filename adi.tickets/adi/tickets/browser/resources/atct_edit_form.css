@@ -14,31 +14,37 @@
 .template-atct_edit.portaltype-ticket
 #fieldsetlegend-creators:before {
     content: 'Persons';
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-contributors:before {
-    content: 'Responsible';
+    content: 'Responsibles';
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-rights:before {
     content: 'Watchers';
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #fieldsetlegend-default:before {
     content: 'Text';
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-creators:before {
     content: 'Reporter';
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-effectiveDate:before {
     content: 'Due start-time';
-float:left
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-expirationDate:before {
     content: 'Due end-time';
+    font-weight: bold;
 }
 .template-atct_edit.portaltype-ticket
 #archetypes-fieldname-effectiveDate > span,
