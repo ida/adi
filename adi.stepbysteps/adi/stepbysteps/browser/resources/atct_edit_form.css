@@ -14,7 +14,6 @@
 .template-atct_edit.portaltype-stepbystep
 #fieldsetlegend-creators:before {
     content: 'Persons';
-    font-weight: bold;
 }
 .template-atct_edit.portaltype-stepbystep
 #archetypes-fieldname-contributors:before {
