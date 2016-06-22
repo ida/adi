@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+<metal:content fill-slot="content">
+<div id="content">
+	<h1>My stepbysteps</h1>
+	<div class="documentDescription">
+	All stepbysteps, I am responsible of:
+	</div>
+</div>
+<div id="content-core">
+	<ul tal:define="my_stepbysteps nocall: view/my_stepbysteps;">
+		<li style="display:block" tal:repeat="stepbystep my_stepbysteps">
+			<a tal:attributes="href stepbystep/absolute_url">
+				<span tal:replace="stepbystep/Title" />
+			</a>
+		</li>
+	</ul>
+</div>
+</metal:content></body></html>

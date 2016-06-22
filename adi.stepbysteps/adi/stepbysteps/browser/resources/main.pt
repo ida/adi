@@ -1,0 +1,125 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="context/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+<metal:block fill-slot="top_slot"
+   tal:define="dummy python:request.set('disable_border',1)" />
+<metal:block fill-slot="main">
+<div id="content"
+     tal:define="std modules/Products.PythonScripts/standard;
+                 newline_to_br nocall:std/newline_to_br;
+                 href context/absolute_url;
+                 text context/getText;
+                 text python:newline_to_br(text);
+                 title context/title;
+                 state context/plone_context_state/workflow_state;
+                 state_class string:state-${state};
+                 trans_url string:${href}/content_status_modify?workflow_action=;
+                 trans_comment_url string:${href}/content_status_comment?workflow_action=;
+                 person context/getResponsiblePerson;
+                 nr nocall:view/getStepbystepPosNr;
+                 nrs nocall:view/getStepbystepPosNrs;
+                 age nocall:view/getAge;
+                 activity nocall:view/getActiveTime;
+                 is_root_stepbystep nocall:view/isRootStepbystep;
+                 total_activity nocall:view/getActiveTimes;
+                 hasActivity python: view.computeActiveTime != 0;
+                 children context/getFolderContents;
+                 hasChildren python:len(children) > 0;
+                 ">
+<div metal:use-macro="context/blockers/macros/blockers">
+  If blocked or blocking, show info.
+</div>
+<div class="header">
+  <span class="numbersPath" tal:condition="is_root_stepbystep" tal:content="string: 0">
+    0
+  </span>
+  <span class="numbersPath" tal:condition="not:is_root_stepbystep" tal:content="nrs">
+    4.2
+  </span>
+  <span class="title" tal:content="title" tal:attributes="class state_class">
+    Title
+  </span>
+</div><tal:comment tal:replace="nothing">EO .header</tal:comment>
+<div class="text" tal:content="structure text">
+  Text
+</div>
+<tal:comment tal:replace="nothing">Note: Everything in #content-core will be
+loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
+<div id="content-core">
+<div metal:use-macro="context/head/macros/head">
+  Metadata (state, persons, times)
+</div>
+  <div class="children"
+       tal:condition="hasChildren">
+    <div class="child"
+         tal:repeat="child children">
+      <tal:definator tal:define="child_obj python:child.getObject();
+      title child_obj/title;
+      text child_obj/getRawText;
+      href child_obj/absolute_url;
+      hasText python: text != '';
+      hasChildren python:len(child_obj.getFolderContents()) > 0;
+      showArrow python: True;
+      ">
+        <a class="loadLink" tal:attributes="href href"
+           tal:condition="showArrow"
+           tal:content="string:&darr;">
+          Arrow down
+        </a>
+        <a class="loadLink dummy" tal:condition="not:showArrow" disabled tal:content="string:&darr;">
+          Arrow down dummy
+        </a>
+        <tal:comment tal:replace="nothing">
+        We take parent's nrs and add child nr to it, because we can't call getStepbystepPosNrs on a child
+        as it transforms to a view-obj inherited of the python-script's view-class.
+        </tal:comment>
+        <tal:child-title tal:define="
+             state child_obj/plone_context_state/workflow_state;
+             class string:state-${state};
+             alt string:Go to substep;
+             nr python:view.getPosNr(child_obj);">
+          <span class="numbersPath">
+            <span tal:replace="nrs">
+              2.7.7
+            </span><span tal:condition="nrs" tal:replace="string:.">
+            </span><span tal:replace="nr">
+            </span>
+          </span>
+        <a tal:attributes="href href; alt alt; class class; tabindex string: -1;">
+          <span tal:replace="title">
+            Child title
+          </span>
+        </a>
+        </tal:child-title>
+        <tal:text-preview tal:define="max_chars python: 127">
+          <span class="text cropped"
+               tal:condition="python:len(text) > max_chars"
+               tal:define="text_cropped python:text[:max_chars] + '<span>...</span>'"
+               tal:content="structure text_cropped">
+            Child ext cropped...
+          </span>
+          <span class="text"
+               tal:condition="python:len(text) <= max_chars"
+               tal:content="structure text">
+            Child text
+          </span>
+        </tal:text-preview>
+        <div class="linkLoader">
+        </div>
+      </tal:definator>
+    </div><tal:comment tal:replace="nothing">EO .child</tal:comment>
+  </div><tal:comment tal:replace="nothing">EO .children</tal:comment>
+</div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
+<div class="buttons">
+<div metal:use-macro="context/navigator/macros/navigator">
+</div>
+  <div metal:use-macro="context/editables/macros/editables">
+  </div><div metal:use-macro="context/transitions/macros/transitions">
+  </div>
+</div>
+</div><tal:comment tal:replace="nothing">EO #content</tal:comment>
+</metal:block>
+</html>

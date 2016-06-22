@@ -1,0 +1,196 @@
+#edit-bar {
+height: 1.27em;
+overflow: hidden;
+}
+/* DEV:
+#visual-portal-wrapper,
+body {
+background: #272727;
+color: #a1a1a1;
+height: 100%;
+overflow: hidden;
+font-family: 'Times New Roman';
+font-size: 127%;
+}
+body.portaltype-stepbystep
+.head,
+body.portaltype-stepbystep
+.buttons,
+body.portaltype-stepbystep
+.children {
+background: #272727;
+color: #a1a1a1;
+}
+#content {
+position: relative;
+top: 0;
+left:0;
+}
+#content > #content-core {
+max-height: 127px;
+max-height: 227px;
+overflow: hidden;
+}
+*/
+
+/*
+ *
+ *  OPACITY
+ *
+ */
+.portaltype-stepbystep
+a[disabled] {
+    opacity: 0.27;
+}
+.portaltype-stepbystep
+.head {
+    opacity: .75;
+}
+/*
+ *
+ *  BACKGROUND
+ *
+ */
+.portaltype-stepbystep
+.head,
+.portaltype-stepbystep
+.children {
+background: #f1f1f1;
+}
+.portaltype-stepbystep
+.buttons {
+background: #b3b3b3;
+}
+
+/* FONT */
+.portaltype-stepbystep {
+    font-family: 'Arial';
+    font-size: 27px;
+    color: #444;
+    line-height: 1.61em;
+}
+.portaltype-stepbystep
+.header {
+    font-size: 150%;
+}
+.portaltype-stepbystep
+.head {
+    font-size: 65%;
+    line-height: 1.5em;
+}
+.portaltype-stepbystep
+.children, 
+.portaltype-stepbystep
+.children .text {
+    font-size: .85em;
+}
+/*
+.portaltype-stepbystep
+.children .children .children .children {
+    font-size: 1em;
+    margin-left: 0;
+}
+*/
+/* LINKS */
+.portaltype-stepbystep
+a:focus {
+    color: lightgreen;
+}
+.portaltype-stepbystep
+a[disabled].dummy {
+    color: transparent;
+}
+.portaltype-stepbystep
+.buttons a {
+    display: inline-block;
+    min-width: 1.61em;
+    text-align: center;
+}
+/* BORDERS */
+.portaltype-stepbystep
+#content {
+    border: 1px dotted lightblue;
+}
+.portaltype-stepbystep
+.children {
+    border-bottom: 1px dotted lightblue;
+}
+.portaltype-stepbystep
+.child {
+    border-top: 1px dotted lightblue;
+}
+.portaltype-stepbystep
+.buttons .editables a  {
+    border: 1px solid;
+}
+/*
+ *
+ *  SEPARATING-SPACES AND -CONTENT
+ *
+ */
+.portaltype-stepbystep
+.head {
+    padding: 0.25em 0.5em;
+}
+.portaltype-stepbystep
+.text {
+    padding: 1em 0.5em;
+}
+.portaltype-stepbystep
+.fieldpair {
+    padding-right: 0.5em;
+}
+.portaltype-stepbystep
+.children .children {
+    margin-left: 1em;
+}
+.portaltype-stepbystep
+.buttons div:last-child a:last-child {
+    margin-right: 0;
+}
+.portaltype-stepbystep
+.fieldpair .name {
+    margin-right: .27em;
+}
+.portaltype-stepbystep
+.fieldpair .name:after {
+    content: ':';
+}
+/* 
+ *
+ * POSITIONING
+ *
+ */
+.portaltype-stepbystep
+#content {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 3em;
+}
+.portaltype-stepbystep
+.buttons {
+    line-height: 3em;
+    height: 3em;
+    position: fixed;
+    bottom: 0;
+    right:0;
+    width: 100%;
+    text-align: right;
+}
+/* DISPLAY */
+.portaltype-stepbystep
+.buttons div {
+    display: inline;
+}
+.portaltype-stepbystep
+.fieldset,
+.portaltype-stepbystep
+.fieldpair,
+.portaltype-stepbystep
+.fieldpair .name,
+.portaltype-stepbystep
+.fieldpair .value {
+    display: inline-block;
+}
+

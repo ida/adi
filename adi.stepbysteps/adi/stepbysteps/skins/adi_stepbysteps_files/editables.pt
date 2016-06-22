@@ -1,0 +1,25 @@
+<div class="edit" metal:define-macro="editables"
+     tal:define="url context/absolute_url"><a class="add"
+     href="../createObject?type_name=Stepbystep"
+     title="Add next-step"
+     tal:content="string:+">
+    Add next-step 
+  </a><a class="add sub"
+     tal:attributes="href string:${url}/createObject?type_name=Stepbystep"
+     title="Add sub-step"
+     tal:content="string:++">
+    Add sub-step
+  </a><a class="edit"
+     tal:attributes="href string:${url}/edit"
+     title="Edit this step">&#9998;<tal:comment tal:replace="nothing">
+     <img src="edit.png" />
+     Edit this step
+  </tal:comment></a><a tal:attributes="href string:${url}/folder_contents"
+     title="Change order and more"
+     alt="Tetragram for centre"
+     tal:content="string:&equiv;">
+    Folder contents
+    <!--
+     tal:content="string:&#119558;">
+     -->
+  </a></div>
