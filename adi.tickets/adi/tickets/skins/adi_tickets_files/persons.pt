@@ -14,54 +14,56 @@
         somebody
       </a>
     </div>
-  </div><div class="fieldpair responsers"  tal:condition="not: isEmptyStr">
-      <div class="name" tal:content="string:Responsible">
-        Responsible
-      </div><div class="value">
-        <tal:repetator tal:repeat="responser responsers"
-           tal:condition="not: isEmptyStr">
-          <tal:definator tal:define="
-            responser python: responser.strip();
-            isLast python: repeat['responser'].index == len(responsers) -1;
-            comma python: isGroup and not isLast;
-            dot python: isGroup and isLast;">
-            <a tal:content="responser" tal:attributes="
-              href string:${portal_url}/author/${responser};
-              tabindex string: -1;
-              title string:See all steps ${responser} is responsible of;">
-              somebody
-            </a><span tal:condition="comma" tal:replace="string:,">
-              ,
-            </span><span tal:condition="dot" tal:replace="string:.">
-              .
-            </span>
-          </tal:definator>
-        </tal:repetator>
-        <span tal:condition="isEmptyStr" tal:replace="string:nobody">
-          nobody
+  </div>
+  <div class="fieldpair responsers" tal:condition="context/Contributors">
+    <div class="name" tal:content="string:Responsible">
+      Responsible
+    </div><div class="value"
+         tal:define="watchers context/Contributors">
+      <a tal:repeat="watcher watchers"
+         tal:attributes="href string:${portal_url}/author/${watcher};
+                         tabindex string: -1;
+                         title string:See all steps ${watcher} is responsible of;">
+        <span tal:replace="watcher">
+          somebody
+        </span><span tal:condition="
+          python: len(watchers) > 1 and repeat['watcher'].index != len(watchers) -1"
+          tal:replace="string:,">
+          ,
+        </span><span tal:condition="
+          python: len(watchers) > 1 and repeat['watcher'].index == len(watchers) -1"
+          tal:replace="string:.">
+          .
         </span>
-      </div>
-    </div><div class="fieldpair watchers" tal:condition="context/Contributors">
-      <div class="name" tal:content="string:Watchers">
-        Watchers
-      </div><div class="value"
-           tal:define="watchers context/Contributors">
-        <a tal:repeat="watcher watchers"
-           tal:attributes="href string:${portal_url}/author/${watcher};
-                           tabindex string: -1;
-                           title string:See all steps ${watcher} is responsible of;">
-          <span tal:replace="watcher">
+      </a>
+    </div>
+  </div>
+  <div class="fieldpair watchers" tal:condition="not: isEmptyStr">
+    <div class="name" tal:content="string:Watchers">
+      Watchers
+    </div><div class="value">
+      <tal:repetator tal:repeat="responser responsers"
+         tal:condition="not: isEmptyStr">
+        <tal:definator tal:define="
+          responser python: responser.strip();
+          isLast python: repeat['responser'].index == len(responsers) -1;
+          comma python: isGroup and not isLast;
+          dot python: isGroup and isLast;">
+          <a tal:content="responser" tal:attributes="
+            href string:${portal_url}/author/${responser};
+            tabindex string: -1;
+            title string:See all steps ${responser} is responsible of;">
             somebody
-          </span><span tal:condition="
-            python: len(watchers) > 1 and repeat['watcher'].index != len(watchers) -1"
-            tal:replace="string:,">
+          </a><span tal:condition="comma" tal:replace="string:,">
             ,
-          </span><span tal:condition="
-            python: len(watchers) > 1 and repeat['watcher'].index == len(watchers) -1"
-            tal:replace="string:.">
+          </span><span tal:condition="dot" tal:replace="string:.">
             .
           </span>
-        </a>
-      </div>
+        </tal:definator>
+      </tal:repetator>
+      <span tal:condition="isEmptyStr" tal:replace="string:nobody">
+        nobody
+      </span>
     </div>
+  </div>
 </div>

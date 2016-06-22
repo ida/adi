@@ -91,6 +91,6 @@ function main(max_autoload_depth=0) {
 (function($) { $(document).ready(function() {
   var max_autoload_depth = 0
   main(max_autoload_depth)
-  //$('.loadLink').click() // 1st children autoload
+  $('.loadLink').click() // 1st children autoload
   manipulateAuthorTemplate()
 }); })(jQuery);

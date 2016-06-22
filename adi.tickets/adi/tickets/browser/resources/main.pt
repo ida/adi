@@ -25,39 +25,42 @@
                  activity nocall:view/getActiveTime;
                  is_root_ticket nocall:view/isRootTicket;
                  total_activity nocall:view/getActiveTimes;
+                 zotal_activity nocall:view/iniActiveTimez;
                  hasActivity python: view.computeActiveTime != 0;
                  children context/getFolderContents;
                  hasChildren python:len(children) > 0;
                  ">
+                 <span tal:content="zotal_activity" />
 <!--
-<div metal:use-macro="context/navigator/macros/navigator">
-</div>
--->
 <a tal:condition="not: is_root_ticket"
    class="goUp" title="Go up" href="./.."
    tal:content="string:&uarr;">
   Go up
 </a>
+-->
 <div metal:use-macro="context/blockers/macros/blockers">
   If blocked or blocking, show info.
 </div>
 <div class="header">
+  <span class="numbersPath" tal:condition="is_root_ticket" tal:content="string: 0">
+    0
+  </span>
   <span class="numbersPath" tal:condition="not:is_root_ticket" tal:content="nrs">
-    2.7.7
+    4.2
   </span>
   <span class="title" tal:content="title" tal:attributes="class state_class">
     Title
   </span>
 </div><tal:comment tal:replace="nothing">EO .header</tal:comment>
-<div metal:use-macro="context/head/macros/head">
-  Metadata: State, persons and times.
+<div class="text" tal:content="structure text">
+  Text
 </div>
 <tal:comment tal:replace="nothing">Note: Everything in #content-core will be
 loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
 <div id="content-core">
-  <div class="text" tal:content="structure text">
-    Text
-  </div>
+<div metal:use-macro="context/head/macros/head">
+  Metadata (state, persons, times)
+</div>
   <div class="children"
        tal:condition="hasChildren">
     <div class="child"
@@ -68,18 +71,16 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
       href child_obj/absolute_url;
       hasText python: text != '';
       hasChildren python:len(child_obj.getFolderContents()) > 0;
-      showArrow python: hasChildren;
+      showArrow python: True;
       ">
         <a class="loadLink" tal:attributes="href href"
+           tal:condition="showArrow"
            tal:content="string:&darr;">
           Arrow down
         </a>
-        <!--
-           tal:condition="showArrow"
         <a class="loadLink dummy" tal:condition="not:showArrow" disabled tal:content="string:&darr;">
           Arrow down dummy
         </a>
-        -->
         <tal:comment tal:replace="nothing">
         We take parent's nrs and add child nr to it, because we can't call getTicketPosNrs on a child
         as it transforms to a view-obj inherited of the python-script's view-class.
@@ -91,7 +92,7 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
              nr python:view.getPosNr(child_obj);">
           <span class="numbersPath">
             <span tal:replace="nrs">
-              2.7.7.
+              2.7.7
             </span><span tal:condition="nrs" tal:replace="string:.">
             </span><span tal:replace="nr">
             </span>
@@ -103,19 +104,17 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
         </a>
         </tal:child-title>
         <tal:text-preview tal:define="max_chars python: 127">
-<!--
           <span class="text cropped"
                tal:condition="python:len(text) > max_chars"
                tal:define="text_cropped python:text[:max_chars] + '<span>...</span>'"
                tal:content="structure text_cropped">
-            Text cropped...
+            Child ext cropped...
           </span>
           <span class="text"
                tal:condition="python:len(text) <= max_chars"
                tal:content="structure text">
-            Text
+            Child text
           </span>
--->
         </tal:text-preview>
         <div class="linkLoader">
         </div>
@@ -124,6 +123,8 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
   </div><tal:comment tal:replace="nothing">EO .children</tal:comment>
 </div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
 <div class="buttons">
+<div metal:use-macro="context/navigator/macros/navigator">
+</div>
   <div metal:use-macro="context/editables/macros/editables">
   </div><div metal:use-macro="context/transitions/macros/transitions">
   </div>

@@ -5,13 +5,13 @@
     </div><div class="value" tal:content="age">
       00:27:13
     </div>
-  </div><div class="fieldpair activity" tal:condition="python:hasActivity">
+  </div><div class="fieldpair activity" tal:condition="hasActivity">
     <div class="name" tal:content="string:Activity">
       Activity
     </div><div class="value" tal:content="activity">
       00:27:13
     </div>
-  </div><div class="fieldpair total_activity" tal:condition="python:hasChildren">
+  </div><div class="fieldpair total_activity" tal:condition="hasChildren">
     <div class="name" tal:content="string:Children's activity">
       Children's activity
     </div><div class="value" tal:content="total_activity">

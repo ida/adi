@@ -5,14 +5,22 @@ overflow: hidden;
 /* DEV:
 #visual-portal-wrapper,
 body {
-background: #000;
+background: #272727;
 color: #a1a1a1;
 height: 100%;
 overflow: hidden;
 font-family: 'Times New Roman';
 font-size: 127%;
 }
-
+body.portaltype-ticket
+.head,
+body.portaltype-ticket
+.buttons,
+body.portaltype-ticket
+.children {
+background: #272727;
+color: #a1a1a1;
+}
 #content {
 position: relative;
 top: 0;
@@ -45,6 +53,7 @@ a[disabled] {
  */
 .portaltype-ticket
 .head,
+.portaltype-ticket
 .children {
 background: #f1f1f1;
 }
@@ -75,19 +84,17 @@ background: #b3b3b3;
 .children .text {
     font-size: .85em;
 }
+/*
 .portaltype-ticket
 .children .children .children .children {
     font-size: 1em;
     margin-left: 0;
 }
+*/
 /* LINKS */
 .portaltype-ticket
 a:focus {
     color: lightgreen;
-}
-.portaltype-ticket
-.loadLink a:focus {
-    outline: none;
 }
 .portaltype-ticket
 a[disabled].dummy {
@@ -108,8 +115,6 @@ a[disabled].dummy {
 .children {
     border-bottom: 1px dotted lightblue;
 }
-.portaltype-ticket
-.loadLink, 
 .portaltype-ticket
 .child {
     border-top: 1px dotted lightblue;
@@ -157,27 +162,21 @@ a[disabled].dummy {
  *
  */
 .portaltype-ticket
-.child,
-.portaltype-ticket
 #content {
     position: relative;
     top: 0;
     left: 0;
-margin-bottom: 3em;
-}
-.portaltype-ticket
-#content-core {
-    clear: both;
+    margin-bottom: 3em;
 }
 .portaltype-ticket
 .buttons {
+    line-height: 3em;
+    height: 3em;
     position: fixed;
     bottom: 0;
     right:0;
     width: 100%;
     text-align: right;
-line-height: 3em;
-height: 3em;
 }
 /* DISPLAY */
 .portaltype-ticket

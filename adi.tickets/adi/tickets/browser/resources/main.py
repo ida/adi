@@ -68,14 +68,14 @@ class View(BrowserView):
         created = DateTime().millis() - created
         return created
 
-    def computeActiveTime(self, obj=None):
+    def computeActiveTime(self, brain_obj=None):
         """
         Look for wf-action 'Start' in wf-history
         and accumulate time until next wf-state-transition,
         return sum in milliseconds.
         """
         context = self.context
-        if obj: context = obj.getObject()
+        if brain_obj: context = brain_obj.getObject()
         active_time = 0
         delta = 0
         end_time = 0
@@ -103,15 +103,24 @@ class View(BrowserView):
         active_time = self.msToHumanReadable(active_time)
         return active_time
 
-    def getActiveTimes(self, obj=None):
-        """Get accumulated active time of all childrens, exclude self."""
-        if not obj: obj = self.context
-        active_time = 0
-        children = obj.getFolderContents()
-        for child in children:
-            active_time += self.computeActiveTime(child)
-        active_time = self.msToHumanReadable(active_time)
-        return active_time
+    def getActiveTimes(self):
+        """
+        Get accumulated active time of all
+        (grand-)childrens, include self.
+        """
+
+        active_times = 0
+
+        context = self.context
+        path = '/'.join(context.getPhysicalPath())
+        item_brains = context.portal_catalog(path={"query": path})
+
+        for item in item_brains:
+            active_times += self.computeActiveTime(item)
+        active_times = self.msToHumanReadable(active_times) 
+
+        return active_times
+
 
     def getPosNr(self, obj=None):
         """Return position of item in parent."""
