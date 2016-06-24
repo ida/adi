@@ -28,9 +28,6 @@
                  children context/getFolderContents;
                  hasChildren python:len(children) > 0;
                  ">
-<div metal:use-macro="context/navigator/macros/navigator">
-  Left-, up-, right- and down-arrows.
-</div>
 <div metal:use-macro="context/blockers/macros/blockers">
   If blocked or blocking, show info.
 </div>
@@ -120,6 +117,9 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
     </div><tal:comment tal:replace="nothing">EO .child</tal:comment>
   </div><tal:comment tal:replace="nothing">EO .children</tal:comment>
   <div class="buttons">
+<div metal:use-macro="context/navigator/macros/navigator">
+  Left-, up-, right- and down-arrows.
+</div>
     <div metal:use-macro="context/editables/macros/editables">
     </div><div metal:use-macro="context/transitions/macros/transitions">
     </div>

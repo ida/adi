@@ -128,12 +128,18 @@ a[disabled].dummy {
     bottom: 0;
     right:0;
     width: 100%;
-    text-align: right;
 }
 /* DISPLAY */
 .buttons div {
     display: inline;
 }
+/*
+.buttons > div {
+    display: inline-block;
+    width: 45%;
+outline: 1px solid;
+}
+*/
 .fieldset,
 .fieldpair,
 .fieldpair .name,
