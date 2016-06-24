@@ -16,35 +16,26 @@ def createContent(context):
     for prod in prods:
         if (prod['id'] == 'adi.stepbysteps') and (prod['status'] != 'uninstalled'):
 
-            stepbystep = _createObjectByType('Stepbystep', portal, '2', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
+            stepbystep = _createObjectByType('Stepbystep', portal, '2', title='NKOTB',
+            text='The new bear-band "Nasty Koalas Of Timeless Bliss" has released a debut album with highly sophisticated lyrics, exceptional harmonic roller-coaster-loops and that little something, words cannot describe.\nSo please enjoy, fresh as fish, the single-release: "Step by step (ooh baby)"', #noqa
+            description="This is an example description of a step. The description-field is not offered to the user, neither in the form, nor in the views, but we fill it, to see, were it might pop up, and if we want to include it maybe, some day, again.") #noqa
             stepbystep.reindexObject()
 
-            child = _createObjectByType('Stepbystep', stepbystep, '3', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
+            child = _createObjectByType('Stepbystep', stepbystep, '3',
+            title='Step One!', text="We can have lots of fun")
             child.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '4', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '5', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '6', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-
-            child = _createObjectByType('Stepbystep', stepbystep, '7', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
+            grandchild = _createObjectByType('Stepbystep', child, '4',
+            title='Step Two!', text="There's so much we can do")
+            grandchild.reindexObject()
+            grandchild = _createObjectByType('Stepbystep', child, '5',
+            title='Step Three!', text="It's just you and me")
+            grandchild.reindexObject()
+            child = _createObjectByType('Stepbystep', stepbystep, '6',
+            title='Step Four!', text="I can give you more")
             child.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '8', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '9', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '10', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-
-            child = _createObjectByType('Stepbystep', stepbystep, '11', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
+            child = _createObjectByType('Stepbystep', stepbystep, '7',
+            title='Step Five!', text="Don't you know that the time has arrived")
             child.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '12', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '13', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
-            childchild = _createObjectByType('Stepbystep', child, '14', title='Ticktack', text="Ein bisschen Text muss sein.", description="Drum tippen wir tagein und tagaus")
-            childchild.reindexObject()
 
 
 def setupVarious(context):

@@ -6,8 +6,7 @@
       i18n:domain="plone">
 <metal:block fill-slot="top_slot"
    tal:define="dummy python:request.set('disable_border',1)" />
-<metal:block fill-slot="main">
-<div id="content"
+<metal:block fill-slot="main"
      tal:define="std modules/Products.PythonScripts/standard;
                  newline_to_br nocall:std/newline_to_br;
                  href context/absolute_url;
@@ -29,9 +28,15 @@
                  children context/getFolderContents;
                  hasChildren python:len(children) > 0;
                  ">
+<div metal:use-macro="context/navigator/macros/navigator">
+  Left-, up-, right- and down-arrows.
+</div>
 <div metal:use-macro="context/blockers/macros/blockers">
   If blocked or blocking, show info.
 </div>
+<tal:comment tal:replace="nothing">Note: We keep the .header out of
+#content-core, it is *not* supposed to be loaded on children, their
+headers are already there in the childrens-list.</tal:comment>
 <div class="header">
   <span class="numbersPath" tal:condition="is_root_stepbystep" tal:content="string: 0">
     0
@@ -39,18 +44,20 @@
   <span class="numbersPath" tal:condition="not:is_root_stepbystep" tal:content="nrs">
     4.2
   </span>
-  <span class="title" tal:content="title" tal:attributes="class state_class">
+  <a class="title" tal:content="title"
+    tal:attributes="class state_class; id title;
+    href href; title string:Click to reload this step">
     Title
-  </span>
+  </a>
 </div><tal:comment tal:replace="nothing">EO .header</tal:comment>
-<div class="text" tal:content="structure text">
-  Text
-</div>
 <tal:comment tal:replace="nothing">Note: Everything in #content-core will be
 loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
 <div id="content-core">
 <div metal:use-macro="context/head/macros/head">
   Metadata (state, persons, times)
+</div>
+<div class="text" tal:content="structure text">
+  Text
 </div>
   <div class="children"
        tal:condition="hasChildren">
@@ -99,7 +106,7 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
                tal:condition="python:len(text) > max_chars"
                tal:define="text_cropped python:text[:max_chars] + '<span>...</span>'"
                tal:content="structure text_cropped">
-            Child ext cropped...
+            Child text cropped ...
           </span>
           <span class="text"
                tal:condition="python:len(text) <= max_chars"
@@ -112,14 +119,11 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
       </tal:definator>
     </div><tal:comment tal:replace="nothing">EO .child</tal:comment>
   </div><tal:comment tal:replace="nothing">EO .children</tal:comment>
+  <div class="buttons">
+    <div metal:use-macro="context/editables/macros/editables">
+    </div><div metal:use-macro="context/transitions/macros/transitions">
+    </div>
+  </div><tal:comment tal:replace="nothing">EO .buttons</tal:comment>
 </div><tal:comment tal:replace="nothing">EO #content-core</tal:comment>
-<div class="buttons">
-<div metal:use-macro="context/navigator/macros/navigator">
-</div>
-  <div metal:use-macro="context/editables/macros/editables">
-  </div><div metal:use-macro="context/transitions/macros/transitions">
-  </div>
-</div>
-</div><tal:comment tal:replace="nothing">EO #content</tal:comment>
 </metal:block>
 </html>

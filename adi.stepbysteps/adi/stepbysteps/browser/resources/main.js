@@ -5,9 +5,16 @@ function loadStep(link, loader, max_autoload_depth) {
       // After loading ...
       function() {
         link.html('&uarr;') // arrow-up
-        //  ... disable author-link in children, for quicker tabbing:
+        //  ... transform author-link in children to 
+        //  plain text, for quicker tabbing:
         $('.children .creator').each(function() {
-        $(this).html($(this).text()) 
+          $(this).html($(this).text()) 
+        });
+        //  ... remove edit-buttons-links in children 
+        //  of the tabflow, for quicker tabbing:
+        $('.children .buttons a').each(function() {
+          $(this).css('border','1px solid red')
+          $(this).attr('tabindex', '-1')
         });
         // ... re-apply listeners to new loaded links:
         loaderParent = $(loader.find('.children')[0])
@@ -89,8 +96,8 @@ function main(max_autoload_depth=0) {
   }
 }
 (function($) { $(document).ready(function() {
+  manipulateAuthorTemplate() // experiemental prototyping
   var max_autoload_depth = 0
   main(max_autoload_depth)
-  $('.loadLink').click() // 1st children autoload
-  manipulateAuthorTemplate()
+//  $('.loadLink').click() // (auto-)load 1st children
 }); })(jQuery);

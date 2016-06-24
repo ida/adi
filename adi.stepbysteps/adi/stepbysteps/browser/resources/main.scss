@@ -11,7 +11,7 @@ $bg_tertiary: #b3b3b3;
 $col_primary: #444;
 $col_secondary: #a1a1a1;
 $font_family_primary: Arial, sans;
-$font_size_primary: 14px*3;
+$font_size_regular: 14px*1.27;
 
 body.portaltype-stepbystep {
     height: 100%;
@@ -20,7 +20,7 @@ body.portaltype-stepbystep {
     background: $bg_primary;
     color: $col_primary;
     font-family: $font_family_primary;
-    font-size: $font_size_primary;
+    font-size: $font_size_regular;
     .header {
         font-size: 150%;
     }
@@ -56,38 +56,31 @@ body.portaltype-stepbystep {
  *  OPACITY
  *
  */
-.portaltype-stepbystep
+body.portaltype-stepbystep {
 a[disabled] {
     opacity: 0.27;
 }
-.portaltype-stepbystep
 .head {
     opacity: .75;
 }
 
 /* LINKS */
-.portaltype-stepbystep
 a:focus {
     color: lightgreen;
 }
-.portaltype-stepbystep
 a[disabled].dummy {
     color: transparent;
 }
 /* BORDERS */
-.portaltype-stepbystep
 #content {
     border: 1px dotted lightblue;
 }
-.portaltype-stepbystep
 .children {
     border-bottom: 1px dotted lightblue;
 }
-.portaltype-stepbystep
 .child {
     border-top: 1px dotted lightblue;
 }
-.portaltype-stepbystep
 .buttons .editables a  {
     border: 1px solid;
 }
@@ -96,31 +89,24 @@ a[disabled].dummy {
  *  SEPARATING-SPACES AND -CONTENT
  *
  */
-.portaltype-stepbystep
 .head {
     padding: 0.25em 0.5em;
 }
-.portaltype-stepbystep
 .text {
     padding: 1em 0.5em;
 }
-.portaltype-stepbystep
 .fieldpair {
     padding-right: 0.5em;
 }
-.portaltype-stepbystep
 .children .children {
     margin-left: 1em;
 }
-.portaltype-stepbystep
 .buttons div:last-child a:last-child {
     margin-right: 0;
 }
-.portaltype-stepbystep
 .fieldpair .name {
     margin-right: .27em;
 }
-.portaltype-stepbystep
 .fieldpair .name:after {
     content: ':';
 }
@@ -129,14 +115,12 @@ a[disabled].dummy {
  * POSITIONING
  *
  */
-.portaltype-stepbystep
 #content {
     position: relative;
     top: 0;
     left: 0;
     margin-bottom: 3em;
 }
-.portaltype-stepbystep
 .buttons {
     line-height: 3em;
     height: 3em;
@@ -147,18 +131,14 @@ a[disabled].dummy {
     text-align: right;
 }
 /* DISPLAY */
-.portaltype-stepbystep
 .buttons div {
     display: inline;
 }
-.portaltype-stepbystep
 .fieldset,
-.portaltype-stepbystep
 .fieldpair,
-.portaltype-stepbystep
 .fieldpair .name,
-.portaltype-stepbystep
 .fieldpair .value {
     display: inline-block;
 }
 
+} /* EO body.portaltype-stepbystep */

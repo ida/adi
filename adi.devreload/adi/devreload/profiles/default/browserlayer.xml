@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+    <layers>
+        <layer name="adi.devreload.layer"
+                   interface="adi.devreload.interfaces.IAdiDevreload" />
+    </layers>
