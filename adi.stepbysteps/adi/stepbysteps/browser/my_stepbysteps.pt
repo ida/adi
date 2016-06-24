@@ -14,7 +14,7 @@
 	</div>
 </div>
 <div id="content-core">
-	<ul tal:define="my_stepbysteps nocall: context/@@stepbysteps_view_helper/my_stepbysteps;">
+	<ul tal:define="my_stepbysteps nocall: context/@@adi_stepbysteps_helper_view/my_stepbysteps;">
 		<li style="display:block" tal:repeat="stepbystep my_stepbysteps">
 			<a tal:attributes="href stepbystep/absolute_url">
 				<span tal:replace="stepbystep/Title" />

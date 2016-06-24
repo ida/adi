@@ -1,7 +1,9 @@
+/*
 #edit-bar {
 height: 1.27em;
 overflow: hidden;
 }
+*/
 $bg_primary: #272727;
 $col_primary: #a1a1a1;
 
@@ -47,7 +49,6 @@ body.portaltype-stepbystep {
         }
         .children .children .children {
             font-size: 1em;
-            margin-left: 0;
         }
     }
 }
@@ -98,12 +99,6 @@ a[disabled].dummy {
 .fieldpair {
     padding-right: 0.5em;
 }
-.children .children {
-    margin-left: 1em;
-}
-.buttons div:last-child a:last-child {
-    margin-right: 0;
-}
 .fieldpair .name {
     margin-right: .27em;
 }
@@ -128,12 +123,12 @@ a[disabled].dummy {
     bottom: 0;
     right:0;
     width: 100%;
-    text-align: right;
 }
 /* DISPLAY */
 .buttons div {
     display: inline;
 }
+*/
 .fieldset,
 .fieldpair,
 .fieldpair .name,

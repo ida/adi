@@ -1,3 +1,8 @@
+function clickArrowUpScrollItemHeadToTop(eve) {
+  var link = $(eve.target)
+  var href = eve.target.getAttribute('href')
+  window.location = href
+}
 function loadStep(link, loader, max_autoload_depth) {
     // Assumes children aren't loaded, yet.
     loader.load(
@@ -19,7 +24,7 @@ function loadStep(link, loader, max_autoload_depth) {
         // ... re-apply listeners to new loaded links:
         loaderParent = $(loader.find('.children')[0])
         max_autoload_depth = listenLoadLinks(loaderParent, max_autoload_depth)
-        // DEV: AUTOLOAD:
+        // Load next children if max_autoload_depth is not exceeded:
         if(max_autoload_depth > 0) {
           //setTimeout(function(){
             loaderParent.find('.loadLink').click()
@@ -53,6 +58,7 @@ function listenLoadLinks(loaderParent, max_autoload_depth) {
         else {
           $(loader.find('> #content-core')[0]).css({'display':'block'});
               link.html('&uarr;') // arrow-up
+              clickArrowUpScrollItemHeadToTop(eve)
         }
       }
       // #content-core is not loaded, yet ...
@@ -64,7 +70,31 @@ function listenLoadLinks(loaderParent, max_autoload_depth) {
   });
   return max_autoload_depth
 }
-function manipulateAuthorTemplate() {
+function manipulateTopicTabularView() { 
+  var context_condition = $('.portaltype-stepbystep')
+  if(context_condition.length > 0) { // TODO: pass current date
+    var query = '/@@search?advanced_search=False&sort_on=&SearchableText='
+              + '&portal_type%3Alist=Stepbystep&expires.query%3Arecord%3Alist'
+              + '%3Adate=2016-06-24&expires.range%3Arecord=max'
+    // Mind and keep the space before the '#' !
+    var url = window.location.href + query + ' #search-results'
+    // Load:
+    $('#due-end-date-passed').load(url, function() {
+        // Has not ele with txt 'No results found'
+        var no_results_found_ele = $(this).find('strong')
+      // After load:
+console.log(no_results_found_ele.length)
+      if(no_results_found_ele.length > 0) {
+        no_results_found_ele.remove()
+        $(this).find('.discreet').remove() // author, mod-date, item-path
+      }
+      else {
+        $(this).prepend('<div class="header warning">Attention! These steps have passed the due end-time already:</div>')
+      }
+    });
+  }
+}
+function manipulateAuthorTemplate() { // TODO: context is app
   if($('.template-author').length > 0) { // context is author-template
       $('#content').html('')             // let content-area dissapear first
       var userId = window.location.pathname.split('/')  // prep var
@@ -96,7 +126,8 @@ function main(max_autoload_depth=0) {
   }
 }
 (function($) { $(document).ready(function() {
-  manipulateAuthorTemplate() // experiemental prototyping
+  manipulateTopicTabularView() // prototype
+  manipulateAuthorTemplate() // prototype
   var max_autoload_depth = 0
   main(max_autoload_depth)
 //  $('.loadLink').click() // (auto-)load 1st children

@@ -28,8 +28,7 @@
                  children context/getFolderContents;
                  hasChildren python:len(children) > 0;
                  ">
-<div metal:use-macro="context/navigator/macros/navigator">
-  Left-, up-, right- and down-arrows.
+<div id="due-end-date-passed">
 </div>
 <div metal:use-macro="context/blockers/macros/blockers">
   If blocked or blocking, show info.
@@ -46,7 +45,8 @@ headers are already there in the childrens-list.</tal:comment>
   </span>
   <a class="title" tal:content="title"
     tal:attributes="class state_class; id title;
-    href href; title string:Click to reload this step">
+    href href; title string:Click to reload this step;
+    tabindex string: -1;">
     Title
   </a>
 </div><tal:comment tal:replace="nothing">EO .header</tal:comment>
@@ -59,19 +59,22 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
 <div class="text" tal:content="structure text">
   Text
 </div>
-  <div class="children"
-       tal:condition="hasChildren">
-    <div class="child"
-         tal:repeat="child children">
+  <div class="children" tal:condition="hasChildren">
+    <div class="child" tal:repeat="child children">
       <tal:definator tal:define="child_obj python:child.getObject();
-      title child_obj/title;
+      child_id child/id;
+      child_title child_obj/title;
       text child_obj/getRawText;
-      href child_obj/absolute_url;
+      child_href child_obj/absolute_url;
       hasText python: text != '';
       hasChildren python:len(child_obj.getFolderContents()) > 0;
       showArrow python: True;
       ">
-        <a class="loadLink" tal:attributes="href href"
+        <a class="loadLink"
+           tal:define="anchor string:${href}#${child_id}"
+           tal:attributes='href anchor;
+                           id child_id;
+                           alt string:Chapter "${child_title}";'
            tal:condition="showArrow"
            tal:content="string:&darr;">
           Arrow down
@@ -95,8 +98,8 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
             </span><span tal:replace="nr">
             </span>
           </span>
-        <a tal:attributes="href href; alt alt; class class; tabindex string: -1;">
-          <span tal:replace="title">
+        <a tal:attributes="href child_href; alt alt; class class; tabindex string: -1;">
+          <span tal:replace="child_title">
             Child title
           </span>
         </a>
@@ -120,6 +123,9 @@ loaded, when clicking on arrow-down of a substep, see '.loadLink'.</tal:comment>
     </div><tal:comment tal:replace="nothing">EO .child</tal:comment>
   </div><tal:comment tal:replace="nothing">EO .children</tal:comment>
   <div class="buttons">
+<div metal:use-macro="context/navigator/macros/navigator">
+  Left-, up-, right- and down-arrows.
+</div>
     <div metal:use-macro="context/editables/macros/editables">
     </div><div metal:use-macro="context/transitions/macros/transitions">
     </div>

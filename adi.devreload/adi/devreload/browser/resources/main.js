@@ -1,6 +1,6 @@
 (function($) {
   $(document).ready(function() {
-    var interval_ms = 4277
+    var interval_ms = 7277
     var url = window.location.href
     reload_interval = setInterval(function () {
       window.location.reload()
