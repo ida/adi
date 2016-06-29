@@ -17,7 +17,7 @@
   <!-- Register the installation GenericSetup extension profile -->
   <genericsetup:registerProfile
       name="default"
-      title="Adi Stepbysteps"
+      title="z Adi Stepbysteps"
       directory="profiles/default"
       description="A stepbystep system for Plone"
       provides="Products.GenericSetup.interfaces.EXTENSION"

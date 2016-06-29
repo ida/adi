@@ -1,7 +1,12 @@
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import _createObjectByType
+from adi.devgen.scripts.plone import addChild
+from adi.devgen.scripts.plone import addNChildrenRecursive
 from zope.component import getMultiAdapter
 
+def devCrea(parent):
+    addNChildrenRecursive(parent, 3)
 
 def createSteps(context):
         stepbystep = _createObjectByType('Stepbystep', context, '2', title='NKOTB',
@@ -58,6 +63,10 @@ def createContent(context):
             container.reindexObject()
             createSteps(container)
             createLandingPage(container)
+
+    devCrea(context)
+
+
 
 def setupVarious(context):
     portal = context.getSite()
