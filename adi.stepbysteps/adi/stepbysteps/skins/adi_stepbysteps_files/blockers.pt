@@ -5,7 +5,7 @@
 
   <tal:surpressors tal:condition="depends_on"
     tal:define="surpressors python: depends_on.split(',')">
-    Is blocking
+    Is blocked by
     <tal:surpressor tal:repeat="surpressor surpressors">
       <tal:getResults tal:condition="python: surpressor != ''"
         tal:define="
@@ -29,7 +29,7 @@
     tal:condition="dependency_of"
     tal:define="surpressing python: dependency_of.split(',')"
     >
-    Is blocked by
+    Is blocking
     <tal:surpressed tal:repeat="surpressed surpressing">
       <tal:getResults tal:condition="python: surpressed != ''"
         tal:define="

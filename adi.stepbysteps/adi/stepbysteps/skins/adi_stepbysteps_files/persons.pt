@@ -1,7 +1,9 @@
 <div class="fieldset persons" metal:define-macro="persons"
      tal:define="responsers python:context.Rights().split('\n');
                  isEmptyStr python:''.join(responsers).strip() == '';
-                 isGroup python:len(responsers) > 1;">
+                 isGroup python:len(responsers) > 1;
+                                  portal_url context/plone_portal_state/portal_url;
+                                  ">
   <div class="fieldpair reporter">
     <div class="name" tal:content="string:Reporter">
       Reporter

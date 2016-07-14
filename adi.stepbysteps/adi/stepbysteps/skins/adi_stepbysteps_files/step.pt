@@ -1,0 +1,67 @@
+<div class="child" metal:define-macro="step" tal:define="
+  href context/absolute_url;
+  id context/id;
+  title context/Title;
+  text context/getText;
+  text_preview_max_chars python:27;
+  text_preview context/getRawText;
+  textIslongerThanMax python: len(text_preview) > text_preview_max_chars;
+  isRootStepbystep nocall: context/adi_stepbysteps_main_view/isRootStepbystep;
+  nrs nocall: context/adi_stepbysteps_main_view/getStepbystepPosNrs;
+  age nocall: context/adi_stepbysteps_main_view/getAge;
+  activity nocall: context/adi_stepbysteps_main_view/getActiveTime;
+  total_activity nocall: context/adi_stepbysteps_main_view/getActiveTimes;
+  hasActivity python: total_activity > 0;
+  hasChildren context/adi_stepbysteps_main_view/hasChildren;
+  state python:context.portal_workflow.getInfoFor(context, 'review_state');
+  state_class string:state-${state};
+  ">
+  <div metal:use-macro="context/blockers/macros/blockers">
+    Blocker
+  </div>
+  <div metal:use-macro="context/head/macros/head">
+    Metadata
+  </div>
+  <tal:konditor tal:condition="isTopStep">
+    <tal:kon tal:condition="isRootStepbystep">
+      <a tal:attributes="href string:./..; title string:Go home"
+         tal:content="string:&#8962;">
+        Go home
+      </a>
+    </tal:kon>
+    <tal:kon tal:condition="not:isRootStepbystep">
+      <a tal:attributes="href string:./..; title string:Go up one level"
+         tal:content="string:&uarr;">
+        Go up one level
+      </a>
+    </tal:kon>
+  </tal:konditor>
+  <tal:kon tal:condition="not:isTopStep">
+    <a tal:attributes="href href; class string:loadLink hideChildren; title string:Show children"
+       tal:condition="hasChildren" tal:content="string:&darr;">
+      Toggle children
+    </a>
+    <a tal:attributes="class string:dummy; href href; title string:No children to show"
+       tal:condition="not: hasChildren" tal:content="string:&darr;">
+      Toggle children dummy
+    </a>
+  </tal:kon>
+  <span tal:replace="string:0" tal:condition="isRootStepbystep">
+    0
+  </span>
+  <span tal:replace="nrs" tal:condition="not: isRootStepbystep">
+    1.2
+  </span>
+  <a class="title" tal:content="title"
+    tal:attributes="class state_class; id title;
+    href href; title string:Click to reload this step;
+    tabindex string: -1;">
+    Title
+  </a>
+  <span class="text preview cropped" tal:condition="textIslongerThanMax"
+    tal:content="python:text_preview[:text_preview_max_chars] + ' (...)'">
+  </span>
+  <span class="text preview" tal:condition="not:textIslongerThanMax"
+    tal:content="text_preview">
+  </span>
+</div>

@@ -16,15 +16,17 @@ class View(BrowserView):
     def __call__(self):
         return self.render()
 
+    def render(self):
+        return self.index()
+
     def isRootStepbystep(self):
         """
         If a stepbystep lives in the siteroot, it is considered to be a root-stepbystep.
         """
-        if self.context.aq_parent is portal(): return True
+        parent = self.context.aq_parent
+        if parent == portal() or parent.Type() != 'Stepbystep':
+             return True
         else: return False
-
-    def render(self):
-        return self.index()
 
     def msToHumanReadable(self, ms):
         """
@@ -46,21 +48,26 @@ class View(BrowserView):
         chunks = [yy, mo, dd, hh, mi, ss]
         for i, chunk in enumerate(chunks):
             chunk = str(chunk)
-            if len(chunk) == 1:
-                chunk = '0' + chunk
             string += chunk
             if i != len(chunks) -1:
                 string += ':'
-
         return string
 
-    def humanReadableToPrettified(self, human_readable):
+    def humanReadableToPrettified(self, ms):
         """
-        Expects human_readable to be in this format:
-        yy:mo:dd:hh:mi:ss
-        Returns 00yr 00mo 23dy 14hr 02mi 33sc
+        Turn ms to: '0yr 0mo 23dy 14hr 2mi 33sc'
+        and omit zero-units: '23dy 14hr 2mi 33sc'
         """
-        pass
+        pretty = ''
+        units = ['years','months','days','hrs','min','sec']
+
+        human_readables = self.msToHumanReadable(ms).split(':')
+        for i, hr in enumerate(human_readables):
+            if hr != '0':
+                pretty +=  hr + ' ' + units[i] + ' '
+        pretty = pretty[:-1]
+        if pretty == '': pretty = None
+        return pretty
 
     def computeAge(self):
         """ Return age of item in milliseconds. """
@@ -94,14 +101,14 @@ class View(BrowserView):
         return active_time
 
     def getAge(self):
-        age = self.computeAge()
-        age = self.msToHumanReadable(age)
-        return age
+        time = self.computeAge()
+        time = self.humanReadableToPrettified(time)
+        return time
 
     def getActiveTime(self):
-        active_time = self.computeActiveTime()
-        active_time = self.msToHumanReadable(active_time)
-        return active_time
+        time = self.computeActiveTime()
+        time = self.humanReadableToPrettified(time)
+        return time
 
     def getActiveTimes(self):
         """
@@ -109,17 +116,15 @@ class View(BrowserView):
         (grand-)childrens, include self.
         """
 
-        active_times = 0
-
         context = self.context
         path = '/'.join(context.getPhysicalPath())
         item_brains = context.portal_catalog(path={"query": path})
 
+        time = 0
         for item in item_brains:
-            active_times += self.computeActiveTime(item)
-        active_times = self.msToHumanReadable(active_times) 
-
-        return active_times
+            time += self.computeActiveTime(item)
+        time = self.humanReadableToPrettified(time)
+        return time
 
 
     def getPosNr(self, obj=None):
@@ -130,7 +135,7 @@ class View(BrowserView):
         nr = 0
         parent = obj.aq_parent
         siblings = parent.getFolderContents()
-        for sibling in  siblings:
+        for sibling in siblings:
             nr += 1
             if sibling['id'] == obj.id:
                 return nr
@@ -150,23 +155,21 @@ class View(BrowserView):
             parent = parent.aq_parent
         return nrs
 
-    def getStepbystepPosNr(self):
-        """
-        Like self.getPosNr(), but except stepbysteps living in the siteroot,
-        return None in that case.
-        """
-        nr = None
-        if self.context.aq_parent is not portal():
-            nr = self.getPosNr()
-        return nr
 
-    def getStepbystepPosNrs(self):
+    def getStepbystepPosNrs(self, obj=None):
         """
-        Like self.getPosNrs(), but except stepbysteps living in the siteroot,
-        meaning e.g. '3.2.7' becomes '2.7'.
+        Like self.getPosNrs(), but only as long as step is a child of step,
+        breaks when other portal_type is detected as parent.
         """
-        nrs = self.getPosNrs().split('.')
-        nrs = '.'.join(nrs[1:])
+        if not obj: obj = self.context
+        nrs = str( self.getPosNr(obj) )
+        parent = obj.aq_parent
+        while parent is not portal():
+            nrs = str( self.getPosNr(parent) ) + '.' + nrs
+            parent = parent.aq_parent
+            if parent.Type() != 'Stepbystep':
+                break
+        nrs = '.'.join(nrs.split('.')[1:]) # omit nr for root-step
         return nrs
 
     def getFullHistory(self, obj=None):
@@ -207,4 +210,11 @@ class View(BrowserView):
         chv.navigation_root_url = chv.site_url = 'http://www.example.org'
         workflow_history = chv.workflowHistory()
         return workflow_history
+
+    def hasChildren(self, obj=None):
+        HAS_CHILDREN = False
+        if not obj: obj = self.context
+        if len(obj.getFolderContents()) > 0: HAS_CHILDREN = True
+        return HAS_CHILDREN
+
 

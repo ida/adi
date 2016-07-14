@@ -40,13 +40,6 @@
         layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
      />
 
-    <browser:page
-        for="*"
-        name="adi_stepbysteps_times_view"
-        class=".resources.times.View"
-        permission="zope2.View"
-        layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
-      />
 
     <!-- Helper view delievering computed vals to other views -->
     <browser:page

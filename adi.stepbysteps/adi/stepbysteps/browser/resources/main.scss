@@ -1,139 +1,110 @@
-/*
-#edit-bar {
-height: 1.27em;
-overflow: hidden;
-}
-*/
-$bg_primary: #272727;
-$col_primary: #a1a1a1;
-
+$border_primary: 1px solid;
 $bg_primary: #fff;
 $bg_secondary: #f1f1f1;
 $bg_tertiary: #b3b3b3;
+$col_attention: lightgreen;
 $col_primary: #444;
+$col_primary: #999;
 $col_secondary: #a1a1a1;
 $font_family_primary: Arial, sans;
-$font_size_regular: 14px*1.27;
+$font_size_regular: 14px;
+$font_size_primary: 1em;
+$font_size_secondary: 0.65em;
+$line_height_primary: 1.61em;
+$line_height_secondary: 1.5em;
+$controls_height: $font_size_regular*2;
+$controls_margin_bottom: $font_size_regular;
+/* Nightsight (uncomment to take effect):
+$bg_primary: #272727;
+$bg_secondary: $bg_primary;
+$bg_tertiary: $bg_primary;
+$col_primary: #a1a1a1;
+*/
 
 body.portaltype-stepbystep {
     height: 100%;
     overflow: hidden;
-    line-height: 1.61em;
+    line-height: $line_height_primary;
     background: $bg_primary;
     color: $col_primary;
     font-family: $font_family_primary;
     font-size: $font_size_regular;
-    .header {
-        font-size: 150%;
+    a:focus {
+        color: $col_attention !important;
     }
-    .head {
-        font-size: 65%;
-        line-height: 1.5em;
-        background: $bg_secondary;
+    a[disabled] {
+        opacity: 0.27;
     }
-    .children {
-        background: $bg_secondary;
+    a.showChildren {
+        background: url("++resource++adi.stepbysteps.resources/closed.png")
+                    no-repeat center $bg_primary;
     }
-    .buttons {
-        background: $bg_tertiary;
-        a {
-            display: inline-block;
-            min-width: 1.61em;
-            text-align: center;
+    a.hideChildren {
+        background: url("++resource++adi.stepbysteps.resources/expanded.png")
+                    no-repeat center $bg_primary;
+    }
+    a.showChildren,
+    a.hideChildren,
+    a.dummy {
+        color: transparent;
+    }
+    #content {
+        background: $bg_primary;
+        border-bottom: $border_primary;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: $controls_height + $controls_margin_bottom;
+        padding: 1em 1em $controls_margin_bottom 1em;
+        .head {
+            float: right;
+            font-size: 65%;
+            line-height: $line_height_secondary;
+            background: $bg_secondary;
+            opacity: .75;
+            div {
+                display: inline-block;
+            }
+            .fieldpair {
+                margin-right: 0.5em;
+                .name {
+                    margin-right: .27em;
+                }
+                .name:after {
+                    content: ':';
+                }
+            }
         }
-    }
-    .children {
-        font-size: .85em;
-        .text {
-            font-size: .85em;
-        }
-        .children .children .children {
-            font-size: 1em;
-        }
-    }
-}
+        .children {
 /*
- *
- *  OPACITY
- *
- */
-body.portaltype-stepbystep {
-a[disabled] {
-    opacity: 0.27;
-}
-.head {
-    opacity: .75;
-}
-
-/* LINKS */
-a:focus {
-    color: lightgreen;
-}
-a[disabled].dummy {
-    color: transparent;
-}
-/* BORDERS */
-#content {
-    border: 1px dotted lightblue;
-}
-.children {
-    border-bottom: 1px dotted lightblue;
-}
-.child {
-    border-top: 1px dotted lightblue;
-}
-.buttons .editables a  {
-    border: 1px solid;
-}
-/*
- *
- *  SEPARATING-SPACES AND -CONTENT
- *
- */
-.head {
-    padding: 0.25em 0.5em;
-}
-.text {
-    padding: 1em 0.5em;
-}
-.fieldpair {
-    padding-right: 0.5em;
-}
-.fieldpair .name {
-    margin-right: .27em;
-}
-.fieldpair .name:after {
-    content: ':';
-}
-/* 
- *
- * POSITIONING
- *
- */
-#content {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-bottom: 3em;
-}
-.buttons {
-    line-height: 3em;
-    height: 3em;
-    position: fixed;
-    bottom: 0;
-    right:0;
-    width: 100%;
-}
-/* DISPLAY */
-.buttons div {
-    display: inline;
-}
 */
-.fieldset,
-.fieldpair,
-.fieldpair .name,
-.fieldpair .value {
-    display: inline-block;
-}
-
+            margin-left: 1.61em;
+            .child {
+                border-top: 1px dotted lightblue;
+            }
+        }
+        .controls {
+            position: fixed;
+            bottom: $controls_margin_bottom;
+            right: 0;
+            width: 100%;
+            line-height: $controls_height;
+            height: $controls_height;
+            .buttons {
+                padding: 0 1em;
+                background: $bg_tertiary;
+                a {
+                    display: inline-block;
+                    min-width: 1.61em;
+                    text-align: center;
+                }
+                div {
+                    display: inline;
+                }
+            }
+        }
+        .controls:hover {
+            height: auto;
+        }
+    } /* EO #content */
 } /* EO body.portaltype-stepbystep */
