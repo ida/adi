@@ -1,71 +1,36 @@
-<div class="fieldset persons" metal:define-macro="persons"
-     tal:define="responsers python:context.Rights().split('\n');
-                 isEmptyStr python:''.join(responsers).strip() == '';
-                 isGroup python:len(responsers) > 1;
-                                  portal_url context/plone_portal_state/portal_url;
-                                  ">
-  <div class="fieldpair reporter">
-    <div class="name" tal:content="string:Reporter">
+<div class="fieldset persons" metal:define-macro="persons">
+<!--
+-->
+  <div class="field" class="reporter">
+    <div class="name">
+    Reporter:
+    </div>
+    <div class="value" tal:content="context/Creator">
       Reporter
-    </div><div class="value">
-      <a tal:define="reporter context/Creator"
-         tal:attributes="href string:${portal_url}/author/${reporter};
-                         title string:See all steps ${reporter} is responsible of;
-                         tabindex string:-1"
-         tal:content="reporter">
-        somebody
-      </a>
     </div>
   </div>
-  <div class="fieldpair responsers" tal:condition="context/Contributors">
-    <div class="name" tal:content="string:Responsible">
-      Responsible
-    </div><div class="value"
-         tal:define="watchers context/Contributors">
-      <a tal:repeat="watcher watchers"
-         tal:attributes="href string:${portal_url}/author/${watcher};
-                         tabindex string: -1;
-                         title string:See all steps ${watcher} is responsible of;">
-        <span tal:replace="watcher">
-          somebody
-        </span><span tal:condition="
-          python: len(watchers) > 1 and repeat['watcher'].index != len(watchers) -1"
-          tal:replace="string:,">
-          ,
-        </span><span tal:condition="
-          python: len(watchers) > 1 and repeat['watcher'].index == len(watchers) -1"
-          tal:replace="string:.">
-          .
+  <div class="field" class="responsibles">
+    <div class="name">
+    Responsibles:
+    </div>
+    <div class="value" tal:define="responsibles context/Contributors">
+      <tal:tal tal:repeat="responsible responsibles">
+        <span tal:replace="responsible">
+          Responsible
         </span>
-      </a>
+      </tal:tal>
     </div>
   </div>
-  <div class="fieldpair watchers" tal:condition="not: isEmptyStr">
-    <div class="name" tal:content="string:Watchers">
-      Watchers
-    </div><div class="value">
-      <tal:repetator tal:repeat="responser responsers"
-         tal:condition="not: isEmptyStr">
-        <tal:definator tal:define="
-          responser python: responser.strip();
-          isLast python: repeat['responser'].index == len(responsers) -1;
-          comma python: isGroup and not isLast;
-          dot python: isGroup and isLast;">
-          <a tal:content="responser" tal:attributes="
-            href string:${portal_url}/author/${responser};
-            tabindex string: -1;
-            title string:See all steps ${responser} is responsible of;">
-            somebody
-          </a><span tal:condition="comma" tal:replace="string:,">
-            ,
-          </span><span tal:condition="dot" tal:replace="string:.">
-            .
-          </span>
-        </tal:definator>
-      </tal:repetator>
-      <span tal:condition="isEmptyStr" tal:replace="string:nobody">
-        nobody
-      </span>
+  <div class="field" class="watchers">
+    <div class="name">
+    Watchers:
+    </div>
+    <div class="value" tal:define="watchers python:context.Rights().split(' ')">
+      <tal:tal tal:repeat="watcher watchers">
+        <span tal:replace="watcher">
+          Watcher
+        </span>
+      </tal:tal>
     </div>
   </div>
 </div>

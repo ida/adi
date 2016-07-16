@@ -2,9 +2,7 @@ $border_primary: 1px solid;
 $bg_primary: #fff;
 $bg_secondary: #f1f1f1;
 $bg_tertiary: #b3b3b3;
-$col_attention: lightgreen;
 $col_primary: #444;
-$col_primary: #999;
 $col_secondary: #a1a1a1;
 $font_family_primary: Arial, sans;
 $font_size_regular: 14px;
@@ -14,12 +12,16 @@ $line_height_primary: 1.61em;
 $line_height_secondary: 1.5em;
 $controls_height: $font_size_regular*2;
 $controls_margin_bottom: $font_size_regular;
-/* Nightsight (uncomment to take effect):
+
+
+/* Nightsight, (un-)comment to switch:
 $bg_primary: #272727;
+$bg_primary: #222;
 $bg_secondary: $bg_primary;
 $bg_tertiary: $bg_primary;
 $col_primary: #a1a1a1;
 */
+
 
 body.portaltype-stepbystep {
     height: 100%;
@@ -30,27 +32,26 @@ body.portaltype-stepbystep {
     font-family: $font_family_primary;
     font-size: $font_size_regular;
     a:focus {
-        color: $col_attention !important;
+        outline: 1px dotted;
     }
     a[disabled] {
         opacity: 0.27;
     }
-    a.showChildren {
+    .button {
+        display: inline-block;
+        min-width: 1em;
+        text-align: center;
+    }
+    .showChildren {
         background: url("++resource++adi.stepbysteps.resources/closed.png")
                     no-repeat center $bg_primary;
     }
-    a.hideChildren {
+    .hideChildren {
         background: url("++resource++adi.stepbysteps.resources/expanded.png")
                     no-repeat center $bg_primary;
     }
-    a.showChildren,
-    a.hideChildren,
-    a.dummy {
-        color: transparent;
-    }
     #content {
         background: $bg_primary;
-        border-bottom: $border_primary;
         position: relative;
         top: 0;
         left: 0;
@@ -58,30 +59,20 @@ body.portaltype-stepbystep {
         padding: 1em 1em $controls_margin_bottom 1em;
         .head {
             float: right;
-            font-size: 65%;
-            line-height: $line_height_secondary;
             background: $bg_secondary;
-            opacity: .75;
+            color: $col_secondary;
+            opacity: 0.75;
             div {
                 display: inline-block;
             }
-            .fieldpair {
-                margin-right: 0.5em;
-                .name {
-                    margin-right: .27em;
-                }
-                .name:after {
-                    content: ':';
-                }
-            }
+        }
+        .title {
+            color: inherit;
+        }
+        .text {
         }
         .children {
-/*
-*/
-            margin-left: 1.61em;
-            .child {
-                border-top: 1px dotted lightblue;
-            }
+            margin-left: $font_size_primary/2;
         }
         .controls {
             position: fixed;
@@ -94,9 +85,7 @@ body.portaltype-stepbystep {
                 padding: 0 1em;
                 background: $bg_tertiary;
                 a {
-                    display: inline-block;
-                    min-width: 1.61em;
-                    text-align: center;
+                    min-width: $line_height_primary;
                 }
                 div {
                     display: inline;
@@ -106,5 +95,11 @@ body.portaltype-stepbystep {
         .controls:hover {
             height: auto;
         }
-    } /* EO #content */
-} /* EO body.portaltype-stepbystep */
+    } // EO #content
+    #navigator {
+        .up,
+        .down {
+            display: none;
+        }
+    }
+} // EO body.portaltype-stepbystep

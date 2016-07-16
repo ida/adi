@@ -9,27 +9,32 @@
       children context/getFolderContents;
       hasChildren python: len(children) > 0;
       state context/plone_context_state/workflow_state;
+      text context/getText;
       trans_comment_url string:${href}/content_status_comment?workflow_action=;
       trans_url string:${href}/content_status_modify?workflow_action=;
       isTopStep string:isTopStep;">
       <metal:item use-macro="context/step/macros/step">
-        This step
+This step
       </metal:item>
-<div id="content-core">
-      <div class="children">
-        <tal:loop tal:repeat="child children">
-          <tal:child tal:define="context python:child.getObject(); isTopStep nothing;">
-            <metal:item use-macro="context/step/macros/step">
-              Child step
-            </metal:item>
-        </tal:child>
-        </tal:loop>
+      <div id="content-core">
+        <div class="text" tal:content="structure text">
+Text
+        </div>
+        <div class="children">
+          <tal:loop tal:repeat="child children">
+            <tal:child tal:define="context python:child.getObject();
+                                   isTopStep nothing;">
+              <metal:item use-macro="context/step/macros/step">
+Child step
+              </metal:item>
+          </tal:child>
+          </tal:loop>
+        </div>
       </div>
-</div>
       <div class="controls">
         <div class="buttons">
           <div metal:use-macro="context/navigator/macros/navigator">
-            Controls
+Controls
           </div><div metal:use-macro="context/editables/macros/editables">
           </div><div metal:use-macro="context/transitions/macros/transitions">
           </div>

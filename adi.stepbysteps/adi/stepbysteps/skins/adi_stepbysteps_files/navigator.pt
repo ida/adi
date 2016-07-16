@@ -8,7 +8,7 @@ hasNext python: index < len(siblings) -1;
 hasPrev python: index > 0;">
 <tal:prev tal:condition="hasPrev" tal:define="href python:
 '../' + context.aq_parent.getFolderContents()[index - 1]['id'];">
-  <a tal:attributes="href href; title string:Step back;"
+  <a tal:attributes="href href" title="Step back" class="previous"
   tal:content="string:&larr;">
   Step back
   </a></tal:prev>
@@ -17,14 +17,14 @@ hasPrev python: index > 0;">
        tal:content="string:&larr;">
         No previous steps available
   </a>
-  <a href="./.." title="Step up" tal:content="string:&uarr;">
+  <a href="./.." title="Step up" class="up" tal:content="string:&uarr;">
           Step up
   </a>
     <tal:next
       tal:condition="hasNext"><a
         tal:define="href python:
         '../' + context.aq_parent.getFolderContents()[index + 1]['id']"
-        tal:attributes="href href; title string:Step forward;"
+        tal:attributes="href href" title="Step forward;" class="next"
         tal:content="string:&rarr;">
           Step forward
   </a></tal:next><a tal:condition="not: hasNext" disabled
@@ -34,8 +34,9 @@ hasPrev python: index > 0;">
   <tal:kondinator
   tal:condition="python:len(context.getFolderContents()) > 0"><tal:definator
     tal:define="first_child_id python:context.getFolderContents()[0].id">
-    <a title="Step down" tal:content="string:&darr;" tal:attributes="
-      href python:context.absolute_url() + '/' + first_child_id;">
+    <a title="Step down" tal:content="string:&darr;" class="down"
+      tal:attributes="href python:
+                      context.absolute_url() + '/' + first_child_id;">
         Step down
     </a>
   </tal:definator></tal:kondinator>

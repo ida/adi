@@ -45,7 +45,7 @@ StepbystepSchema = folder.ATFolderSchema.copy() + atapi.Schema((
 		default_method = 'wireGetCurrentUser',
         vocabulary = "wireGetEditors",
         widget = atapi.SelectionWidget(
-            visible={'edit':'hidden', 'view':'visible'},
+#            visible={'edit':'hidden', 'view':'visible'},
         ),
     ),
 
