@@ -3,47 +3,51 @@
     <tal:root-step tal:condition="isRootStepbystep">
       <a tal:content="string:&#8962;" tal:attributes="
         href string:./..; title string:Go home; class string:button;">
-Go home
+        Home
       </a>
     </tal:root-step>
     <tal:not-root-step tal:condition="not:isRootStepbystep">
       <a tal:attributes="href string:./..;
         title string:Go up one level; class string:button;"
          tal:content="string:&uarr;">
-Go up one level
+        Up one level
       </a>
     </tal:not-root-step>
   </tal:first-step>
   <tal:not-first-step tal:condition="not:isTopStep">
-    <a tal:attributes="href href; class string:loadLink showChildren button;
+    <a tal:attributes="href string:${href}#content-core; class string:loadLink showChildren button;
                        title string:Show children"
        tal:condition="hasChildren"
        tal:content="string:&nbsp;">
-Toggle children
-    </a>
-    <a tal:attributes="href href; class string:loadLink showText button;
-                       title string:Show text"
-       tal:condition="python: text != '' and not hasChildren"
-       style="color:inherit"
-       tal:content="string:+">
-Toggle children
+      Toggle children
     </a>
     <span class="dummy button"
-       tal:condition="python: text == '' and hasChildren == False" tal:content="string:-">
-Toggle children dummy
+       tal:condition="not: hasChildren" tal:content="string:&nbsp;">
+      Toggle dummy
+    </span>
+    <a tal:attributes="href string:${href}#text; class string:loadLink showText button;
+                       title string:Show text"
+       tal:condition="python: text != ''"
+       style="color:inherit"
+       tal:content="string:">
+      Toggle text
+    </a>
+    <span class="dummy button"
+       tal:condition="python: text == ''" tal:content="string:&nbsp;">
+      Toggle dummy
     </span>
   </tal:not-first-step>
   <span tal:replace="string:0" tal:condition="isRootStepbystep">
-0
+    0
   </span>
   <span tal:replace="nrs" tal:condition="not: isRootStepbystep">
-1.2
+    1.2
   </span>
   <a class="title" tal:content="title"
-    tal:attributes="class string:title state_class; id title;
-    href href; title string:Click to reload this step;
+    tal:attributes="class state_class; id title;
+    href href; title state;
     tabindex string: -1;">
-Title
+    Title
   </a>
 </div>
 

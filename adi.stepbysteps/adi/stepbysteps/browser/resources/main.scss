@@ -1,9 +1,9 @@
-$border_primary: 1px solid;
 $bg_primary: #fff;
 $bg_secondary: #f1f1f1;
 $bg_tertiary: #b3b3b3;
 $col_primary: #444;
 $col_secondary: #a1a1a1;
+$border_primary: 1px solid $col_primary;
 $font_family_primary: Arial, sans;
 $font_size_regular: 14px;
 $font_size_primary: 1em;
@@ -50,13 +50,19 @@ body.portaltype-stepbystep {
         background: url("++resource++adi.stepbysteps.resources/expanded.png")
                     no-repeat center $bg_primary;
     }
+    .showText:before {
+        content: '+';
+    }
+    .hideText:before {
+        content: '-';
+    }
     #content {
         background: $bg_primary;
         position: relative;
         top: 0;
         left: 0;
         margin-bottom: $controls_height + $controls_margin_bottom;
-        padding: 1em 1em $controls_margin_bottom 1em;
+        padding-bottom: $controls_margin_bottom;
         .head {
             float: right;
             background: $bg_secondary;
@@ -65,14 +71,27 @@ body.portaltype-stepbystep {
             div {
                 display: inline-block;
             }
+            .fieldpair {
+                margin-right: 0.5em;
+                .name {
+                    margin-right: .27em;
+                }
+                .name:after {
+                    content: ':';
+                }
+            }
         }
         .title {
             color: inherit;
         }
         .text {
+//            padding: $font_size_primary;
+        }
+        .child {
+            border-top: 1px solid silver;
         }
         .children {
-            margin-left: $font_size_primary/2;
+//            margin-left: $font_size_primary/2;
         }
         .controls {
             position: fixed;
@@ -102,4 +121,17 @@ body.portaltype-stepbystep {
             display: none;
         }
     }
+
+.activity span:nth-child(even) {
+display: inline-block;
+width: 1.75em;
+margin-left: 0.25em;
+outline: $border_primary
+}
+.activity span:nth-child(odd) {
+display: inline-block;
+width: 1.125em;
+margin-left: 0.25em;
+outline: $border_primary
+}
 } // EO body.portaltype-stepbystep

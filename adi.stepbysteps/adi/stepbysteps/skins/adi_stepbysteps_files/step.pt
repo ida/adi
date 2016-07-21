@@ -15,9 +15,14 @@
   hasChildren context/adi_stepbysteps_main_view/hasChildren;
   state python:context.portal_workflow.getInfoFor(context, 'review_state');
   state_class string:state-${state};
-  "><div metal:use-macro="context/blockers/macros/blockers">
+  ">
+  <div metal:use-macro="context/blockers/macros/blockers">
 Blocker
-  </div><div metal:use-macro="context/head/macros/head">
+  </div>
+  <div metal:use-macro="context/head/macros/head">
 Head
-  </div><div metal:use-macro="context/header/macros/header">
-Header</div></div>
+  </div>
+  <div metal:use-macro="context/header/macros/header">
+Header
+  </div>
+</div>

@@ -1,4 +1,9 @@
 <div class="head" metal:define-macro="head">
+<div tal:content="context/Creator" />
+<div class="activity"><tal:rep tal:repeat="a total_activity"><span class="value" tal:content="a">
+    </span></tal:rep>
+</div>
+<!--
   <div class="fields">
     <div class="fieldset main">
       <div class="fieldpair state">
@@ -14,4 +19,5 @@
     </div><div metal:use-macro="context/times/macros/times">
     </div>
   </div>
+-->
 </div>

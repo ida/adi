@@ -13,14 +13,14 @@
       trans_comment_url string:${href}/content_status_comment?workflow_action=;
       trans_url string:${href}/content_status_modify?workflow_action=;
       isTopStep string:isTopStep;">
+      <div id="text" class="text" tal:content="structure text">
+Text
+      </div>
       <metal:item use-macro="context/step/macros/step">
 This step
       </metal:item>
-      <div id="content-core">
-        <div class="text" tal:content="structure text">
-Text
-        </div>
-        <div class="children">
+      <div id="content-core" class="body">
+        <div class="children" tal:condition="hasChildren">
           <tal:loop tal:repeat="child children">
             <tal:child tal:define="context python:child.getObject();
                                    isTopStep nothing;">

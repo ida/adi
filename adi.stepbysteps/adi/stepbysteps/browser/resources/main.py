@@ -55,19 +55,29 @@ class View(BrowserView):
 
     def humanReadableToPrettified(self, ms):
         """
-        Turn ms to: '0yr 0mo 23dy 14hr 2mi 33sc'
-        and omit zero-units: '23dy 14hr 2mi 33sc'
         """
-        pretty = ''
-        units = ['years','months','days','hrs','min','sec']
+        pretties = []
+        units = ['yrs','mth','dys','hrs','min','sec']
 
         human_readables = self.msToHumanReadable(ms).split(':')
-        for i, hr in enumerate(human_readables):
-            if hr != '0':
-                pretty +=  hr + ' ' + units[i] + ' '
-        pretty = pretty[:-1]
-        if pretty == '': pretty = None
-        return pretty
+        for i, human_readable in enumerate(human_readables):
+            if human_readable != '0': # omit zero-vals
+                if len(human_readable) == 1: # prepend zero if single digit
+                    human_readable = '0' + human_readable
+                pretties.append(human_readable)
+                pretties.append(units[i])
+        if len(pretties) > 4: # only take first two non-zero vals
+            pretties = pretties[0:4]
+        # Prepend zero-val, if there is only one non-zero val, for better
+        # readability (same horizontal line-up as the other entries in listview):
+        if len(pretties) == 2:
+            current_unit = pretties[1]
+            previous_unit = units[units.index(current_unit) - 1]
+            pretties = ['00', previous_unit] + pretties
+        # Dummy val if no time consumed:
+        if len(pretties) == 0:
+            pretties = ['00', 'min', '00', 'sec']
+        return pretties
 
     def computeAge(self):
         """ Return age of item in milliseconds. """
