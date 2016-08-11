@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="adi.subsection">
+
+  <include package="plone.app.contentmenu" />
+
+  <!-- -*- extra stuff goes here -*- -->
+
+    <browser:page 
+        for="*" 
+        name="adi_subsection" 
+        template="adi_subsection.pt" 
+        permission="zope2.View" 
+      />
+
+    <browser:page 
+        for="*" 
+        name="adi_sublist" 
+        template="adi_sublist.pt" 
+        permission="zope2.View" 
+      />
+
+    <browser:page 
+        for="*" 
+        name="adi_subalbum" 
+        template="adi_subalbum.pt" 
+        permission="zope2.View" 
+      />
+
+
+</configure>
