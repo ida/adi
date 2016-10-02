@@ -110,9 +110,17 @@ class View(BrowserView):
                 active_time += delta
         return active_time
 
-    def getAge(self):
-        time = self.computeAge()
-        time = self.humanReadableToPrettified(time)
+    def computeActiveTimes(self):
+        """
+        Get accumulated active time of all
+        (grand-)childrens in ms, include self.
+        """
+        context = self.context
+        path = '/'.join(context.getPhysicalPath())
+        item_brains = context.portal_catalog(path={"query": path})
+        time = 0
+        for item in item_brains:
+            time += self.computeActiveTime(item)
         return time
 
     def getActiveTime(self):
@@ -122,20 +130,17 @@ class View(BrowserView):
 
     def getActiveTimes(self):
         """
-        Get accumulated active time of all
-        (grand-)childrens, include self.
+        Get accumulated active time of all (grand-)childrens
+        in prettified-format, include self.
         """
-
-        context = self.context
-        path = '/'.join(context.getPhysicalPath())
-        item_brains = context.portal_catalog(path={"query": path})
-
-        time = 0
-        for item in item_brains:
-            time += self.computeActiveTime(item)
+        time = self.computeActiveTimes()
         time = self.humanReadableToPrettified(time)
         return time
 
+    def getAge(self):
+        time = self.computeAge()
+        time = self.humanReadableToPrettified(time)
+        return time
 
     def getPosNr(self, obj=None):
         """Return position of item in parent."""
@@ -164,7 +169,6 @@ class View(BrowserView):
             nrs = str( self.getPosNr(parent) ) + '.' + nrs
             parent = parent.aq_parent
         return nrs
-
 
     def getStepbystepPosNrs(self, obj=None):
         """
@@ -226,5 +230,4 @@ class View(BrowserView):
         if not obj: obj = self.context
         if len(obj.getFolderContents()) > 0: HAS_CHILDREN = True
         return HAS_CHILDREN
-
 

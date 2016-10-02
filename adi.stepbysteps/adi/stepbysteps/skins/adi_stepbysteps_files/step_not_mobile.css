@@ -1,0 +1,13 @@
+@media (max-width: 333px) {
+    #portal-column-content {
+        margin-left: -100%;
+        width: 100%;
+    }
+}
+@media (min-width: 333px) {
+    #visual-portal-wrapper {
+        width: 80%;
+        margin: 27px auto 0;
+        padding: 1em;
+    }
+}

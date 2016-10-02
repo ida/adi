@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="adi.devcontent">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="adi.devcontent"
+      directory="profiles/default"
+      description="Installs the adi.devcontent package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+      <genericsetup:importStep
+      name="adi.devcontent"
+      title="adi.devcontent special import handlers"
+      description=""
+      handler="adi.devcontent.setuphandlers.setupVarious" />
+      />
+
+</configure>

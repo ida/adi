@@ -1,17 +1,37 @@
 <?xml version="1.0"?>
 <object name="portal_css">
 <stylesheet title=""
-    id="++resource++adi.stepbysteps.resources/main.css"
+    id="step_not_mobile.css"
     media="screen" rel="stylesheet" rendering="import"
     cacheable="True" compression="safe" cookable="True"
     enabled="1" expression=""/>
 <stylesheet title=""
-    id="++resource++adi.stepbysteps.resources/states.css"
+    id="step_main.css"
     media="screen" rel="stylesheet" rendering="import"
     cacheable="True" compression="safe" cookable="True"
     enabled="1" expression=""/>
 <stylesheet title=""
-    id="++resource++adi.stepbysteps.resources/atct_edit_form.css"
+    id="step_colors.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+<stylesheet title=""
+    id="step_sizes.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+<stylesheet title=""
+    id="step_head.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+<stylesheet title=""
+    id="step_edit.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+<stylesheet title=""
+    id="reset_plone_default_styles.css"
     media="screen" rel="stylesheet" rendering="import"
     cacheable="True" compression="safe" cookable="True"
     enabled="1" expression=""/>

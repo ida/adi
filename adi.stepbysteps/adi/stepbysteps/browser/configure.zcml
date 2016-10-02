@@ -34,20 +34,18 @@
 
     <browser:page
         for="*"
+        name="adi_stepbysteps_helper_view"
+        class=".adi_stepbysteps_helper_view.View"
+        permission="zope2.View"
+        layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
+      />
+
+    <browser:page
+        for="*"
         name="my_stepbysteps"
         template="my_stepbysteps.pt"
         permission="cmf.SetOwnPassword" 
         layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
      />
-
-
-    <!-- Helper view delievering computed vals to other views -->
-    <browser:page
-        for="*"
-        name="adi_stepbysteps_helper_view"
-        class=".resources.times.View"
-        permission="zope2.View"
-        layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
-      />
 
 </configure>

@@ -1,0 +1,39 @@
+@import 'variables';
+
+/************************************
+ *                                  *
+ * WORKFLOW-STATES AND -TRANSITIONS *
+ *                                  *
+ ************************************/
+.start,
+.state-active {
+    color: #207207 !important; /* green */
+}
+.block,
+.state-blocked {
+    color: red !important;
+}
+.state-closed {
+    color: inherit !important;
+}
+.close,
+.state-new {
+    color: #223772 !important; /* darkblue */
+}
+.pause,
+.state-waiting {
+    color: orange !important;
+}
+
+body.portaltype-stepbystep {
+    background: $bg_primary;
+    color: $col_primary;
+    .head {
+        background: $bg_tertiary;
+        background: $bg_secondary;
+        color: $col_secondary;
+    }
+    #content {
+        background: lightyellow;
+    }
+}

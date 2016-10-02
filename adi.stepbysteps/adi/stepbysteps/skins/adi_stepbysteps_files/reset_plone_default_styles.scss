@@ -1,0 +1,18 @@
+/* Reset styles of Plone-4's default-theme "Sunburst Theme". */
+
+@import 'variables';
+
+body.portaltype-stepbystep {
+    #content {
+        line-height: $line_height_primary;
+        margin: 0;
+        a:link,
+        a:visited {
+            border-bottom: none;
+        }
+        p,
+        .field {
+            margin-bottom: 0;
+        }
+    }
+}

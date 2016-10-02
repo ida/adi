@@ -1,0 +1,56 @@
+@import 'variables';
+
+body.portaltype-stepbystep .head {
+float: right;
+    opacity: 0.75;
+    min-height: $border_width_primary;
+    min-width: $line_height_primary;
+    * {
+//        outline: 1px dotted;
+    }
+    .fields {
+//text-align: right;
+        div {
+            display: inline-block;
+            display: none;
+        }
+        .activity,
+        .activity .value,
+        .reporter,
+        .reporter .value {
+            display: inline-block;
+        }
+        .fieldset {
+            display: inline; // break the line
+        }
+    }
+    .fields:hover {
+        div {
+            display: inline-block;
+        }
+        div.fieldset {
+            display: inline; // break the line
+        }
+    }
+    .field {
+        margin-left: 0.5em;
+        .name {
+//            margin-right: 0.25em;
+        }
+        .name:after {
+            content: ':';
+        }
+    }
+/*
+    .times span:nth-child(even) {
+        display: inline-block;
+        width: 1.75em;
+        margin-left: 0.25em;
+    }
+    .times span:nth-child(odd) {
+        display: inline-block;
+        width: 1.125em;
+        margin-left: 0.25em;
+    }
+*/
+}

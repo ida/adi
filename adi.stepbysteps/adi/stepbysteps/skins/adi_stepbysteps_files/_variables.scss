@@ -1,0 +1,25 @@
+$border_width_primary: 0.1em;
+$border_style_primary: solid;
+$bg_primary: lightyellow;
+$bg_secondary: #f1f1f1;
+$bg_tertiary: #b3b3b3;
+$col_primary: #444;
+$col_secondary: #a1a1a1;
+$border_primary: $border_width_primary $border_style_primary $col_primary;
+$font_family_primary: Arial, sans;
+$font_size_primary: 1em;
+$font_size_secondary: 0.65em;
+$line_height_primary: 1.61em;
+$line_height_secondary: 1.5em;
+$button_min_width: $line_height_primary;
+$controls_height: $font_size_primary*2;
+$controls_margin_bottom: $font_size_primary;
+
+
+/* Nightsight, (un-)comment to switch:
+$bg_primary: #000;
+$bg_secondary: $bg_primary;
+$bg_tertiary: #272727;
+$col_primary: #a3a1a1;
+*/
+

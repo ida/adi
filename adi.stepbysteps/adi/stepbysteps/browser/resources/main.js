@@ -1,35 +1,47 @@
 function loadLink(link, loadLinkClass) {
   var href = link.attr('href')
   var destId = ''
+  var loadContainer = null
+  var loadedEle = null
   if(href.indexOf('#') != -1) {
     href = href.split('#')
     destId = href[1]
     href = href[0]
   }
+//$('body').prepend(link)
+// Dirty hack (not universal, hardcoded class-names):
+// If showChildren; prepend to parent,
+// if loadText; insert after step-title:
+if( link.hasClass('showText') ) {
   // Create wrapper to load dest into:
   link.parent().append('<div class="loadWrapper"></div>')
-  // Grap the newly created wrapper:
-  var loadContainer = link.find('~ div.loadWrapper')
-  // Load:
+  // Grab the newly created wrapper:
+  loadContainer = link.find('~ div.loadWrapper')
+}
+else {
+  loadContainer = $('<div class="loadWrapper"></div>')
+                  .insertAfter( link.parent() )
+}
+  // Load destination into wrapper:
   loadContainer.load(href + ' #' + destId, function() {
     // Fetch loaded content:
-    var loadedEle = loadContainer.find('#' + destId)
+    loadedEle = loadContainer.find('#' + destId)
     // Now the wrapper has become superfluous, remove it:
     loadedEle.unwrap()
-    // Apply this listener to the new loaded links:
-    loadLinkClick(loadedEle, loadLinkClass, destId)
-    // Show first children of new loaded content:
-    toggleChildren(link)
+    // Apply click-listener to the new loaded links:
+    onLoadLinkClick(loadedEle, loadLinkClass, destId)
+    // Switch button for show/hide children-button:
+    toggleChildrenButtons(link)
   });
 }
-function loadLinkClick(container, loadLinkClass) {
+function onLoadLinkClick(container, loadLinkClass) {
   // On click, check if content is already loaded,
   // if so, switch its visibility, if not, load content intially.
   container.find('.' + loadLinkClass).click(function(eve) {
     eve.preventDefault()
     var link = $(eve.target)
     var destId = link.attr('href').split('#')[1]
-    var content = link.find('~ #' + destId)
+    var content = link.parent().parent().find('#' + destId)
     // Content has not been loaded yet, load it:
     if(content.length < 1) {
       loadLink(link, loadLinkClass, destId)
@@ -37,11 +49,14 @@ function loadLinkClick(container, loadLinkClass) {
     // Otherwise only toggle visibility:
     else {
       content.toggle()
-      toggleChildren(link)
+      toggleChildrenButtons(link)
     }
   });
 }
-function toggleChildren(link) {
+function toggleChildrenButtons(link) {
+// TODO improve: Do not merely switch class-name,
+// but really check, if content is visible or not,
+// because beleaving is good, yet proving is better.
   if(link.hasClass('showChildren')) {
     link.removeClass('showChildren'); link.addClass('hideChildren')
   }
@@ -58,5 +73,5 @@ function toggleChildren(link) {
 (function($) { $(document).ready(function() {
   var container  = $(document.body)
   var loadLinkClass = 'loadLink'
-  loadLinkClick(container, loadLinkClass) // apply listener
+  onLoadLinkClick(container, loadLinkClass) // apply listener
 }); })(jQuery);

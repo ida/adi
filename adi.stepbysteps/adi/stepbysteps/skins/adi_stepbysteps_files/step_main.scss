@@ -1,0 +1,88 @@
+@import 'variables';
+
+body.portaltype-stepbystep {
+    height: 100%;
+    overflow: hidden;
+    line-height: $line_height_primary;
+    font-family: $font_family_primary;
+    font-size: $font_size_primary;
+    a:focus {
+        outline: 1px dotted;
+    }
+    a[disabled] {
+        opacity: 0.27;
+    }
+    .button {
+        display: inline-block;
+        min-width: 1em;
+        min-height: $line_height_primary;
+        text-align: center;
+    }
+    .showChildren {
+        background: url("++resource++adi.stepbysteps.resources/closed.png")
+                    no-repeat center;
+    }
+    .hideChildren {
+        background: url("++resource++adi.stepbysteps.resources/expanded.png")
+                    no-repeat center;
+    }
+    .hideText {
+        color: inherit;
+/*
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        overflow: hidden;
+        text-indent: 999em;
+outline: 1px solid red;
+*/
+    }
+    .hideText:before {
+        content: '-';
+    }
+    .showText:before {
+        content: '+';
+    }
+    #content {
+        border: 1px solid silver;
+        border-top : none;
+        position: relative;
+        top: 0;
+        bottom: $controls_margin_bottom;
+        margin-bottom: $controls_height + $controls_margin_bottom;
+        .title {
+            color: inherit;
+        }
+        .text {
+            margin-left: $button_min_width;
+        }
+        .step {
+            border-top: 1px solid silver;
+        }
+        .children {
+//            margin-left: $font_size_primary; // indent
+        }
+        .controls {
+z-index: 27; /* override plone default styles */
+            position: fixed;
+            bottom: $controls_margin_bottom;
+            right: 0;
+            width: 100%;
+            line-height: $controls_height;
+            height: $controls_height;
+            .buttons {
+                padding: 0 1em;
+                background: $bg_tertiary;
+                a {
+                    min-width: $button_min_width;
+                }
+                div {
+                    display: inline;
+                }
+            }
+        }
+        .controls:hover {
+            height: auto;
+        }
+    } // EO #content
+} // EO body.portaltype-stepbystep

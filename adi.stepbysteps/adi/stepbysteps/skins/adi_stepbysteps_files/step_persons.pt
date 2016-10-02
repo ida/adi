@@ -1,0 +1,34 @@
+<div class="fieldset persons" metal:define-macro="persons"
+  tal:define="persons_snippet string:'<h2>aha</h2>'"><div
+    class="field reporter">
+    <div class="name" tal:content="string:Reporter">
+Reporter:
+    </div><div 
+    class="value" tal:define="persons context/Creators"><span
+      tal:repeat="person persons" tal:content="person">
+aperson
+      </span>
+    </div>
+  </div><div
+  class="field responsibles">
+    <div class="name" tal:content="string:Responsibles">
+Responsibles:
+    </div><div 
+    class="value" tal:define="persons context/Contributors"><span
+      tal:repeat="person persons" tal:content="person">
+aperson
+      </span>
+    </div>
+  </div><div
+  class="field watchers">
+    <div class="name" tal:content="string:Watchers">
+Watchers:
+    </div><div
+      class="value" tal:define="persons context/Rights;
+      persons python: persons.split()"><span
+        tal:repeat="person persons" tal:content="person">
+aperson
+      </span>
+    </div>
+  </div>
+</div>

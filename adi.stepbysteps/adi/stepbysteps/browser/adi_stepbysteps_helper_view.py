@@ -4,32 +4,29 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
 from adi.stepbysteps.helpers import getCurrentUser
 
+
 class View(BrowserView):
 
-	def my_stepbysteps(self):
-		"""Return all stepbysteps, of which the 
-		   current logged-in user is responsible of.
-		"""
-		
-		records = []
-		criteria = {}
+    def my_stepbysteps(self):
+        """
+        Return all stepbysteps where the current
+        logged-in user is the responsible person.
+        """
+        records = []
+        criteria = {}
+        context = aq_inner(self.context)
+        current_user = getCurrentUser(self)
+        searchpath = getNavigationRoot(context)
 
-		context = aq_inner(self.context)
+        criteria['path'] = searchpath
+        criteria['Type'] = 'Stepbystep'
+        criteria['getResponsiblePerson'] = current_user
 
-		current_user = getCurrentUser(self)
-		searchpath = getNavigationRoot(context)
+        brains = self.context.queryCatalog(criteria)
 
-		criteria['path'] = searchpath
-		criteria['Type'] = 'Stepbystep'
-		criteria['getResponsiblePerson'] = current_user
+        for brain in brains:
+            obj = brain.getObject()
+            records.append(obj)
 
-		brains = self.context.queryCatalog(criteria)
+        return records
 
-
-		for brain in brains:
-
-			obj = brain.getObject()
-
-			records.append(obj)
-
-		return records
