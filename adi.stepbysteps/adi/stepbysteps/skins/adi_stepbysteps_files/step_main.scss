@@ -52,7 +52,7 @@ body.portaltype-stepbystep {
 //            margin-left: $font_size_primary; // indent
         }
         .controls {
-z-index: 27; /* override plone default styles */
+            z-index: 27; /* override plone default styles */
             position: fixed;
             bottom: $controls_margin_bottom;
             right: 0;

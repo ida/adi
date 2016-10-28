@@ -3,35 +3,60 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import _createObjectByType
 from zope.component import getMultiAdapter
 
-def createSteps(context):
-        stepbystep = _createObjectByType('Stepbystep', context, '2', title='NKOTB',
-        text='The new bear-band "Nasty Koalas Of Timeless Bliss" has released a debut album with highly sophisticated lyrics, exceptional harmonic roller-coaster-loops and that little something, words cannot describe.\nSo please enjoy, fresh as fish, the single-release: "Step by step (ooh baby)"', #noqa
-        description="This is an example description of a step. The description-field is not offered to the user, neither in the form, nor in the views, but we fill it, to see, were it might pop up, and if we want to include it maybe, some day, again.") #noqa
-        stepbystep.reindexObject()
+def addStep(parent, id_nr):
+    id_ = str(id_nr)
+    typ = 'Stepbystep'
+    title = 'Sample title of ' + id_ 
+    text = 'Sample text of ' + id_ + '.'
+    step = _createObjectByType(typ, parent, id_, title=title, text=text)
+    step.reindexObject()
+    return step
 
-        child = _createObjectByType('Stepbystep', stepbystep, '3',
-        title='Step One!', text="We can have lots of fun")
-        child.reindexObject()
-        grandchild = _createObjectByType('Stepbystep', child, '4',
-        title='Step Two!', text="There's so much we can do")
-        grandchild.reindexObject()
-        grandchild = _createObjectByType('Stepbystep', child, '5',
-        title='Step Three!', text="It's just you and me")
-        grandchild.reindexObject()
-        child = _createObjectByType('Stepbystep', stepbystep, '6',
-        title='Step Four!', text="I can give you more")
-        child.reindexObject()
-        child = _createObjectByType('Stepbystep', stepbystep, '7',
-        title='Step Five!', text="Don't you know that the time has arrived")
-        child.reindexObject()
+def createSteps(context):
+    step_id_nr = 2
+
+    step = addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    context = step
+
+    step = addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    context = step
+
+    step = addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    addStep(context, step_id_nr)
+    step_id_nr += 1
+
+    # Now, let's set an expired expiration-date,
+    # to one of the steps, for testing:
+    from DateTime import DateTime
+    step.setExpirationDate(DateTime())
+    step.setTitle('I am an expired step')
+    step.reindexObject()
 
 def createLandingPage(container):
     # Create obj:
     collection = _createObjectByType("Topic", container, 'latest-modified', title='Latest steps', description='An overview of all tickets, sorted by latest modification.')
     
-    # Update catalog:
-    collection.reindexObject()
-
     # Set default views:
     container.setDefaultPage('tickets')
     container.setDefaultPage('latest-modified')
@@ -39,25 +64,64 @@ def createLandingPage(container):
     # Set collection-criteria:
     collection_criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     collection_criterion.setValue('Stepbystep')
+    
+    date_crit = collection_criterion
+    date_crit = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
+    date_crit.setValue(0)
+    date_crit.setDateRange('-')  # This is irrelevant when the date is now
+    date_crit.setOperation('less')
+
+    # Update catalog:
+    collection.reindexObject()
+
+# Assign portlet:
 #            getMultiAdapter((folder, folder.REQUEST, folder.restrictedTraverse('@@plone'), managerAbove, calendar.Assignment()), IPortletRenderer)
  
+def createOverviews(container):
+    # Create collection:
+    collection = _createObjectByType("Topic", container, 'latest-modified', title='Latest modified steps', description='An overview of all steps, sorted by latest modification.')
+    # Set collection-criteria:
+    criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
+    criterion.setValue('Stepbystep')
+    # Update catalog:
+    collection.reindexObject()
+    
+    # Create collection:
+    collection = _createObjectByType("Topic", container, 'overdue', title='Overdue steps', description='Steps where the expiration-date has passed by.')
+    # Set collection-criteria:
+    criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
+    criterion.setValue(0)
+#    criterion.setDateRange('-')  # This is irrelevant when the date is now, but we set a val anyways?
+    criterion.setOperation('less')
+    # Update catalog:
+    collection.reindexObject()
+
+
+# Example for a new-style-collection:
+#    collection = _createObjectByType("Collection", container, 'overdue', title='Overdue steps', description='Steps where the expiration-date has passed by.')
+#    query = [{'i': 'portal_type',
+#              'o': 'plone.app.querystring.operation.selection.is',
+#              'v': ['Stepbystep']},
+#             {'i': 'expires',
+#              'o': 'plone.app.querystring.operation.date.beforeToday',
+#              'v': ''}]
+#    collection.setQuery(query)
+#    # Update catalog:
+#    collection.reindexObject()
+
+
 def createContent(context):
     
-    urltool = getToolByName(context, 'portal_url')
-    portal = urltool.getPortalObject()
-    typestool = getToolByName(context, 'portal_types')
-    catalog = getToolByName(context, 'portal_catalog')
-    qi = getToolByName(context, 'portal_quickinstaller')
-    prods = qi.listInstallableProducts(skipInstalled=False)
-
-    # We only want the following to happen on an initial install,
-    # not on a reinstall, which is given if status is uninstalled:
-    for prod in prods:
-        if (prod['id'] == 'adi.stepbysteps') and (prod['status'] != 'uninstalled'):
-            container = _createObjectByType("Folder", context, 'steps', title='Step by step')
-            container.reindexObject()
-            createSteps(container)
-            createLandingPage(container)
+    id_ = 'stepbystep'
+    if id_ not in context.keys():
+        container = _createObjectByType("Folder", context, 'stepbystep', title='Step by step')
+        container.reindexObject()
+        createLandingPage(container)
+        context = container
+        container = _createObjectByType("Stepbystep", context, 'root-step', title='Root step')
+        createSteps(container)
+        container = _createObjectByType("Folder", context, 'overviews', title='Overviews')
+        createOverviews(container)
 
 def setupVarious(context):
     portal = context.getSite()

@@ -1,6 +1,7 @@
 $bg_primary: lightyellow;
 $bg_secondary: #f1f1f1;
 $bg_tertiary: #b3b3b3;
+$bg_content: $bg_primary;
 $col_primary: #444;
 $col_secondary: #a1a1a1;
 
@@ -9,6 +10,7 @@ $col_secondary: #a1a1a1;
 $bg_primary: #000;
 $bg_secondary: $bg_primary;
 $bg_tertiary: #272727;
+$bg_content: $bg_primary;
 $col_primary: #a3a1a1;
 
 
@@ -28,7 +30,7 @@ body.portaltype-stepbystep {
         color: $col_secondary;
     }
     #content {
-        background: lightyellow;
+        background: $bg_content;
     }
 }
 
