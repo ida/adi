@@ -8,10 +8,8 @@ function loadLink(link, loadLinkClass) {
     destId = href[1]
     href = href[0]
   }
-//$('body').prepend(link)
-// Dirty hack (not universal, hardcoded class-names):
-// If showChildren; prepend to parent,
-// if loadText; insert after step-title:
+// If we have a link with class showChildren; prepend to parent,
+// if link we have a link with class loadText; insert after step-title:
 if( link.hasClass('showText') ) {
   // Create wrapper to load dest into:
   link.parent().append('<div class="loadWrapper"></div>')
@@ -41,7 +39,7 @@ function onLoadLinkClick(container, loadLinkClass) {
     eve.preventDefault()
     var link = $(eve.target)
     var destId = link.attr('href').split('#')[1]
-    var content = link.parent().parent().find('#' + destId)
+    var content = $(link.parent().parent().find('#' + destId)[0]) // only 1st
     // Content has not been loaded yet, load it:
     if(content.length < 1) {
       loadLink(link, loadLinkClass, destId)
@@ -70,8 +68,16 @@ function toggleChildrenButtons(link) {
     link.removeClass('hideText'); link.addClass('showText')
   }
 }
+function listenToSpacebar(container) {
+  container.keypress(function(eve) { // a key is pressed
+    if(eve.keyCode == '0') { // it's the spacebar
+      eve.target.click() // simulate click on focused/active-ele
+    }
+  });
+}
 (function($) { $(document).ready(function() {
   var container  = $(document.body)
   var loadLinkClass = 'loadLink'
   onLoadLinkClick(container, loadLinkClass) // apply listener
+  listenToSpacebar(container)
 }); })(jQuery);
