@@ -26,17 +26,6 @@ body.portaltype-stepbystep {
         background: url("++resource++adi.stepbysteps.resources/expanded.png")
                     no-repeat center;
     }
-    .hideText {
-        color: inherit;
-/*
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        overflow: hidden;
-        text-indent: 999em;
-outline: 1px solid red;
-*/
-    }
     .hideText:before {
         content: '-';
     }
@@ -72,7 +61,6 @@ z-index: 27; /* override plone default styles */
             height: $controls_height;
             .buttons {
                 padding: 0 1em;
-                background: $bg_tertiary;
                 a {
                     min-width: $button_min_width;
                 }

@@ -1,4 +1,36 @@
-@import 'variables';
+$bg_primary: lightyellow;
+$bg_secondary: #f1f1f1;
+$bg_tertiary: #b3b3b3;
+$col_primary: #444;
+$col_secondary: #a1a1a1;
+
+/* Nightsight, (un-)comment to switch:
+*/
+$bg_primary: #000;
+$bg_secondary: $bg_primary;
+$bg_tertiary: #272727;
+$col_primary: #a3a1a1;
+
+
+/************************************
+ *                                  *
+ *            GENERAL               *
+ *                                  *
+ ************************************/
+body.portaltype-stepbystep {
+    background: $bg_primary;
+    color: $col_primary;
+    .buttons {
+        background: $bg_tertiary;
+    }
+    .head {
+        background: $bg_secondary;
+        color: $col_secondary;
+    }
+    #content {
+        background: lightyellow;
+    }
+}
 
 /************************************
  *                                  *
@@ -25,15 +57,3 @@
     color: orange !important;
 }
 
-body.portaltype-stepbystep {
-    background: $bg_primary;
-    color: $col_primary;
-    .head {
-        background: $bg_tertiary;
-        background: $bg_secondary;
-        color: $col_secondary;
-    }
-    #content {
-        background: lightyellow;
-    }
-}

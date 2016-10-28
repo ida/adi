@@ -9,7 +9,7 @@
   isRootStepbystep nocall: context/adi_stepbysteps_main_view/isRootStepbystep;
   nrs nocall: context/adi_stepbysteps_main_view/getStepbystepPosNrs;
   hasChildren context/adi_stepbysteps_main_view/hasChildren;
-  state python:context.portal_workflow.getInfoFor(context, 'review_state');
+  state context/plone_context_state/workflow_state;
   state_class string:state-${state};
   ">
   <div metal:use-macro="context/step_blockers/macros/blockers">

@@ -68,16 +68,29 @@ function toggleChildrenButtons(link) {
     link.removeClass('hideText'); link.addClass('showText')
   }
 }
-function listenToSpacebar(container) {
+function onSpacebarPress(container) {
   container.keypress(function(eve) { // a key is pressed
     if(eve.keyCode == '0') { // it's the spacebar
       eve.target.click() // simulate click on focused/active-ele
     }
   });
 }
+function alertOverdues(container) {
+  var href = 'http://localhost:8080/Plone/@@search?portal_type:list=Stepbystep&expires.query:date:list:record=2017/01/02%2000%3A00%3A00%20GMT%2B0&expires.range:record=min'
+  var anchorId = 'search-results'
+  href = 'http://localhost:8080/Plone/stepbystep/overviews/overdue'
+  anchorId = 'content-core'
+  // Provide ele to load content into, prepend it to container-children:
+  var loadEle = $('<div></div>').insertBefore($(container.find('> *')[0]))
+  // Load content:
+  loadEle.load(href + ' #' + anchorId, function() {
+    loadEle.find('a').attr('tabindex', '-1')
+  });
+}
 (function($) { $(document).ready(function() {
   var container  = $(document.body)
   var loadLinkClass = 'loadLink'
   onLoadLinkClick(container, loadLinkClass) // apply listener
-  listenToSpacebar(container)
+  onSpacebarPress(container)
+  alertOverdues(container)
 }); })(jQuery);
