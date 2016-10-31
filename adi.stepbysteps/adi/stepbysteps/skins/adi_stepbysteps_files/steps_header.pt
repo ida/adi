@@ -1,0 +1,5 @@
+<div metal:define-macro="steps_header">
+  <a href="#" title="Show expired steps">
+    Expired steps
+  </a>
+</div>
