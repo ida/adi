@@ -1,5 +1,6 @@
 from Acquisition import aq_inner, aq_parent
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import _createObjectByType
 from Products.statusmessages.interfaces import IStatusMessage
 from adi.stepbysteps import stepbystepsMessageFactory as _
 from adi.stepbysteps.helpers import increaseStepbystepsIndex
@@ -109,6 +110,41 @@ def setBlocker(obj, eve):
                         is_blocking += ','
                     block.getObject().setIsDependencyOf(is_blocking + obj.getId())
                     block.getObject().reindexObject()
+
+def addLastModifiedCollection(step):
+    # Create collection:
+    collection = _createObjectByType("Topic", step, 'latest-modified', title='Latest modified steps', description='An overview of all steps, sorted by latest modification.')
+    # Set collection-criteria:
+    criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
+    criterion.setValue('Stepbystep')
+    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    criterion.setRelativePath('../..')
+    # Update catalog:
+    collection.reindexObject()
+
+def addLastExpiredCollection(step):
+    # Create collection:
+    collection = _createObjectByType("Topic", step, 'overdue', title='Overdue steps', description='Steps where the expiration-date has passed by.')
+    # Set collection-criteria:
+    criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
+    criterion.setValue(0)
+#    criterion.setDateRange('-')  # This is irrelevant when the date is now, but we set a val anyways?
+    criterion.setOperation('less')
+    # Enable table-view:
+    collection.setCustomView(True)
+    # Set fields to show in table-view:
+    collection.setCustomViewFields(['Title', 'ExpirationDate'])
+    # Set sorting:
+    collection.setSortCriterion('expires', 'descending')
+    # Update catalog:
+    collection.reindexObject()
+
+# zope.lifecycleevent.IObjectCreatedEvent
+def addCollections(step, event):
+    """
+    On creation of a step, add overviews as collections.
+    """
+    addLastModifiedCollection(step)
 
 #IObjectInitializedEvent
 def setIndexNumber(obj, event):

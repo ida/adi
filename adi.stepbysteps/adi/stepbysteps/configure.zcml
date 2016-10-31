@@ -30,6 +30,12 @@
 		handler=".subscriber.setIndexNumber"
 	  />
 
+	<subscriber
+		for=".interfaces.IStepbystep
+            zope.lifecycleevent.IObjectCreatedEvent"
+		handler=".subscriber.addCollections"
+	  />
+
   <!--  A stepbystep has been modified: -->
 	<subscriber
 		for=".interfaces.IStepbystep
