@@ -33,10 +33,10 @@ Toggle children
 Toggle children dummy
     </span>
   </tal:not-first-step>
-  <span tal:replace="string:0" tal:condition="isRootStepbystep">
+  <span class="posnr" tal:content="string:0" tal:condition="isRootStepbystep">
 0
   </span>
-  <span tal:replace="nrs" tal:condition="not: isRootStepbystep">
+  <span class="posnr" tal:content="nrs" tal:condition="not: isRootStepbystep">
 1.2
   </span>
   <a class="title" tal:content="title"

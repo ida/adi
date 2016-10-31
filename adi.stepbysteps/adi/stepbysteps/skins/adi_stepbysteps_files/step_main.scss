@@ -39,6 +39,9 @@ body.portaltype-stepbystep {
         top: 0;
         bottom: $controls_margin_bottom;
         margin-bottom: $controls_height + $controls_margin_bottom;
+        .posnr {
+            color: red;
+        }
         .title {
             color: inherit;
         }

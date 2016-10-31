@@ -1,11 +1,11 @@
 function loadLink(link, loadLinkClass) {
   var href = link.attr('href')
-  var destId = ''
+  var anchorId = ''
   var loadContainer = null
   var loadedEle = null
   if(href.indexOf('#') != -1) {
     href = href.split('#')
-    destId = href[1]
+    anchorId = href[1]
     href = href[0]
   }
 // If we have a link with class showChildren; prepend to parent,
@@ -21,13 +21,13 @@ else {
                   .insertAfter( link.parent() )
 }
   // Load destination into wrapper:
-  loadContainer.load(href + ' #' + destId, function() {
+  loadContainer.load(href + ' #' + anchorId, function() {
     // Fetch loaded content:
-    loadedEle = loadContainer.find('#' + destId)
+    loadedEle = loadContainer.find('#' + anchorId)
     // Now the wrapper has become superfluous, remove it:
     loadedEle.unwrap()
     // Apply click-listener to the new loaded links:
-    onLoadLinkClick(loadedEle, loadLinkClass, destId)
+    onLoadLinkClick(loadedEle, loadLinkClass, anchorId)
     // Switch button for show/hide children-button:
     toggleChildrenButtons(link)
   });
@@ -38,11 +38,11 @@ function onLoadLinkClick(container, loadLinkClass) {
   container.find('.' + loadLinkClass).click(function(eve) {
     eve.preventDefault()
     var link = $(eve.target)
-    var destId = link.attr('href').split('#')[1]
-    var content = $(link.parent().parent().find('#' + destId)[0]) // only 1st
+    var anchorId = link.attr('href').split('#')[1]
+    var content = $(link.parent().parent().find('#' + anchorId)[0]) // only 1st
     // Content has not been loaded yet, load it:
     if(content.length < 1) {
-      loadLink(link, loadLinkClass, destId)
+      loadLink(link, loadLinkClass, anchorId)
     }
     // Otherwise only toggle visibility:
     else {
@@ -76,15 +76,18 @@ function onSpacebarPress(container) {
   });
 }
 function alertOverdues(container) {
-  var href = 'http://localhost:8080/Plone/@@search?portal_type:list=Stepbystep&expires.query:date:list:record=2017/01/02%2000%3A00%3A00%20GMT%2B0&expires.range:record=min'
+// http://www.stackoverflow.com/questions/24744466/how-to-search-content-using-a-date-range-on-plone
+  var href = 'http://localhost:8080/Plone/@@search?portal_type:list=Stepbystep&expires.query:date:list:record=2017/01/02%2000%3A00%3A00%20GMT%2B0&expires.range:record=max'
   var anchorId = 'search-results'
-  href = 'http://localhost:8080/Plone/stepbystep/overviews/overdue'
+  // Or, load results of pre-populated collection (see '../../setuphandlers.py'),
+  // that'll give us atble-view qith the xpiraton-date shown:
+  href = 'http://localhost:8080/Plone/0/overviews/overdue'
   anchorId = 'content-core'
+
   // Provide ele to load content into, prepend it to container-children:
   var loadEle = $('<div></div>').insertBefore($(container.find('> *')[0]))
-  // Load content:
-  loadEle.load(href + ' #' + anchorId, function() {
-    loadEle.find('a').attr('tabindex', '-1')
+  loadEle.load(href + ' #' + anchorId, function() { // load into ele
+    loadEle.find('a').attr('tabindex', '-1') // inhibit links in ele of tabbing
   });
 }
 (function($) { $(document).ready(function() {

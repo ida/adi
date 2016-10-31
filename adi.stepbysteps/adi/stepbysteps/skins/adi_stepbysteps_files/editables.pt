@@ -14,14 +14,14 @@ tags, no linebreak or other space.
   </a><a class="add sub"
      tal:attributes="href string:${url}/createObject?type_name=Stepbystep"
      title="Add sub-step"
-     tal:content="string:++">
+     tal:content="string:+">
     Add sub-step
-  </a><a class="add"
+  </a><tal:comment tal:replace="nothing"><a class="add"
      href="../createObject?type_name=Stepbystep"
      title="Add next-step"
      tal:content="string:+">
     Add next-step 
-  </a><a class="edit"
+  </a></tal:comment><a class="edit"
      tal:attributes="href string:${url}/edit"
      title="Edit this step">&#9998;
   </a></div>

@@ -13,38 +13,14 @@ def addStep(parent, id_nr):
     return step
 
 def createSteps(context):
-    step_id_nr = 2
-
-    step = addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    addStep(context, step_id_nr)
-    step_id_nr += 1
-
+    n = 3
+    m = n
+    step = addStep(context, 0)
     context = step
-
-    step = addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    context = step
-
-    step = addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    addStep(context, step_id_nr)
-    step_id_nr += 1
-
-    addStep(context, step_id_nr)
-    step_id_nr += 1
+    while m > 0:
+        createStepsLoop(context, n)
+        context = context[str(n)]
+        m -= 1
 
     # Now, let's set an expired expiration-date,
     # to one of the steps, for testing:
@@ -53,26 +29,10 @@ def createSteps(context):
     step.setTitle('I am an expired step')
     step.reindexObject()
 
-def createLandingPage(container):
-    # Create obj:
-    collection = _createObjectByType("Topic", container, 'latest-modified', title='Latest steps', description='An overview of all tickets, sorted by latest modification.')
-    
-    # Set default views:
-    container.setDefaultPage('tickets')
-    container.setDefaultPage('latest-modified')
-
-    # Set collection-criteria:
-    collection_criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    collection_criterion.setValue('Stepbystep')
-    
-    date_crit = collection_criterion
-    date_crit = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
-    date_crit.setValue(0)
-    date_crit.setDateRange('-')  # This is irrelevant when the date is now
-    date_crit.setOperation('less')
-
-    # Update catalog:
-    collection.reindexObject()
+def createStepsLoop(context, n):
+    while n > 0:
+        addStep(context, n)
+        n -= 1
 
 # Assign portlet:
 #            getMultiAdapter((folder, folder.REQUEST, folder.restrictedTraverse('@@plone'), managerAbove, calendar.Assignment()), IPortletRenderer)
@@ -83,9 +43,10 @@ def createOverviews(container):
     # Set collection-criteria:
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     criterion.setValue('Stepbystep')
+    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    criterion.setRelativePath('../..')
     # Update catalog:
     collection.reindexObject()
-    
     # Create collection:
     collection = _createObjectByType("Topic", container, 'overdue', title='Overdue steps', description='Steps where the expiration-date has passed by.')
     # Set collection-criteria:
@@ -93,6 +54,12 @@ def createOverviews(container):
     criterion.setValue(0)
 #    criterion.setDateRange('-')  # This is irrelevant when the date is now, but we set a val anyways?
     criterion.setOperation('less')
+    # Enable table-view:
+    collection.setCustomView(True)
+    # Set fields to show in table-view:
+    collection.setCustomViewFields(['Title', 'ExpirationDate'])
+    # Set sorting:
+    collection.setSortCriterion('expires', 'descending')
     # Update catalog:
     collection.reindexObject()
 
@@ -111,17 +78,12 @@ def createOverviews(container):
 
 
 def createContent(context):
-    
-    id_ = 'stepbystep'
+    id_ = '0'
     if id_ not in context.keys():
-        container = _createObjectByType("Folder", context, 'stepbystep', title='Step by step')
-        container.reindexObject()
-        createLandingPage(container)
-        context = container
-        container = _createObjectByType("Stepbystep", context, 'root-step', title='Root step')
-        createSteps(container)
-        container = _createObjectByType("Folder", context, 'overviews', title='Overviews')
-        createOverviews(container)
+        context = _createObjectByType("Stepbystep", context, id_, title='Root step')
+        createSteps(context)
+        context = _createObjectByType("Folder", context, 'overviews', title='Overviews')
+        createOverviews(context)
 
 def setupVarious(context):
     portal = context.getSite()
