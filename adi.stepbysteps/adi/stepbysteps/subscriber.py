@@ -115,19 +115,24 @@ def addLastModifiedCollection(step):
     # Create collection:
     collection = _createObjectByType("Topic", step, 'latest-modified', title='Latest modified steps', description='An overview of all steps, sorted by latest modification.')
 
-    # SORTING
-    # Sort results by latest modified item first:
-    collection.setSortCriterion('modified', 'descending')
-
-    # CRITERIA
-    # Set collection-criterion 'portal-type':
+    # Set collection-criterion 'portal-type' to be 'Stepbystep':
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    criterion.setValue('Stepbystep') # all items of type Stepbystep
-    # Set collection-criterion 'relative-path':
-    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-    criterion.setRelativePath('..') # all items in collection-parent
+    criterion.setValue('Stepbystep')
+
+    # Set collection-criterion 'relative-path' to be parent,
+    # include grand-children and exclude parent in results:
+    # criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    # criterion.setRelativePath('..')
+    # criterion.setRecurse(True)
+
+    # Set collection-criterion 'UID-path' to be parent,
+    # include grand-children and parent in results:
+    criterion = collection.addCriterion('path', 'ATPathCriterion')
+    criterion.setValue([collection.aq_parent.UID()])
     criterion.setRecurse(True) # include grand-children
 
+    # Sort results by latest modified item first:
+    collection.setSortCriterion('modified', 'descending')
     # Update catalog:
     collection.reindexObject()
 
@@ -146,16 +151,25 @@ def addLastExpiredCollection(step):
     collection.setCustomViewFields(['Title', 'ExpirationDate'])
 
     # CRITERIA
-    # Set collection-criterion 'expiration-date':
+    # Expiration date passed by:
     criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
-    criterion.setValue(0) # 0 means now
-    criterion.setOperation('less') # all items where exp-date is less than now
-    # Set collection-criterion 'portal-type':
+    criterion.setValue(0) # now
+    criterion.setOperation('less') # older than now
+
+    # Set collection-criterion 'portal-type' to be 'Stepbystep':
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    criterion.setValue('Stepbystep') # all items of type Stepbystep
-    # Set collection-criterion 'relative-path':
-    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-    criterion.setRelativePath('..') # all items in collection-parent
+    criterion.setValue('Stepbystep')
+
+    # Set collection-criterion 'relative-path' to be parent,
+    # include grand-children and exclude parent in results:
+    # criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    # criterion.setRelativePath('..')
+    # criterion.setRecurse(True)
+
+    # Set collection-criterion 'UID-path' to be parent,
+    # include grand-children and parent in results:
+    criterion = collection.addCriterion('path', 'ATPathCriterion')
+    criterion.setValue([collection.aq_parent.UID()])
     criterion.setRecurse(True) # include grand-children
 
     # Update portal-catalog:

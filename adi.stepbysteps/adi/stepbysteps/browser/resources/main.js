@@ -85,8 +85,15 @@ function alertOverdues(container) {
   var loadEle = $('<div></div>').insertBefore($(container.find('> *')[0]))
   // Load:
   loadEle.load(href + ' #' + anchorId, function() {
-    // Exclude links of loaded content to be focused, when user uses tab-key:
-    loadEle.find('a').attr('tabindex', '-1')
+    // No results have been found:
+    if(loadEle.find('.discreet').length > 0) {
+      // Remove whole loadEle again (for now):
+      loadEle.remove()
+    }
+    else { // We got results:
+      // Exclude links of loaded content to be focused, when user uses tab-key:
+      loadEle.find('a').attr('tabindex', '-1')
+    }
   });
 }
 (function($) { $(document).ready(function() {
