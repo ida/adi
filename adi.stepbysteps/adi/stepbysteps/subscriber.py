@@ -114,29 +114,51 @@ def setBlocker(obj, eve):
 def addLastModifiedCollection(step):
     # Create collection:
     collection = _createObjectByType("Topic", step, 'latest-modified', title='Latest modified steps', description='An overview of all steps, sorted by latest modification.')
-    # Set collection-criteria:
+
+    # SORTING
+    # Sort results by latest modified item first:
+    collection.setSortCriterion('modified', 'descending')
+
+    # CRITERIA
+    # Set collection-criterion 'portal-type':
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    criterion.setValue('Stepbystep')
+    criterion.setValue('Stepbystep') # all items of type Stepbystep
+    # Set collection-criterion 'relative-path':
     criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-    criterion.setRelativePath('../..')
+    criterion.setRelativePath('..') # all items in collection-parent
+    criterion.setRecurse(True) # include grand-children
+
     # Update catalog:
     collection.reindexObject()
 
 def addLastExpiredCollection(step):
     # Create collection:
     collection = _createObjectByType("Topic", step, 'overdue', title='Overdue steps', description='Steps where the expiration-date has passed by.')
-    # Set collection-criteria:
-    criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
-    criterion.setValue(0)
-#    criterion.setDateRange('-')  # This is irrelevant when the date is now, but we set a val anyways?
-    criterion.setOperation('less')
-    # Enable table-view:
-    collection.setCustomView(True)
-    # Set fields to show in table-view:
-    collection.setCustomViewFields(['Title', 'ExpirationDate'])
-    # Set sorting:
+
+    # SORTING
+    # Sort results by latest expired item first:
     collection.setSortCriterion('expires', 'descending')
-    # Update catalog:
+
+    # VIEW
+    # Enable and thereby also set the table-view as default-template:
+    collection.setCustomView(True)
+    # Set which columns shall show up in table-view:
+    collection.setCustomViewFields(['Title', 'ExpirationDate'])
+
+    # CRITERIA
+    # Set collection-criterion 'expiration-date':
+    criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
+    criterion.setValue(0) # 0 means now
+    criterion.setOperation('less') # all items where exp-date is less than now
+    # Set collection-criterion 'portal-type':
+    criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
+    criterion.setValue('Stepbystep') # all items of type Stepbystep
+    # Set collection-criterion 'relative-path':
+    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    criterion.setRelativePath('..') # all items in collection-parent
+    criterion.setRecurse(True) # include grand-children
+
+    # Update portal-catalog:
     collection.reindexObject()
 
 # zope.lifecycleevent.IObjectCreatedEvent

@@ -36,7 +36,6 @@ setup(name='adi.stepbysteps',
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
-      'adi.devgen',
                         'collective.wfcomment'
                         # -*- Extra requirements: -*-
                         ],
