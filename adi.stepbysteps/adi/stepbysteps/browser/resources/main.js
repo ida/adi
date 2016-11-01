@@ -76,18 +76,17 @@ function onSpacebarPress(container) {
   });
 }
 function alertOverdues(container) {
-// http://www.stackoverflow.com/questions/24744466/how-to-search-content-using-a-date-range-on-plone
-  var href = 'http://localhost:8080/Plone/@@search?portal_type:list=Stepbystep&expires.query:date:list:record=2017/01/02%2000%3A00%3A00%20GMT%2B0&expires.range:record=max'
-  var anchorId = 'search-results'
-  // Or, load results of pre-populated collection (see '../../setuphandlers.py'),
-  // that'll give us atble-view qith the xpiraton-date shown:
-  href = 'http://localhost:8080/Plone/0/overviews/overdue'
+  // Assumes a collection called 'overdue' is contained in the currently watched
+  // step, and prepends its content into the passed container-ele.
+  href = 'overdue'
   anchorId = 'content-core'
 
   // Provide ele to load content into, prepend it to container-children:
   var loadEle = $('<div></div>').insertBefore($(container.find('> *')[0]))
-  loadEle.load(href + ' #' + anchorId, function() { // load into ele
-    loadEle.find('a').attr('tabindex', '-1') // inhibit links in ele of tabbing
+  // Load:
+  loadEle.load(href + ' #' + anchorId, function() {
+    // Exclude links of loaded content to be focused, when user uses tab-key:
+    loadEle.find('a').attr('tabindex', '-1')
   });
 }
 (function($) { $(document).ready(function() {

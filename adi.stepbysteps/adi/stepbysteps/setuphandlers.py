@@ -1,8 +1,9 @@
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import _createObjectByType
-from zope.component import getMultiAdapter
+from DateTime import DateTime
 from Products.Archetypes.interfaces import IObjectInitializedEvent
+from zope.component import getMultiAdapter
 
 def addStep(parent, id_nr):
     id_ = str(id_nr)
@@ -10,6 +11,9 @@ def addStep(parent, id_nr):
     title = 'Sample title of ' + id_ 
     text = 'Sample text of ' + id_ + '.'
     #step = _createObjectByType(typ, parent, id_, title=title, text=text)
+# We use invokeFactory() instead of _createObjectByType(), because the first
+# does, in contradiction to the latter, fire an creation-event, needed for
+# our subscriber to take off.
     parent.invokeFactory(typ, id_, title=title, text=text)
     step = parent[id_]
     step.reindexObject()
@@ -27,7 +31,6 @@ def createSteps(context):
 
     # Now, let's set an expired expiration-date,
     # to one of the steps, for testing:
-    from DateTime import DateTime
     step.setExpirationDate(DateTime())
     step.setTitle('I am an expired step')
     step.reindexObject()

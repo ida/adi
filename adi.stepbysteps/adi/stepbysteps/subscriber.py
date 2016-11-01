@@ -144,6 +144,7 @@ def addCollections(step, event):
     """
     On creation of a step, add overviews as collections.
     """
+    addLastExpiredCollection(step)
     addLastModifiedCollection(step)
 
 #IObjectInitializedEvent
