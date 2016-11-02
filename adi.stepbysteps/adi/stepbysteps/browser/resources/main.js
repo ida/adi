@@ -83,17 +83,35 @@ function alertOverdues(container) {
 
   // Provide ele to load content into, prepend it to container-children:
   var loadEle = $('<div></div>').insertBefore($(container.find('> *')[0]))
-  // Load:
+  // Style loadEle:
+  loadEleCss = {
+    'height':'1px',
+    'width':'1px',
+    'overflow':'hidden',
+    'border':'0.5em solid',
+  }
+  loadEleCssOnHover = {
+    'height':'auto',
+    'width':'auto',
+    'overflow':'visible',
+    'border':'none',
+  }
+  loadEle.css(loadEleCss)
+  // Load dest into ele:
   loadEle.load(href + ' #' + anchorId, function() {
     // No results have been found:
     if(loadEle.find('.discreet').length > 0) {
-      // Remove whole loadEle again (for now):
-      loadEle.remove()
+    } // We got results:
+    else {
+      loadEleCss['border-color'] = 'red'
+      loadEle.css(loadEleCss)
     }
-    else { // We got results:
-      // Exclude links of loaded content to be focused, when user uses tab-key:
-      loadEle.find('a').attr('tabindex', '-1')
-    }
+    loadEle.mouseover(function() {
+      loadEle.css(loadEleCssOnHover)
+    });
+    loadEle.mouseout(function() {
+      loadEle.css(loadEleCss)
+    });
   });
 }
 (function($) { $(document).ready(function() {
