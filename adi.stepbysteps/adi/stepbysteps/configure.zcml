@@ -23,16 +23,17 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   
-  <!--  A stepbystep has been created: -->
+  <!--  A stepbystep is in creation: -->
 	<subscriber
 		for=".interfaces.IStepbystep
 		Products.Archetypes.interfaces.IObjectInitializedEvent"
 		handler=".subscriber.setIndexNumber"
 	  />
 
+  <!--  A stepbystep has been created: -->
 	<subscriber
 		for=".interfaces.IStepbystep
-            zope.lifecycleevent.IObjectCreatedEvent"
+		Products.Archetypes.interfaces.IObjectInitializedEvent"
 		handler=".subscriber.addCollections"
 	  />
 

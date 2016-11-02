@@ -111,77 +111,57 @@ def setBlocker(obj, eve):
                     block.getObject().setIsDependencyOf(is_blocking + obj.getId())
                     block.getObject().reindexObject()
 
-def addLastModifiedCollection(step):
+def addLastModifiedCollection(step, event):
     # Create collection:
-    collection = _createObjectByType("Topic", step, 'latest-modified', title='Latest modified steps', description='An overview of all steps, sorted by latest modification.')
-
+    collection = _createObjectByType("Topic", step, 'latest-modified',
+        title='Latest modified steps',
+        description='An overview of all steps, sorted by latest modification.')
     # Set collection-criterion 'portal-type' to be 'Stepbystep':
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     criterion.setValue('Stepbystep')
-
-    # Set collection-criterion 'relative-path' to be parent,
-    # include grand-children and exclude parent in results:
-    # criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-    # criterion.setRelativePath('..')
-    # criterion.setRecurse(True)
-
     # Set collection-criterion 'UID-path' to be parent,
     # include grand-children and parent in results:
     criterion = collection.addCriterion('path', 'ATPathCriterion')
     criterion.setValue([collection.aq_parent.UID()])
     criterion.setRecurse(True) # include grand-children
-
     # Sort results by latest modified item first:
     collection.setSortCriterion('modified', 'descending')
     # Update catalog:
     collection.reindexObject()
 
-def addLastExpiredCollection(step):
+def addLastExpiredCollection(step, event):
     # Create collection:
-    collection = _createObjectByType("Topic", step, 'overdue', title='Overdue steps', description='Steps where the expiration-date has passed by.')
-
-    # SORTING
+    collection = _createObjectByType("Topic", step, 'overdue',
+        title='Overdue steps',
+        description='Steps where the expiration-date has passed by.')
     # Sort results by latest expired item first:
     collection.setSortCriterion('expires', 'descending')
-
-    # VIEW
     # Enable and thereby also set the table-view as default-template:
     collection.setCustomView(True)
     # Set which columns shall show up in table-view:
     collection.setCustomViewFields(['Title', 'ExpirationDate'])
-
-    # CRITERIA
     # Expiration date passed by:
     criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
     criterion.setValue(0) # now
     criterion.setOperation('less') # older than now
-
     # Set collection-criterion 'portal-type' to be 'Stepbystep':
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     criterion.setValue('Stepbystep')
-
-    # Set collection-criterion 'relative-path' to be parent,
-    # include grand-children and exclude parent in results:
-    # criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-    # criterion.setRelativePath('..')
-    # criterion.setRecurse(True)
-
     # Set collection-criterion 'UID-path' to be parent,
     # include grand-children and parent in results:
     criterion = collection.addCriterion('path', 'ATPathCriterion')
     criterion.setValue([collection.aq_parent.UID()])
     criterion.setRecurse(True) # include grand-children
-
     # Update portal-catalog:
     collection.reindexObject()
 
-# zope.lifecycleevent.IObjectCreatedEvent
+#Products.Archetypes.interfaces.IObjectInitializedEvent
 def addCollections(step, event):
     """
     On creation of a step, add overviews as collections.
     """
-    addLastExpiredCollection(step)
-    addLastModifiedCollection(step)
+    addLastExpiredCollection(step, event)
+    addLastModifiedCollection(step, event)
 
 #IObjectInitializedEvent
 def setIndexNumber(obj, event):
