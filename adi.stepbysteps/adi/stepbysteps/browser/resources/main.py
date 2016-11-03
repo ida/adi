@@ -170,22 +170,48 @@ class View(BrowserView):
             parent = parent.aq_parent
         return nrs
 
+    def getStepbystepPosNr(self, step=None):
+        """
+        Like self.getPosNr(), but only count steps, no other content-types.
+        """
+        # If no obj is passed, default to context:
+        if not step: step = self.context
+        if step.Type() == 'Stepbystep':
+            step = step.aq_inner
+            nr = 0
+            parent = step.aq_parent
+            #siblings = parent.getFolderContents()
+            siblings = parent.listFolderContents(
+                        contentFilter={"portal_type" : "Stepbystep"})
+            for sibling in siblings:
+                nr += 1
+                if sibling['id'] == step.id:
+                    return nr
+        return None
+
     def getStepbystepPosNrs(self, obj=None):
         """
         Like self.getPosNrs(), but only as long as step is a child of step,
         breaks when other portal_type is detected as parent.
         """
+        nrs = None
         if not obj: obj = self.context
-        nrs = str( self.getPosNr(obj) )
-        parent = obj.aq_parent
-        while parent is not portal():
-            nrs = str( self.getPosNr(parent) ) + '.' + nrs
-            parent = parent.aq_parent
-            if parent.Type() != 'Stepbystep':
-                break
-        nrs = '.'.join(nrs.split('.')[1:]) # omit nr for root-step
+        if obj.Type() == 'Stepbystep':
+            nrs = str( self.getStepbystepPosNr(obj) )
+            parent = obj.aq_parent
+            while parent is not portal():
+                nrs = str( self.getStepbystepPosNr(parent) ) + '.' + nrs
+                parent = parent.aq_parent
+                if parent.Type() != 'Stepbystep':
+                    break
+            nrs = '.'.join(nrs.split('.')[1:]) # omit nr for root-step
         return nrs
 
+    def getSteps(self, folder=None):
+        """
+        Get all items of type 'Stepbystep' of the context or
+        a folderish item, if passed.
+        """
     def getFullHistory(self, obj=None):
         """
         http://docs.plone.org/develop/plone/content/history.html
@@ -198,7 +224,7 @@ class View(BrowserView):
         #newSecurityManager(request, admin)
         request = TestRequest()
         chv = ContentHistoryViewlet(context, request, None, None)
-        # These attributes are needed, the fullHistory() call fails otherwise
+        # These attributes are needed, the fullHistory() call fails otherwise:
         chv.navigation_root_url = chv.site_url = 'http://www.example.org'
         history = chv.fullHistory()
         return history
