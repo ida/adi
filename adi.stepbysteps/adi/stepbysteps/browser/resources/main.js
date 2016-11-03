@@ -85,10 +85,15 @@ function alertOverdues(container) {
   var loadEle = $('<div></div>').insertBefore($(container.find('> *')[0]))
   // Style loadEle:
   loadEleCss = {
-    'height':'1px',
-    'width':'1px',
+    'height':1,
+    'width':1,
     'overflow':'hidden',
     'border':'0.5em solid',
+    'opacity':.25,
+    'position':'absolute',
+    'top':0,
+    'left':0,
+    'z-index':2,
   }
   loadEleCssOnHover = {
     'height':'auto',
@@ -101,11 +106,13 @@ function alertOverdues(container) {
   loadEle.load(href + ' #' + anchorId, function() {
     // No results have been found:
     if(loadEle.find('.discreet').length > 0) {
-    } // We got results:
+    }
+    // We got results:
     else {
       loadEleCss['border-color'] = 'red'
       loadEle.css(loadEleCss)
     }
+    // Switch styles on hover:
     loadEle.mouseover(function() {
       loadEle.css(loadEleCssOnHover)
     });
