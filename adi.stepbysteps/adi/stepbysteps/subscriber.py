@@ -119,10 +119,10 @@ def addLastModifiedCollection(step, event):
     # Set collection-criterion 'portal-type' to be 'Stepbystep':
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     criterion.setValue('Stepbystep')
-    # Set collection-criterion 'UID-path' to be parent,
-    # include grand-children and parent in results:
-    criterion = collection.addCriterion('path', 'ATPathCriterion')
-    criterion.setValue([collection.aq_parent.UID()])
+    # Set collection-criterion 'relative-path' to be parent,
+    # include grand-children and exclude parent in results:
+    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    criterion.setRelativePath('..')
     criterion.setRecurse(True) # include grand-children
     # Sort results by latest modified item first:
     collection.setSortCriterion('modified', 'descending')
@@ -148,20 +148,20 @@ def addLastExpiredCollection(step, event):
     criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     criterion.setValue('Stepbystep')
     # Set collection-criterion 'UID-path' to be parent,
-    # include grand-children and parent in results:
-    criterion = collection.addCriterion('path', 'ATPathCriterion')
-    criterion.setValue([collection.aq_parent.UID()])
+    # include grand-children and exclude parent in results:
+    criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
+    criterion.setRelativePath('..')
     criterion.setRecurse(True) # include grand-children
     # Update portal-catalog:
     collection.reindexObject()
 
-#Products.Archetypes.interfaces.IObjectInitializedEvent
+# Products.Archetypes.interfaces.IObjectInitializedEvent
 def addCollections(step, event):
     """
     On creation of a step, add overviews as collections.
     """
     addLastExpiredCollection(step, event)
-    addLastModifiedCollection(step, event)
+#    addLastModifiedCollection(step, event)
 
 #IObjectInitializedEvent
 def setIndexNumber(obj, event):

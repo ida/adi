@@ -33,7 +33,7 @@
   <!--  A stepbystep has been created: -->
 	<subscriber
 		for=".interfaces.IStepbystep
-		Products.Archetypes.interfaces.IObjectInitializedEvent"
+		zope.lifecycleevent.IObjectAddedEvent"
 		handler=".subscriber.addCollections"
 	  />
 
