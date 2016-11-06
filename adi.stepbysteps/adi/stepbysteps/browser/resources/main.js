@@ -39,7 +39,13 @@ function onLoadLinkClick(container, loadLinkClass) {
     eve.preventDefault()
     var link = $(eve.target)
     var anchorId = link.attr('href').split('#')[1]
-    var content = $(link.parent().parent().find('#' + anchorId)[0]) // only 1st
+    // if #text, we need this:
+    var content_container = link.parent()
+    // else for #content-core, we need this:
+    if(anchorId == 'content-core') {
+      content_container = content_container.parent()
+    }
+    var content = $(content_container.find('#' + anchorId)[0]) // only 1st
     // Content has not been loaded yet, load it:
     if(content.length < 1) {
       loadLink(link, loadLinkClass, anchorId)
