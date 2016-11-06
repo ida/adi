@@ -39,23 +39,29 @@ body.portaltype-stepbystep {
         top: 0;
         bottom: $controls_margin_bottom;
         margin-bottom: $controls_height + $controls_margin_bottom;
+        .step {
+            border-top: 1px solid silver;
+        }
+        & > .step { /* 1st step */
+            border: 3px solid silver;
+        }
         .posnr {
-            color: red;
+            //color: red;
         }
         .title {
             color: inherit;
         }
         .text {
-            margin-left: $button_min_width;
+            padding-left: $button_min_width;
         }
-        .step {
-            border-top: 1px solid silver;
+        & > .text {
+        border: 3px solid silver;
         }
         .children {
-//            margin-left: $font_size_primary; // indent
+//            margin-left: $font_size_primary; // indent accumuluating per .children in .children
         }
         .controls {
-            z-index: 27; /* override plone default styles */
+            z-index: 27; /* override Plone default-styles of #portal-footer */
             position: fixed;
             bottom: $controls_margin_bottom;
             right: 0;

@@ -24,12 +24,12 @@ Up one level
     <a tal:attributes="href string:${href}/adi_stepbysteps_main_view#content-core;
                        class string:loadLink showChildren button;
                        title string:Show children"
-       tal:condition="hasChildren"
+       tal:condition="hasChildSteps"
        tal:content="string:&nbsp;">
 Toggle children
     </a>
     <span class="dummy button"
-       tal:condition="not: hasChildren" tal:content="string:&nbsp;">
+       tal:condition="not: hasChildSteps" tal:content="string:&nbsp;">
 Toggle children dummy
     </span>
   </tal:not-first-step>

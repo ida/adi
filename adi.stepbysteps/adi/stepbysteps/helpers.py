@@ -1,49 +1,90 @@
 from Acquisition import aq_inner, aq_parent
+from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
+from adi.devgen.helpers.content import getChildrenOfType
+from adi.devgen.helpers.users import getCurrentUser
+from adi.devgen.helpers.times import humanReadableToPrettified
+from adi.devgen.helpers.versioning import getWorkflowHistory
 from adi.stepbysteps.interfaces import IStepbystepsSettings
 
-def getCurrentUser(self):
-	"""Get the current user id or None."""
-	context = aq_inner(self)
-	mt = getToolByName(context, 'portal_membership')
-	if mt.isAnonymousUser():
-		return None
-	else:
-		member = mt.getAuthenticatedMember()
-		username = member.getUserName()
-		return username
 
-def getEditors(self):
-	"""Return everybody, who holds the 
-	   local Editor-role.
-	"""
-	users = [''] # empty string as default
-	context = aq_parent(self)
-	pu=context.plone_utils
+def computeActiveTime(item, user=None):
+    """
+    Look for wf-action 'Start' in wf-history of item
+    and accumulate time until next wf-state-transition,
+    return sum in milliseconds.
+    """
+    MATCH = False
+    active_time = 0
+    history = getWorkflowHistory(item)
+    for i, entry in enumerate(history):
+        if (entry['state_title'] == 'Active'):
+            MATCH = True
+            if user and (entry['actor']['username']) != user:
+                MATCH = False
+            if MATCH == True:
+                start_time = entry['time'].millis()
+                if i is 0:
+                    end_time = DateTime().millis()
+                else:
+                    end_time = history[i - 1]['time'].millis()
+                delta = end_time - start_time
+                active_time += delta
+    return active_time
 
-	try: #TODO: exception necessary? siterootcase on stepbystepcreation, iirc.
-		acquired_roles=pu.getInheritedLocalRoles(context)
-		local_roles=context.acl_users.getLocalRolesForDisplay(context)
-		assigned_roles = acquired_roles + local_roles
-	except:
-		assigned_roles = []
+def computeActiveTimes(item, user=None):
+    """
+    Get accumulated active time of all
+    (grand-)childrens in ms, include self.
+    """
+    path = '/'.join(item.getPhysicalPath())
+    item_brains = item.portal_catalog(path={"query": path})
+    time = 0
+    for item_brain in item_brains:
+        item = item_brain.getObject()
+        time += computeActiveTime(item, user)
+    return time
 
-	for role in assigned_roles:
-		if role[2] is not 'group' and 'Editor' in role[1]:
-			username = role[0]
-			if username not in users:
-				users.append(username)
+def getActiveTime(item, user=None):
+    time = computeActiveTime(item, user)
+    time = humanReadableToPrettified(time)
+    return time
 
-	return users
+def getActiveTimes(item, user=None):
+    """
+    Get accumulated active time of all (grand-)childrens
+    in prettified-format, include self.
+    """
+    time = computeActiveTimes(item, user)
+    time = humanReadableToPrettified(time)
+    return time
 
+def getSteps(item):
+    """Return all item's children of type 'Stepbystep'."""
+    return getChildrenOfType(item, 'Stepbystep')
 
-def increaseStepbystepsIndex(self):
+def getStepsOfUser(item, user):
+    """
+    Return all children including self, where the user is
+    the responsible person, represented by the Creator-field.
+    """
+    records = []
+    criteria = {}
+    criteria['path'] = '/Plone'
+    criteria['Type'] = 'Stepbystep'
+    criteria['Creator'] = user
+    brains = self.context.queryCatalog(criteria)
+    for brain in brains:
+        obj = brain.getObject()
+        records.append(obj)
+    return records
+
+def increaseStepbystepsIndex():
 	""" Increase and return index-number of 
 		stepbysteps-registry in controlpanel.
 	"""
-
 	registry = getUtility(IRegistry)
 	settings = registry.forInterface(IStepbystepsSettings)
 	stepbysteps_index = settings.stepbystep_indexer
@@ -51,3 +92,4 @@ def increaseStepbystepsIndex(self):
 	settings.stepbystep_indexer = new_index
 
 	return new_index
+

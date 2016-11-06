@@ -111,6 +111,8 @@ function alertOverdues(container) {
     else {
       loadEleCss['border-color'] = 'red'
       loadEle.css(loadEleCss)
+      // Disable tabbing in loaded links:
+      loadEle.find('a').attr('tabindex', '-1')
     }
     // Switch styles on hover:
     loadEle.mouseover(function() {

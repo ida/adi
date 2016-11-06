@@ -2,7 +2,6 @@
   age nocall: context/adi_stepbysteps_main_view/getAge;
   activity nocall: context/adi_stepbysteps_main_view/getActiveTime;
   total_activity nocall: context/adi_stepbysteps_main_view/getActiveTimes;
-  total_activity_ms nocall: context/adi_stepbysteps_main_view/computeActiveTimes;
   hasActivity python: total_activity > 0;">
   <div class="field age">
     <div class="name" tal:content="string:Age">

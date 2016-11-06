@@ -13,6 +13,10 @@
 	All stepbysteps, I am responsible of:
 	</div>
 </div>
+	<ul tal:define="my_activetimes nocall: context/@@adi_stepbysteps_helper_view/my_activetimes;">
+		<li tal:content="my_activetimes">
+		</li>
+	</ul>
 <div id="content-core">
 	<ul tal:define="my_stepbysteps nocall: context/@@adi_stepbysteps_helper_view/my_stepbysteps;">
 		<li style="display:block" tal:repeat="stepbystep my_stepbysteps">
@@ -22,4 +26,6 @@
 		</li>
 	</ul>
 </div>
+<!--
+  -->
 </metal:content></body></html>

@@ -5,15 +5,13 @@ float: right;
     opacity: 0.75;
     min-height: $border_width_primary;
     min-width: $line_height_primary;
-    * {
-//        outline: 1px dotted;
-    }
     .fields {
-//text-align: right;
+        // First hide all fields:
         div {
             display: inline-block;
             display: none;
         }
+        // But show these initially:
         .activity,
         .activity .value,
         .reporter,
@@ -24,6 +22,7 @@ float: right;
             display: inline; // break the line
         }
     }
+    // On hover show all fields:
     .fields:hover {
         div {
             display: inline-block;
@@ -41,7 +40,7 @@ float: right;
             content: ':';
         }
     }
-/*
+    // Align time-fields vertically, when in listing view:
     .times span:nth-child(even) {
         display: inline-block;
         width: 1.75em;
@@ -52,5 +51,6 @@ float: right;
         width: 1.125em;
         margin-left: 0.25em;
     }
+/*
 */
 }
