@@ -7,15 +7,16 @@ float: right;
     min-width: $line_height_primary;
     .fields {
         // First hide all fields:
+        .responsibles .value span,
         div {
-            display: inline-block;
             display: none;
         }
         // But show these initially:
+        .responsibles,
+        .responsibles .value,
+        .responsibles .value span:first-child,
         .activity,
-        .activity .value,
-        .reporter,
-        .reporter .value {
+        .activity .value {
             display: inline-block;
         }
         .fieldset {
@@ -27,6 +28,7 @@ float: right;
         div {
             display: inline-block;
         }
+        .responsibles .value span,
         div.fieldset {
             display: inline; // break the line
         }

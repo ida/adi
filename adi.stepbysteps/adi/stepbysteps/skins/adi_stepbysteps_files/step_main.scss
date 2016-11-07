@@ -42,9 +42,6 @@ body.portaltype-stepbystep {
         .step {
             border-top: 1px solid silver;
         }
-        & > .step { /* 1st step */
-            border: 3px solid silver;
-        }
         .posnr {
             //color: red;
         }
@@ -54,8 +51,12 @@ body.portaltype-stepbystep {
         .text {
             padding-left: $button_min_width;
         }
+        // THE 1st step:
+        & > .step {
+            border-top: 3px solid silver;
+        }
         & > .text {
-        border: 3px solid silver;
+        border-bottom: 3px solid silver;
         }
         .children {
 //            margin-left: $font_size_primary; // indent accumuluating per .children in .children
