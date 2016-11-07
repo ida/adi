@@ -27,15 +27,13 @@ Reporter:
 The owner
     </div>
   </div><div
-  class="field watchers">
+  class="field watchers"
+    tal:define="persons context/Rights;
+          persons python: persons.split()">
     <div class="name" tal:content="string:Watchers">
 Watchers:
-    </div><div
-      class="value" tal:define="persons context/Rights;
-      persons python: persons.split()"><span
+    </div><div tal:condition="python:persons != []"
+      class="value"><span
         tal:repeat="person persons" tal:content="person">
 A right
-      </span>
-    </div>
-  </div>
-</div>
+      </span></div></div></div>

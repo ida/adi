@@ -1,8 +1,16 @@
 @import 'variables';
 
 body.portaltype-stepbystep .head {
+        div {
+            display: inline-block;
+        }
+        div.fieldset {
+            display: inline; // break the line
+        }
+/*
 float: right;
     opacity: 0.75;
+*/
     min-height: $border_width_primary;
     min-width: $line_height_primary;
     .fields {
@@ -53,6 +61,4 @@ float: right;
         width: 1.125em;
         margin-left: 0.25em;
     }
-/*
-*/
 }
