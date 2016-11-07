@@ -66,14 +66,14 @@ def setIndexNumber(obj, event):
     context = aq_inner(obj)
     catalog = getToolByName(context, 'portal_catalog')    
     request = context.REQUEST
-    index_number = increaseStepbystepsIndex(context)
+    index_number = increaseStepbystepsIndex()
     id = str(index_number)
     id_exists = context.portal_catalog.searchResults(REQUEST=request, id=id)
 
     while id_exists:
         limit = 1000
         while limit > 0:
-            index_number = increaseStepbystepsIndex(context)
+            index_number = increaseStepbystepsIndex()
             id = str(index_number)
             id_exists = context.portal_catalog.searchResults(REQUEST=request,id = id)
             limit = limit - 1
