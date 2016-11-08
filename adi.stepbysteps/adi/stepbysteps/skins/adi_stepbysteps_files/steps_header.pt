@@ -1,5 +1,5 @@
 <div metal:define-macro="steps_header">
-  <a href="#" title="Show expired steps">
-    Expired steps
+  <a href="#" title="Your username"  tal:define="username python: request.AUTHENTICATED_USER.getUserName()" tal:content="username">
+    Your username
   </a>
 </div>

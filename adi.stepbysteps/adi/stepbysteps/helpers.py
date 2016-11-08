@@ -10,6 +10,63 @@ from adi.devgen.helpers.versioning import getWorkflowHistory
 from adi.stepbysteps.interfaces import IStepbystepsSettings
 
 
+def getActivityEntries(item):
+    entries = []
+    history = getWorkflowHistory(item)
+    for i, entry in enumerate(history):
+        if (entry['state_title'] == 'Active'):
+            entries.append(entry)
+            if i != 0:
+                entries.append(history[i-1])
+    return entries
+
+def formatActivityEntries(entries):
+    start_time = end_time = 0
+    formatted_entry = ['User', 'Action', 'Date', 'Time', 'Delta']
+    formatted_entries = [formatted_entry]
+    for i, entry in enumerate(entries):
+        delta = 0
+        formatted_entry = [entry['actor']['username']]
+        action = entry['transition_title']
+        formatted_entry.append(action)
+        time = entry['time']
+        formatted_entry.append(str(DateTime.Date(time)))
+        formatted_entry.append(str(DateTime.Time(time)))
+        if action == 'Start':
+            start_time = time.millis()
+        else:
+            end_time = time.millis()
+            delta = end_time - start_time
+            delta = humanReadableToPrettified(delta)
+        formatted_entry.append(delta)
+        formatted_entries.append(formatted_entry)
+        if end_time == 0 and start_time != 0:
+            end_time = DateTime().millis()
+            delta = end_time - start_time
+            delta = humanReadableToPrettified(delta)
+            formatted_entry = ['Item', 'is', 'still', 'playing', delta]
+            formatted_entries.append(formatted_entry)
+
+    return formatted_entries
+
+def activityEntriesToHtml(entries):
+    html = ''
+    for i, entry in enumerate(entries):
+        html += '<ul><li>' + str(i) + '</li>'
+        for item in entry:
+            html += '<li>'
+            html += str(item)
+            html += '</li>'
+        html += '</ul>'
+    return html
+
+def testReturn(item):
+    test_return = getActivityEntries(item)
+    test_return = formatActivityEntries(test_return)
+    test_return = activityEntriesToHtml(test_return)
+    return test_return
+
+#######################################################
 def computeActiveTime(item, user=None):
     """
     Look for wf-action 'Start' in wf-history of item

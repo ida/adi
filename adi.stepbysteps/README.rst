@@ -3,25 +3,68 @@ TODOS:
 - On site crea throws "KeyError linkable", seems not configurable,
 commented out in tinymce.xml for now, added manually in controlpanel.
 
-- provide skins/plone_deprecated/document_icon.gif in a skinfolder.
 
-- validations in subscribers.setBlock() (id exists, no self reference, etc.)
+Step by step
+============
+
+What
+----
+
+A Plone-addon for managing processes, including collaboration,
+setting priority, track time (new, paused, playing, stopped),
+assign responsibilities and get overviews and reports.
+
+Why
+---
+
+- There are a lot of ticket-systems I have met, they all sucked in
+representing priority, cluster tickets as subtickets of a ticket,
+and assigning user-permissions. The latter is Plone's strength, let's
+take advantage of it. Priority is represented by the hierarchy of
+the steps, meaning if a step, respectively process, contains at least
+one other step, that one must be finished first, before the parent
+can be finished. Otherwise, if there are no children-steps, the
+order inside of the folder rules, so for changing priority of a step,
+change the order or add and remove substeps. For clustering subtasks,
+add substeps.
+
+- Because multi-tasking is a myth, as it is provenly not
+possible to focus on several things at once. Provide a tool, helping to
+enforce doing things step by step and focus with devotion on each step,
+one at a time, by inhibiting to be active on several steps at once.
+
+- Be fully functional, also when Javascript is not available or disabled
+in the browser, enhance progressively.
+
+- Navigate quickly through items by using the tab-key and when hitting
+a selected item, show children and also grand-children, if tabbing further.
+Tabbing backwards after page-load, will focus the edit-buttons at bottom,
+immediately. You can also use the mouse and click your way, of course.
 
 
-Adi Stepbysteps
-===========
+How
+---
 
-A stepbystepsystem for Plone, inspired by trac and Redmine.
+After installation (see docs/INSTALL.txt), add a step, name it after your
+project or anything you like and add more steps in it.
+The moment a step contains steps, it is regarded to be a process.
 
 
 Usage
 -----
 
-- Assign the 'Can edit'-permissions to each user,
-  who is supposed to be part of the team, via the sharing-tab
-  of a folder. These users will show up as possibly selected
-  in the 'responsible person'-field.
-  This applies also to Editors of parent folders (local inheritance).
+- Install and add items of type 'Step', set permissions for other users,
+via the sharing-tab.
+
+- Every step has at least one responsible person to take care of it, by default
+it is the creator of the step, you change it in edit-mode of step,
+by clicking the persons-tab and enter the wanted username in the field
+'Responsibles'. More persons can be added, seperate usernames with a linebreak,
+first username is regarded to be most responsible, can have a seconder, a.s.o.
+
+- When you start working on a step, click the 'Play'-button, when you make a break,
+click the 'Pause-button', when you return to work on it, click 'Play' again, until
+you're finished, then click the 'Stop'-button.
 
 - A stepbystep is folderish, thus you can add to it:
 
@@ -30,6 +73,10 @@ Usage
     - More Stepbysteps for splitting things up in subtasks.
 
     - Pages for documentation.
+
+    - Any other content-type available in the Plone-site.
+
+Only steps and files will be shown in a step's view.
 
 - In your personaltools (the dropdown showing your username), click
   on 'My stepbysteps' to get an overview of the stepbysteps you are responsible of.
@@ -46,46 +93,7 @@ Behaviours
 
 - The creator of a stepbystep is set as default responsible person.
 
-- Editors are selectable to be responsible person.
-
-- If the reponsible person is changed, s/he will be set as the 
-  only local Owner of the Stepbystep.
-
-- Owners get notified via E-Mail of changes made by others.
-
-
-
-Fields
-------
-
-- Title
-
-- Rich-Textfield (applies your TTW-editor) for all the details.
-
-- 'Priority' provides three static values: low, normal, high.
-
-- Responsible person equals the owner of a stepbystep.
-  Default is Owner, selectable are all locally assigned (via sharing-tab) Editors,
-  also inherited ones.
-  Will ne notified, if changes are made on a stepbystep by another person.
-
-
-Workflow
---------
-
-- States: new, invalid, confirmed, postponed, finished successfully
-  
-  Transitions: close, confirm, postpone (sleeping mode with given date possible?),
-  reject.
-  
-  Permissions: We have the four common permissions:
-	Access contents information
-	Change portal events 
-	Modify portal content
-	View
-  granted on all states for editors and no 
-  permisssion-conditions in the transitions.
-  ---> As workflow for our type.
+- Reporters get notified via E-Mail of changes made by others.
 
 
 Content rules

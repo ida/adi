@@ -6,6 +6,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from adi.devgen.helpers.times import getAge
 from adi.stepbysteps.helpers import getActiveTime
 from adi.stepbysteps.helpers import getActiveTimes
+from adi.stepbysteps.helpers import testReturn
 from zope.publisher.browser import TestRequest
 from zope.site.hooks import getSite as portal
 
@@ -14,20 +15,15 @@ class View(BrowserView):
 
     index = ViewPageTemplateFile("main.pt")
 
+    def testReturn(self):
+        item = self.context
+        return testReturn(item)
+
     def __call__(self):
         return self.render()
 
     def render(self):
         return self.index()
-
-    def isRootStepbystep(self):
-        """
-        If a stepbystep lives in the siteroot, it is considered to be a root-stepbystep.
-        """
-        parent = self.context.aq_parent
-        if parent == portal() or parent.Type() != 'Stepbystep':
-             return True
-        else: return False
 
     def getActiveTime(self):
         item = self.context
@@ -40,6 +36,15 @@ class View(BrowserView):
     def getAge(self):
         item = self.context
         return getAge(item)
+
+    def isRootStepbystep(self):
+        """
+        If a stepbystep lives in the siteroot, it is considered to be a root-stepbystep.
+        """
+        parent = self.context.aq_parent
+        if parent == portal() or parent.Type() != 'Stepbystep':
+             return True
+        else: return False
 
     def getStepbystepPosNr(self, step=None):
         """
@@ -63,7 +68,8 @@ class View(BrowserView):
     def getStepbystepPosNrs(self, obj=None):
         """
         Like self.getPosNrs(), but only as long as step is a child of step,
-        breaks when other portal_type is detected as parent.
+        breaks when other portal_type is detected as parent. Return a nr-path
+        like: '2.4.1'.
         """
         nrs = None
         if not obj: obj = self.context

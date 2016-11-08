@@ -1,4 +1,0 @@
-- Blockers: Seems unblocking forgets to reindex obj.
-- Blockers: Regard several blockers when unblocking.
-- Ids: We probably need unique ids.
-

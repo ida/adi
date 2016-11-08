@@ -134,5 +134,5 @@ function alertOverdues(container) {
   var loadLinkClass = 'loadLink'
   onLoadLinkClick(container, loadLinkClass) // apply listener
   onSpacebarPress(container)
-  alertOverdues(container)
+  //alertOverdues(container)
 }); })(jQuery);

@@ -1,18 +1,16 @@
 @import 'variables';
 
 body.portaltype-stepbystep .head {
-        div {
-            display: inline-block;
-        }
-        div.fieldset {
-            display: inline; // break the line
-        }
-/*
-float: right;
+    float: right;
     opacity: 0.75;
-*/
     min-height: $border_width_primary;
     min-width: $line_height_primary;
+    div {
+        display: inline-block;
+    }
+    div.fieldset {
+        display: inline; // break the line
+    }
     .fields {
         // First hide all fields:
         .responsibles .value span,
@@ -32,6 +30,8 @@ float: right;
         }
     }
     // On hover show all fields:
+    /*
+     */
     .fields:hover {
         div {
             display: inline-block;
@@ -40,25 +40,41 @@ float: right;
         div.fieldset {
             display: inline; // break the line
         }
+        // And add commas and dot for person-lists:
+        .responsibles,
+        .contributors,
+        .watchers {
+            .value span:after {
+                content: ', ';
+            }
+            .value span:last-child:after {
+                content: '.';
+            }
+        }
     }
+    // Space and separation:
     .field {
         margin-left: 0.5em;
-        .name {
-//            margin-right: 0.25em;
-        }
         .name:after {
             content: ':';
         }
+        .value {
+            margin-left: 0.25em;
+        }
     }
-    // Align time-fields vertically, when in listing view:
-    .times span:nth-child(even) {
+
+    // Make time-fields align vertically in listing view,
+    // by setting a constant width, no matter how much the numbers
+    // consume, as e.g. a '1' is narrower than an '8':
+    .times span {
         display: inline-block;
+    }
+    .times span:nth-child(even) { // units, e.g. 'sec'
         width: 1.75em;
         margin-left: 0.25em;
     }
-    .times span:nth-child(odd) {
-        display: inline-block;
+    .times span:nth-child(odd) { // numbers, e.g. '08'
         width: 1.125em;
-        margin-left: 0.25em;
+        text-align: right; // cling to right side, wanna be as close as possible to unit
     }
 }
