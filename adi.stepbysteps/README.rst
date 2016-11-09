@@ -25,7 +25,7 @@ the steps, meaning if a step, respectively process, contains at least
 one other step, that one must be finished first, before the parent
 can be finished. Otherwise, if there are no children-steps, the
 order inside of the folder rules, so for changing priority of a step,
-change the order or add and remove substeps. For clustering subtasks,
+change the order, or add and remove substeps for clustering subtasks,
 add substeps.
 
 - Because multi-tasking is a myth, as it is provenly not
@@ -33,8 +33,8 @@ possible to focus on several things at once. Provide a tool, helping to
 enforce doing things step by step and focus with devotion on each step,
 one at a time, by inhibiting to be active on several steps at once.
 
-- Be fully functional, also when Javascript is not available or disabled
-in the browser, enhance progressively.
+- Be fully functional also when Javascript is not available or disabled
+in the browser. Enhance progressively, mobile-devices first.
 
 - Navigate quickly through items by using the tab-key and when hitting
 a selected item, show children and also grand-children, if tabbing further.

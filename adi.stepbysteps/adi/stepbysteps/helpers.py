@@ -11,6 +11,12 @@ from adi.stepbysteps.interfaces import IStepbystepsSettings
 
 
 def getActivityEntries(item):
+    """
+    Search workflow-hitory of item for entries where the state_title is
+    'Active', collect this entry as the activity-start and its preceding
+    entry in the history as the activity-ending. Return those entries as
+    pairs. If item is in activity right now, last pair remains endless.
+    """
     entries = []
     history = getWorkflowHistory(item)
     for i, entry in enumerate(history):
@@ -21,6 +27,13 @@ def getActivityEntries(item):
     return entries
 
 def formatActivityEntries(entries):
+    """
+    Expects a tuple of entries of the workflow-history, regards them as
+    start/end-pairs. If ending with a start entry, now is taken as end-time.
+    Return a list of lists showing user, start/end-action, date, time and the
+    time consumed betweeen each entry-pair from to start and as last entry a
+    sum of all of these.
+    """
     start_time = end_time = 0
     formatted_entry = ['User', 'Action', 'Date', 'Time', 'Delta']
     formatted_entries = [formatted_entry]
@@ -138,9 +151,26 @@ def getStepsOfUser(item, user):
         records.append(obj)
     return records
 
+def handleUrlParams(item):
+    """
+    Look for search-params in the URL and decide what to do with
+    it centrally, here in this definition.
+    """
+    user = None
+    try:
+        request = item.REQUEST
+        fields = request.form
+        for key in fields:
+            if key == 'user':
+                user = fields[key]
+    except:
+        print 'no request'
+    return getActiveTimes(item, user)
+
 def increaseStepbystepsIndex():
-	""" Increase and return index-number of 
-		stepbysteps-registry in controlpanel.
+	"""
+    Increase and return index-number of
+	stepbysteps-registry in controlpanel.
 	"""
 	registry = getUtility(IRegistry)
 	settings = registry.forInterface(IStepbystepsSettings)

@@ -1,5 +1,7 @@
 <div metal:define-macro="steps_header">
-  <a href="#" title="Your username"  tal:define="username python: request.AUTHENTICATED_USER.getUserName()" tal:content="username">
+  <div tal:define="username python:
+       request.AUTHENTICATED_USER.getUserName()"
+       tal:content="username">
     Your username
-  </a>
+  </div>
 </div>

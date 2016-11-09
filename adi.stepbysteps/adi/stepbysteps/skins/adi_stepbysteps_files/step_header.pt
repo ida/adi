@@ -54,9 +54,5 @@ Title
        tal:content="string:&nbsp;">
 Text preview
     </a>
-<!--
-       tal:content="text_preview">
-<span tal:content="text_preview" />
--->
   </tal:not-first-step>
 </div>
