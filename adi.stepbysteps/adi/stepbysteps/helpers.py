@@ -5,60 +5,59 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from adi.devgen.helpers.content import getChildrenOfType
 from adi.devgen.helpers.users import getCurrentUser
+from adi.devgen.helpers.times import msToHumanReadable
 from adi.devgen.helpers.times import humanReadableToPrettified
 from adi.devgen.helpers.versioning import getWorkflowHistory
 from adi.stepbysteps.interfaces import IStepbystepsSettings
 
 
-def getActivityEntries(item):
-    """
-    Search workflow-hitory of item for entries where the state_title is
-    'Active', collect this entry as the activity-start and its preceding
-    entry in the history as the activity-ending. Return those entries as
-    pairs. If item is in activity right now, last pair remains endless.
-    """
-    entries = []
-    history = getWorkflowHistory(item)
-    for i, entry in enumerate(history):
-        if (entry['state_title'] == 'Active'):
-            entries.append(entry)
-            if i != 0:
-                entries.append(history[i-1])
-    return entries
-
 def formatActivityEntries(entries):
     """
-    Expects a tuple of entries of the workflow-history, regards them as
-    start/end-pairs. If ending with a start entry, now is taken as end-time.
+    Expects a tuple of entries of the workflow-history.
     Return a list of lists showing user, start/end-action, date, time and the
     time consumed betweeen each entry-pair from to start and as last entry a
     sum of all of these.
     """
-    start_time = end_time = 0
     formatted_entry = ['User', 'Action', 'Date', 'Time', 'Delta']
     formatted_entries = [formatted_entry]
+    deltas = delta = end_time = start_time = 0
     for i, entry in enumerate(entries):
-        delta = 0
+        # Collect user:
         formatted_entry = [entry['actor']['username']]
+        # Collect action:
         action = entry['transition_title']
         formatted_entry.append(action)
+        # Collect time:
         time = entry['time']
         formatted_entry.append(str(DateTime.Date(time)))
         formatted_entry.append(str(DateTime.Time(time)))
-        if action == 'Start':
-            start_time = time.millis()
+        time = time.millis()
+
+        # Compute and collect delta:
+        if action == 'Pause' or action == 'Stop':
+            end_time = time
+        elif action == 'Start':
+            start_time = time
+        if end_time != 0 and start_time != 0:
+            if end_time == start_time:
+                end_time = DateTime().millis()
+            delta = end_time - start_time
+        if delta != 0:
+            deltas += delta
+            delta = humanReadableToPrettified(delta)
+            formatted_entry.append(delta)
+            delta = end_time = start_time = 0
         else:
-            end_time = time.millis()
-            delta = end_time - start_time
-            delta = humanReadableToPrettified(delta)
-        formatted_entry.append(delta)
+            formatted_entry.append('')
+
+        # Collect whole new entry:
         formatted_entries.append(formatted_entry)
-        if end_time == 0 and start_time != 0:
-            end_time = DateTime().millis()
-            delta = end_time - start_time
-            delta = humanReadableToPrettified(delta)
-            formatted_entry = ['Item', 'is', 'still', 'playing', delta]
-            formatted_entries.append(formatted_entry)
+
+    # Collect total delta:
+    formatted_entries.append(
+        ['0', '0', '0', '0', humanReadableToPrettified(deltas)])
+    formatted_entries.append(
+        ['0', '0', '0', '0', msToHumanReadable(deltas)])
 
     return formatted_entries
 
@@ -68,15 +67,29 @@ def activityEntriesToHtml(entries):
         html += '<ul><li>' + str(i) + '</li>'
         for item in entry:
             html += '<li>'
-            html += str(item)
+            if type(item) == list:
+                for ite in item:
+                    html += '<span>' + ite + ' </span>'
+            else:
+                html += str(item)
             html += '</li>'
         html += '</ul>'
     return html
 
+def getActivityEntries(item):
+    entries = getWorkflowHistory(item)
+    entries = formatActivityEntries(entries)
+    entries = activityEntriesToHtml(entries)
+    return entries
+
 def testReturn(item):
     test_return = getActivityEntries(item)
-    test_return = formatActivityEntries(test_return)
-    test_return = activityEntriesToHtml(test_return)
+    items = []
+    items_brain = item.getFolderContents()
+    for item_brain in items_brain:
+        item = item_brain.getObject()
+        test_return += getActivityEntries(item)
+        items.append(item_brain)
     return test_return
 
 #######################################################

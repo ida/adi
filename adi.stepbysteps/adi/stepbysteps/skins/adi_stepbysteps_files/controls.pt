@@ -3,6 +3,6 @@
     <div metal:use-macro="context/navigator/macros/navigator">
     </div><div metal:use-macro="context/editables/macros/editables">
     </div><div metal:use-macro="context/transitions/macros/transitions">
-    </div><span tal:replace="context/Title" />
+    </div>
   </div>
 </div>

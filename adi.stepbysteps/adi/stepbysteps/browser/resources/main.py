@@ -1,5 +1,5 @@
 from AccessControl.SecurityManagement import newSecurityManager
-from Acquisition import aq_parent
+from Acquisition import aq_inner, aq_parent
 from DateTime import DateTime
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -16,7 +16,7 @@ class View(BrowserView):
     index = ViewPageTemplateFile("main.pt")
 
     def testReturn(self):
-        item = self.context
+        item = aq_inner(self.context)
         return testReturn(item)
 
     def __call__(self):

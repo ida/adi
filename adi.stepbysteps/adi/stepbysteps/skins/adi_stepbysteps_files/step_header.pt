@@ -1,7 +1,4 @@
 <div class="header" metal:define-macro="header">
-<!--
-<tal:comment tal:replace="nothing">
--->
   <tal:first-step tal:condition="isTopStep">
     <tal:root-step tal:condition="isRootStepbystep">
       <a tal:content="string:&#8962;" tal:attributes="
@@ -14,35 +11,29 @@ Home
         title string:Go up one level; class string:button;"
          tal:content="string:&uarr;">
 Up one level
-      </a>
-    </tal:not-root-step>
-  </tal:first-step>
-<!--
-</tal:comment>
--->
-  <tal:not-first-step tal:condition="not:isTopStep">
-    <a tal:attributes="href string:${href}/adi_stepbysteps_main_view#content-core;
+      </a></tal:not-root-step></tal:first-step><tal:not-first-step
+    tal:condition="not:isTopStep"><a
+    tal:attributes="href string:${href}/adi_stepbysteps_main_view#content-core;
                        class string:loadLink showChildren button;
                        title string:Show children"
        tal:condition="hasChildSteps"
        tal:content="string:&nbsp;">
 Toggle children
-    </a>
-    <span class="dummy button"
+    </a><span
+    class="dummy button"
        tal:condition="not: hasChildSteps" tal:content="string:&nbsp;">
 Toggle children dummy
-    </span>
-  </tal:not-first-step>
-  <span class="posnr" tal:content="string:0" tal:condition="isRootStepbystep">
+    </span></tal:not-first-step><span
+      class="posnr" tal:content="string:0" tal:condition="isRootStepbystep">
 0
-  </span>
-  <span class="posnr" tal:content="nrs" tal:condition="not: isRootStepbystep">
+  </span><span class="posnr" tal:content="nrs" tal:condition="not: isRootStepbystep">
 1.2
   </span>
-  <a class="title" tal:content="title"
-    tal:attributes="class state_class; id title;
-    href href; title state;
-    tabindex string: -1;">
+  <a tal:content="title"
+     tal:attributes="href href;
+      class string:title ${state_class};
+      title state;
+      tabindex string: -1;">
 Title
   </a>
   <tal:not-first-step tal:condition="not:isTopStep">

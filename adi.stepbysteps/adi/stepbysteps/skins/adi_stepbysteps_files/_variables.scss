@@ -1,6 +1,7 @@
-$border_width_primary: 0.1em;
+$border_color_primary: silver;
 $border_style_primary: solid;
-$border_primary: $border_width_primary $border_style_primary;
+$border_width_primary: 0.1em;
+$border_primary: $border_width_primary $border_style_primary $border_color_primary;
 $font_family_primary: Arial, sans;
 $font_size_primary: 1em;
 $font_size_secondary: 0.65em;

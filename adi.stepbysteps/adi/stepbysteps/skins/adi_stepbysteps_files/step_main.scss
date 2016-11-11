@@ -12,6 +12,7 @@ body.portaltype-stepbystep {
     a[disabled] {
         opacity: 0.27;
     }
+    .buttons a,
     .button {
         display: inline-block;
         min-width: 1em;
@@ -32,6 +33,10 @@ body.portaltype-stepbystep {
     .showText:before {
         content: '+';
     }
+    .stepsHeader {
+        text-align: right;
+        border-top: $border_primary;
+    }
     #content {
         border: 1px solid silver;
         border-top : none;
@@ -40,10 +45,10 @@ body.portaltype-stepbystep {
         bottom: $controls_margin_bottom;
         margin-bottom: $controls_height + $controls_margin_bottom;
         .step {
-            border-top: 1px solid silver;
+            border-top: $border_primary;
         }
         .posnr {
-            //color: red;
+            color: #111;
         }
         .title {
             color: inherit;
@@ -53,10 +58,11 @@ body.portaltype-stepbystep {
         }
         // THE 1st step:
         & > .step {
+            font-size: 127%;
             border-top: 3px solid silver;
         }
         & > .text {
-        border-bottom: 3px solid silver;
+            border-bottom: 3px solid silver;
         }
         .children {
 //            margin-left: $font_size_primary; // indent accumuluating per .children in .children

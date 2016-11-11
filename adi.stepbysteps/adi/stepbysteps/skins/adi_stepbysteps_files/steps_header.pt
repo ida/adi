@@ -1,6 +1,7 @@
-<div metal:define-macro="steps_header">
+<div class="stepsHeader" metal:define-macro="steps_header">
   <div tal:define="username python:
-       request.AUTHENTICATED_USER.getUserName()"
+       request.AUTHENTICATED_USER.getUserName();
+       isAnonymous python: username == 'Anonymous User';"
        tal:content="username">
     Your username
   </div>
