@@ -12,10 +12,13 @@
 </div>
 <div>
   <style>
-  li:not(:first-child) {
-  border: 1px dotted;
-  width: 18%;
-  display: inline-block;
+  li {
+    border: 1px dotted;
+    display: inline-block;
+    width: 14%;
+  }
+  span:not(:last-child) {
+    margin-right: 0.27em;
   }
   </style>
   <div tal:define="testReturn context/@@adi_stepbysteps_main_view/testReturn;">

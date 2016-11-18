@@ -3,16 +3,21 @@ $bg_primary: #E1EAB6; /* lightgreen */
 $bg_secondary: #f1f1f1;
 $bg_tertiary: #b3b3b3;
 $bg_content: $bg_primary;
+$border_color_regular: silver;
+$border_style_regular: solid;
+$border_width_regular: 0.1em;
+$border_regular: $border_width_regular $border_style_regular
+                                       $border_color_regular;
 $col_primary: #444;
 $col_secondary: #a1a1a1;
 
 /* Nightsight, (un-)comment to switch:
-$bg_primary: #000;
+*/
+$bg_primary: #011435;
 $bg_secondary: $bg_primary;
 $bg_tertiary: #272727;
 $bg_content: $bg_primary;
-$col_primary: #a3a1a1;
-*/
+$col_primary: #fff!important;
 
 
 /************************************
@@ -23,15 +28,21 @@ $col_primary: #a3a1a1;
 body.portaltype-stepbystep {
     background: $bg_primary;
     color: $col_primary;
+    a {
+    color: $col_primary !important;
+    }
     .buttons {
         background: $bg_tertiary;
+    }
+    #content {
+        background: $bg_content;
+    }
+    .step {
+        border-top: $border_regular;
     }
     .head {
         background: $bg_secondary;
         color: $col_secondary;
-    }
-    #content {
-        background: $bg_content;
     }
 }
 

@@ -6,93 +6,27 @@ from plone.registry.interfaces import IRegistry
 from adi.devgen.helpers.content import getChildrenOfType
 from adi.devgen.helpers.users import getCurrentUser
 from adi.devgen.helpers.times import msToHumanReadable
-from adi.devgen.helpers.times import humanReadableToPrettified
+from adi.devgen.helpers.times import msToPrettified
+from adi.devgen.helpers.versioning import getFullHistory
 from adi.devgen.helpers.versioning import getWorkflowHistory
 from adi.stepbysteps.interfaces import IStepbystepsSettings
 
 
-def formatActivityEntries(entries):
-    """
-    Expects a tuple of entries of the workflow-history.
-    Return a list of lists showing user, start/end-action, date, time and the
-    time consumed betweeen each entry-pair from to start and as last entry a
-    sum of all of these.
-    """
-    formatted_entry = ['User', 'Action', 'Date', 'Time', 'Delta']
-    formatted_entries = [formatted_entry]
-    deltas = delta = end_time = start_time = 0
-    for i, entry in enumerate(entries):
-        # Collect user:
-        formatted_entry = [entry['actor']['username']]
-        # Collect action:
-        action = entry['transition_title']
-        formatted_entry.append(action)
-        # Collect time:
-        time = entry['time']
-        formatted_entry.append(str(DateTime.Date(time)))
-        formatted_entry.append(str(DateTime.Time(time)))
-        time = time.millis()
-
-        # Compute and collect delta:
-        if action == 'Pause' or action == 'Stop':
-            end_time = time
-        elif action == 'Start':
-            start_time = time
-        if end_time != 0 and start_time != 0:
-            if end_time == start_time:
-                end_time = DateTime().millis()
-            delta = end_time - start_time
-        if delta != 0:
-            deltas += delta
-            delta = humanReadableToPrettified(delta)
-            formatted_entry.append(delta)
-            delta = end_time = start_time = 0
-        else:
-            formatted_entry.append('')
-
-        # Collect whole new entry:
-        formatted_entries.append(formatted_entry)
-
-    # Collect total delta:
-    formatted_entries.append(
-        ['0', '0', '0', '0', humanReadableToPrettified(deltas)])
-    formatted_entries.append(
-        ['0', '0', '0', '0', msToHumanReadable(deltas)])
-
-    return formatted_entries
-
 def activityEntriesToHtml(entries):
     html = ''
-    for i, entry in enumerate(entries):
-        html += '<ul><li>' + str(i) + '</li>'
+    for entry in entries:
+        html += '<ul>' 
         for item in entry:
             html += '<li>'
-            if type(item) == list:
+            if isinstance(item, list):
                 for ite in item:
-                    html += '<span>' + ite + ' </span>'
+                    html += '<span>' + str(ite) + '</span>'
             else:
-                html += str(item)
+                html += item
             html += '</li>'
         html += '</ul>'
     return html
 
-def getActivityEntries(item):
-    entries = getWorkflowHistory(item)
-    entries = formatActivityEntries(entries)
-    entries = activityEntriesToHtml(entries)
-    return entries
-
-def testReturn(item):
-    test_return = getActivityEntries(item)
-    items = []
-    items_brain = item.getFolderContents()
-    for item_brain in items_brain:
-        item = item_brain.getObject()
-        test_return += getActivityEntries(item)
-        items.append(item_brain)
-    return test_return
-
-#######################################################
 def computeActiveTime(item, user=None):
     """
     Look for wf-action 'Start' in wf-history of item
@@ -132,7 +66,7 @@ def computeActiveTimes(item, user=None):
 
 def getActiveTime(item, user=None):
     time = computeActiveTime(item, user)
-    time = humanReadableToPrettified(time)
+    time = msToPrettified(time)
     return time
 
 def getActiveTimes(item, user=None):
@@ -141,21 +75,86 @@ def getActiveTimes(item, user=None):
     in prettified-format, include self.
     """
     time = computeActiveTimes(item, user)
-    time = humanReadableToPrettified(time)
+    time = msToPrettified(time)
     return time
 
+def getActivityEntries(items):
+    """
+    Search workflow-history of each item for entries with the 'Start', 'Pause'
+    or 'Stop'-action and compute the time between the start/ and end-actions.
+    Return a list of lists in the format like in the first entry below.
+    Adds a list-entry for the sum of all activities after each step
+    and at lastly also one for the total sum of all steps' activities.
+    """
+    new_entry = ['Path', 'Title', 'Actor', 'Action', 'Date', 'Time', 'Activity']
+    new_entries = [new_entry]
+    total_deltas = 0
+    for item in items:
+        deltas = 0
+        end_time = DateTime().millis() # now
+        path = '/'.join(item.getPhysicalPath()[2:])
+        title = item.Title()
+        history = getWorkflowHistory(item)
+        for entry in history:
+            new_entry = [path, title] # Path + Title
+            new_entry.append(entry['actor']['username']) # Actor
+            action = entry['transition_title'] # Action
+            new_entry.append(action)
+            time = entry['time']
+            new_entry.append(str(DateTime.Date(time))) # Date
+            new_entry.append(str(DateTime.Time(time))) # Time
+            time = time.millis()
+            delta = last_time - time
+            if action == 'Pause' or action == 'Close':
+                end_time = time
+                new_entry.append('-')
+            elif action == 'Start':
+                new_entry.append(msToPrettified(delta)) # Delta
+                deltas += delta
+            else:
+                new_entry.append('-')
+            new_entries.append(new_entry)
+        new_entries.append([path, title, '-', '-', '-',
+                            'Total activity:', msToPrettified(deltas)])
+        total_deltas += deltas
+    new_entries.append(['-', '-', '-', '-', '-',
+                        'Total activities:', msToPrettified(total_deltas)])
+    return new_entries
+
+def getActivityEntriesRecur(item):
+    items = getStepsRecur(item)
+    entries = getActivityEntries(items)
+    html = activityEntriesToHtml(test_return)
+    return html
+
 def getSteps(item):
-    """Return all item's children of type 'Stepbystep'."""
+    """
+    Return all item's children of type 'Stepbystep'.
+    """
     return getChildrenOfType(item, 'Stepbystep')
+
+def getStepsRecur(item):
+    """
+    Return all item's children and (grand-)grand-children of type 'Stepbystep'.
+    """
+    items = []
+    brains = item.queryCatalog({
+                'path':'/'.join(item.getPhysicalPath()),
+                'portal_type':'Stepbystep'
+             })
+    for brain in brains:
+        item = brain.getObject()
+        items.append(item)
+    return items
 
 def getStepsOfUser(item, user):
     """
-    Return all children including self, where the user is
+    Return all steps of item including self, where the user is
     the responsible person, represented by the Creator-field.
     """
     records = []
     criteria = {}
-    criteria['path'] = '/Plone'
+    criteria['path'] = '/'.join(item.getPhysicalPath())
     criteria['Type'] = 'Stepbystep'
     criteria['Creator'] = user
     brains = self.context.queryCatalog(criteria)
@@ -190,6 +189,5 @@ def increaseStepbystepsIndex():
 	stepbysteps_index = settings.stepbystep_indexer
 	new_index = stepbysteps_index + 1
 	settings.stepbystep_indexer = new_index
-
 	return new_index
 

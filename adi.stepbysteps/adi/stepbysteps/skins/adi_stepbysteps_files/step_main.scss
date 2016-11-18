@@ -1,71 +1,47 @@
 @import 'variables';
 
 body.portaltype-stepbystep {
-    height: 100%;
-//    overflow: hidden;
     line-height: $line_height_primary;
     font-family: $font_family_primary;
     font-size: $font_size_primary;
-    a:focus {
-        outline: 1px dotted;
-    }
-    a[disabled] {
-        opacity: 0.27;
-    }
-    .buttons a,
-    .button {
-        display: inline-block;
-        min-width: 1em;
-        min-height: $line_height_primary;
-        text-align: center;
-    }
-    .showChildren {
-        background: url("++resource++adi.stepbysteps.resources/closed.png")
-                    no-repeat center;
-    }
-    .hideChildren {
-        background: url("++resource++adi.stepbysteps.resources/expanded.png")
-                    no-repeat center;
-    }
-    .hideText:before {
-        content: '-';
-    }
-    .showText:before {
-        content: '+';
-    }
-    .stepsHeader {
-        text-align: right;
-        border-top: $border_primary;
-    }
     #content {
-        border: 1px solid silver;
-        border-top : none;
         position: relative;
         top: 0;
         bottom: $controls_margin_bottom;
         margin-bottom: $controls_height + $controls_margin_bottom;
-        .step {
-            border-top: $border_primary;
+        .stepsHeader {
+            text-align: right;
         }
-        .posnr {
-            color: #111;
+        //
+        // BUTTONS
+        //
+        a:focus {
+            outline: 1px dotted;
         }
-        .title {
-            color: inherit;
+        a[disabled] {
+            opacity: 0.27;
+            outline: 1px dotted red;
         }
-        .text {
-            padding-left: $button_min_width;
+        .buttons a,
+        .button {
+            display: inline-block;
+            min-width: $button_min_width;
+            min-height: $line_height_primary;
+            text-align: center;
         }
-        // THE 1st step:
-        & > .step {
-            font-size: 127%;
-            border-top: 3px solid silver;
+        .showChildren {
+            background: url("++resource++adi.stepbysteps.resources/closed.png")
+                        no-repeat center;
         }
-        & > .text {
-            border-bottom: 3px solid silver;
+        .hideChildren {
+            background: url("++resource++adi.stepbysteps.resources/expanded.png")
+                        no-repeat center;
         }
-        .children {
-//            margin-left: $font_size_primary; // indent accumuluating per .children in .children
+        .hideText:before {
+            content: '-';
+        }
+        .showText:before {
+            content: '+';
         }
         .controls {
             z-index: 27; /* override Plone default-styles of #portal-footer */
@@ -75,18 +51,15 @@ body.portaltype-stepbystep {
             width: 100%;
             line-height: $controls_height;
             height: $controls_height;
+            &:hover {
+                height: auto;
+            }
             .buttons {
                 padding: 0 1em;
-                a {
-                    min-width: $button_min_width;
-                }
                 div {
                     display: inline;
                 }
             }
-        }
-        .controls:hover {
-            height: auto;
-        }
-    } // EO #content
-} // EO body.portaltype-stepbystep
+        } // .controls
+    } // #content
+} // body.portaltype-stepbystep

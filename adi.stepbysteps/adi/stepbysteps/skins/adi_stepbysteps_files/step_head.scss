@@ -68,10 +68,10 @@ body.portaltype-stepbystep .head {
     // consume, as e.g. a '1' is narrower than an '8':
     .times span {
         display: inline-block;
+        margin-left: 0.25em;
     }
     .times span:nth-child(even) { // units, e.g. 'sec'
         width: 1.75em;
-        margin-left: 0.25em;
     }
     .times span:nth-child(odd) { // numbers, e.g. '08'
         width: 1.125em;

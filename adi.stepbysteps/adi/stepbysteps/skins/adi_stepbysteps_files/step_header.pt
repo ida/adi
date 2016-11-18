@@ -1,5 +1,6 @@
 <div class="header" metal:define-macro="header">
   <tal:first-step tal:condition="isTopStep">
+    <tal:comment tal:replace="nothing">
     <tal:root-step tal:condition="isRootStepbystep">
       <a tal:content="string:&#8962;" tal:attributes="
         href string:./..; title string:Go home; class string:button;">
@@ -11,8 +12,11 @@ Home
         title string:Go up one level; class string:button;"
          tal:content="string:&uarr;">
 Up one level
-      </a></tal:not-root-step></tal:first-step><tal:not-first-step
-    tal:condition="not:isTopStep"><a
+      </a></tal:not-root-step>
+          </tal:comment>
+                               </tal:first-step><tal:not-first-step
+    tal:condition="not:isTopStep">
+    <a
     tal:attributes="href string:${href}/adi_stepbysteps_main_view#content-core;
                        class string:loadLink showChildren button;
                        title string:Show children"

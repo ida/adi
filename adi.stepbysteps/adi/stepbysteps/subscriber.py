@@ -1,70 +1,21 @@
-from Acquisition import aq_inner, aq_parent
+from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType
 from adi.stepbysteps import stepbystepsMessageFactory as _
 from adi.stepbysteps.helpers import increaseStepbystepsIndex
 
+def handleEditBegun(obj, eve):
+    pass#rint obj, eve
 
-def addLastModifiedCollection(step, event):
-    id_ = 'latest-modified'
-    if not id_ in step.keys():
-        # Create collection:
-        step.invokeFactory("Topic", id_)
-        collection = step['latest-modified']
-        collection.setTitle('Latest modified steps')
-        collection.setDescription('An overview of all steps, sorted by latest modification.')
-        # Set collection-criterion 'portal-type' to be 'Stepbystep':
-        criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-        criterion.setValue('Stepbystep')
-        # Set collection-criterion 'relative-path' to be parent,
-        # include grand-children and exclude parent in results:
-        criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-        criterion.setRelativePath('..')
-        criterion.setRecurse(True) # include grand-children
-        # Sort results by latest modified item first:
-        collection.setSortCriterion('modified', 'descending')
-        # Update catalog:
-        collection.reindexObject()
+def doAfterCancel(obj, eve):
+    pass#rint obj, eve
 
-def addLastExpiredCollection(step, event):
-    id_ = 'overdue'
-    if not id_ in step.keys():
-        # Create collection:
-        collection = _createObjectByType("Topic", step, id_,
-            title='Overdue steps',
-            description='Steps where the expiration-date has passed by.')
-        # Sort results by latest expired item first:
-        collection.setSortCriterion('expires', 'descending')
-        # Enable and thereby also set the table-view as default-template:
-        collection.setCustomView(True)
-        # Set which columns shall show up in table-view:
-        collection.setCustomViewFields(['Title', 'ExpirationDate'])
-        # Expiration date passed by:
-        criterion = collection.addCriterion('expires', 'ATFriendlyDateCriteria')
-        criterion.setValue(0) # now
-        criterion.setOperation('less') # older than now
-        # Set collection-criterion 'portal-type' to be 'Stepbystep':
-        criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-        criterion.setValue('Stepbystep')
-        # Set collection-criterion 'UID-path' to be parent,
-        # include grand-children and exclude parent in results:
-        criterion = collection.addCriterion('path', 'ATRelativePathCriterion')
-        criterion.setRelativePath('..')
-        criterion.setRecurse(True) # include grand-children
-        # Update portal-catalog:
-        collection.reindexObject()
-
-# Products.Archetypes.interfaces.IObjectInitializedEvent
-def addCollections(step, event):
-    """
-    On creation of a step, add overviews as collections.
-    """
-    addLastExpiredCollection(step, event)
-    addLastModifiedCollection(step, event)
+def doAfterSave(obj, eve):
+    pass#rint obj, eve
 
 #IObjectInitializedEvent
 def setIndexNumber(obj, event):
-    """ Set increased index-number for a stepbystep as id.
+    """
+    Set increased index-number for a stepbystep as id.
     """
 
     context = aq_inner(obj)
@@ -88,5 +39,4 @@ def setIndexNumber(obj, event):
         if not id_exists:
             obj.setId(id)
             obj.reindexObject()
-    return
 
