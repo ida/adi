@@ -1,12 +1,17 @@
 from AccessControl.SecurityManagement import newSecurityManager
 from Acquisition import aq_inner, aq_parent
 from DateTime import DateTime
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.browser.navtree import getNavigationRoot
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from adi.devgen.helpers.times import getAge
+from adi.devgen.helpers.users import getCurrentUser
 from adi.stepbysteps.helpers import getActiveTime
 from adi.stepbysteps.helpers import getActiveTimes
-from adi.stepbysteps.helpers import testReturn
+from adi.stepbysteps.helpers import getActivitiesReport
+from adi.stepbysteps.helpers import getActivityReport
+from adi.stepbysteps.helpers import getStepOverdues
 from zope.publisher.browser import TestRequest
 from zope.site.hooks import getSite as portal
 
@@ -14,10 +19,6 @@ from zope.site.hooks import getSite as portal
 class View(BrowserView):
 
     index = ViewPageTemplateFile("main.pt")
-
-    def testReturn(self):
-        item = aq_inner(self.context)
-        return testReturn(item)
 
     def __call__(self):
         return self.render()
@@ -33,18 +34,22 @@ class View(BrowserView):
         item = self.context
         return getActiveTimes(item)
 
+    def getActivitiesReport(self):
+        item = self.context
+        return getActivitiesReport(item)
+
+    def getActivityReport(self):
+        item = self.context
+        return getActivityReport(item)
+
     def getAge(self):
         item = self.context
         return getAge(item)
 
-    def isRootStepbystep(self):
-        """
-        If a stepbystep lives in the siteroot, it is considered to be a root-stepbystep.
-        """
-        parent = self.context.aq_parent
-        if parent == portal() or parent.Type() != 'Stepbystep':
-             return True
-        else: return False
+    def getChildSteps(self, context=None):
+        if not context: context = self.context
+        return context.listFolderContents(
+            contentFilter={'portal_type':'Stepbystep'})
 
     def getStepbystepPosNr(self, step=None):
         """
@@ -56,7 +61,6 @@ class View(BrowserView):
             step = step.aq_inner
             nr = 0
             parent = step.aq_parent
-            #siblings = parent.getFolderContents()
             siblings = parent.listFolderContents(
                         contentFilter={"portal_type" : "Stepbystep"})
             for sibling in siblings:
@@ -84,10 +88,8 @@ class View(BrowserView):
             nrs = '.'.join(nrs.split('.')[1:]) # omit nr for root-step
         return nrs
 
-    def getChildSteps(self, context=None):
-        if not context: context = self.context
-        return context.listFolderContents(
-            contentFilter={'portal_type':'Stepbystep'})
+    def getStepOverdues(self):
+        return getStepOverdues(self.context)
 
     def hasChildren(self, obj=None):
         HAS_CHILDREN = False
@@ -100,4 +102,41 @@ class View(BrowserView):
         if not obj: obj = self.context
         if len(self.getChildSteps(obj)) > 0: HAS_CHILDSTEPS = True
         return HAS_CHILDSTEPS
+
+    def isRootStepbystep(self):
+        """
+        A step which is not a child of a step, is ragarded to be a root-step.
+        """
+        parent = self.context.aq_parent
+        if parent == portal() or parent.Type() != 'Stepbystep': return True
+        else: return False
+
+    def my_activetimes(self):
+        context = aq_inner(self.context)
+        current_user = getCurrentUser(self)
+        result = getActiveTimes(context, current_user)
+        return result
+
+    def my_stepbysteps(self):
+        """
+        Return all stepbysteps where the current
+        logged-in user is the responsible person.
+        """
+        records = []
+        criteria = {}
+        context = aq_inner(self.context)
+        current_user = getCurrentUser(self)
+        searchpath = getNavigationRoot(context)
+
+        criteria['path'] = searchpath
+        criteria['Type'] = 'Stepbystep'
+        criteria['Creator'] = current_user
+
+        brains = self.context.queryCatalog(criteria)
+
+        for brain in brains:
+            obj = brain.getObject()
+            records.append(obj)
+
+        return records
 

@@ -7,10 +7,12 @@ from adi.devgen.helpers.content import getChildrenOfType
 from adi.devgen.helpers.users import getCurrentUser
 from adi.devgen.helpers.times import msToHumanReadable
 from adi.devgen.helpers.times import msToPrettified
-from adi.devgen.helpers.versioning import getFullHistory
 from adi.devgen.helpers.versioning import getWorkflowHistory
 from adi.stepbysteps.interfaces import IStepbystepsSettings
 
+
+def testReturn(item):
+    return getActivityEntriesRecur(item)
 
 def activityEntriesToHtml(entries):
     html = ''
@@ -104,7 +106,7 @@ def getActivityEntries(items):
             new_entry.append(str(DateTime.Date(time))) # Date
             new_entry.append(str(DateTime.Time(time))) # Time
             time = time.millis()
-            delta = last_time - time
+            delta = end_time - time
             if action == 'Pause' or action == 'Close':
                 end_time = time
                 new_entry.append('-')
@@ -117,14 +119,21 @@ def getActivityEntries(items):
         new_entries.append([path, title, '-', '-', '-',
                             'Total activity:', msToPrettified(deltas)])
         total_deltas += deltas
-    new_entries.append(['-', '-', '-', '-', '-',
-                        'Total activities:', msToPrettified(total_deltas)])
+    if len(items) > 1:
+        new_entries.append(['-', '-', '-', '-', '-',
+                            'Total activities:', msToPrettified(total_deltas)])
     return new_entries
 
-def getActivityEntriesRecur(item):
+def getActivitiesReport(item):
     items = getStepsRecur(item)
     entries = getActivityEntries(items)
-    html = activityEntriesToHtml(test_return)
+    html = activityEntriesToHtml(entries)
+    return html
+
+def getActivityReport(item):
+    items = [item]
+    entries = getActivityEntries(items)
+    html = activityEntriesToHtml(entries)
     return html
 
 def getSteps(item):
@@ -162,6 +171,20 @@ def getStepsOfUser(item, user):
         obj = brain.getObject()
         records.append(obj)
     return records
+
+def getStepOverdues(item):
+    """
+    Return all childrens where the expiration-date has passed, include self.
+    """
+    overdue_steps = []
+    steps = getStepsRecur(item)
+    for step in steps:
+        print step.contentExpired()
+        if step.contentExpired() == True:
+            print 'match'
+            overdue_steps.append(step)
+    print overdue_steps
+    return overdue_steps
 
 def handleUrlParams(item):
     """
