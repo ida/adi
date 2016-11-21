@@ -81,48 +81,59 @@ def getActiveTimes(item, user=None):
     return time
 
 def getActivityEntries(items):
-    """
-    Search workflow-history of each item for entries with the 'Start', 'Pause'
-    or 'Stop'-action and compute the time between the start/ and end-actions.
-    Return a list of lists in the format like in the first entry below.
-    Adds a list-entry for the sum of all activities after each step
-    and at lastly also one for the total sum of all steps' activities.
-    """
-    new_entry = ['Path', 'Title', 'Actor', 'Action', 'Date', 'Time', 'Activity']
-    new_entries = [new_entry]
-    total_deltas = 0
-    for item in items:
-        deltas = 0
+    entry = ['Path', 'Title', 'Actor', 'From', 'To', 'Time']
+    entries = [entry]
+    step_deltas = steps_deltas = 0
+    STEPS_STARTED = False
+    now_time = DateTime()
+    now_time_str = str(DateTime.Date(now_time)) + ' ' +\
+                   str(DateTime.Time(now_time))
+    steps_start_str = step_start_str = now_time_str
+    for i, item in enumerate(items):
+        STEP_STARTED = False
         end_time = DateTime().millis() # now
+        end_time_str = 'Is still playing'
         path = '/'.join(item.getPhysicalPath()[2:])
         title = item.Title()
         history = getWorkflowHistory(item)
-        for entry in history:
-            new_entry = [path, title] # Path + Title
-            new_entry.append(entry['actor']['username']) # Actor
-            action = entry['transition_title'] # Action
-            new_entry.append(action)
-            time = entry['time']
-            new_entry.append(str(DateTime.Date(time))) # Date
-            new_entry.append(str(DateTime.Time(time))) # Time
+        for j, story in enumerate(history):
+            action = story['transition_title']
+            time = story['time']
+            time_str = str(DateTime.Date(time)) + ' ' + str(DateTime.Time(time))
             time = time.millis()
             delta = end_time - time
             if action == 'Pause' or action == 'Close':
                 end_time = time
-                new_entry.append('-')
+                end_time_str = time_str
             elif action == 'Start':
-                new_entry.append(msToPrettified(delta)) # Delta
-                deltas += delta
-            else:
-                new_entry.append('-')
-            new_entries.append(new_entry)
-        new_entries.append([path, title, '-', '-', '-',
-                            'Total activity:', msToPrettified(deltas)])
-        total_deltas += deltas
-    if len(items) > 1:
-        new_entries.append(['-', '-', '-', '-', '-',
-                            'Total activities:', msToPrettified(total_deltas)])
-    return new_entries
+                entry = [path] # Path
+                entry.append(title) # Title
+                entry.append(story['actor']['username']) # Actor
+                entry.append(time_str) # From
+                entry.append(end_time_str) # To
+                entry.append(msToPrettified(delta)) # Time
+                entries.append(entry)
+                step_deltas += delta 
+                if STEP_STARTED == False:
+                    step_start_str = time_str
+                    STEP_STARTED = True
+                if STEPS_STARTED == False:
+                    steps_start_str = step_start_str
+                    STEPS_STARTED = True
+        if step_deltas > 0 and len(items) > 1:
+            if end_time_str == 'Is still playing':
+                end_time_str = now_time_str
+            entries.append([path, title, 'Total activity:',
+                    step_start_str, end_time_str,
+                    '<b>' + ' '.join(msToPrettified(step_deltas)) + '</b>'])
+        steps_deltas += step_deltas
+        step_deltas = 0
+    if steps_deltas > 0:
+        entries.append(['Report created at:', now_time_str, 'Total activities:',
+                    steps_start_str, end_time_str,
+                    '<hr><b>' + ' '.join(msToPrettified(steps_deltas)) + '</b>'])
+    else: entries = [['No activity has happened, yet.']]
+    return entries
 
 def getActivitiesReport(item):
     items = getStepsRecur(item)
@@ -179,11 +190,8 @@ def getStepOverdues(item):
     overdue_steps = []
     steps = getStepsRecur(item)
     for step in steps:
-        print step.contentExpired()
         if step.contentExpired() == True:
-            print 'match'
             overdue_steps.append(step)
-    print overdue_steps
     return overdue_steps
 
 def handleUrlParams(item):

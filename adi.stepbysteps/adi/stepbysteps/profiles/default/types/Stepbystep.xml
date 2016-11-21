@@ -13,8 +13,9 @@
   <property name="global_allow">True</property>
   <property name="filter_content_types">False</property>
   <property name="allow_discussion">False</property>
-  <property name="default_view">adi_stepbysteps_main_view</property>
+  <property name="default_view">steps_main</property>
   <property name="view_methods">
+    <element value="steps_main" />
     <element value="adi_stepbysteps_main_view" />
     <element value="adi_stepbysteps_times_view" />
     <element value="stepbystep_view" />

@@ -22,27 +22,6 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   
-  <!--  An edit has begun: -->
-	<subscriber
-		for=".interfaces.IStepbystep
-		Products.Archetypes.interfaces.IEditBegunEvent"
-		handler=".subscriber.handleEditBegun"
-	  />
-
-  <!--  An edit has been done: -->
-	<subscriber
-		for=".interfaces.IStepbystep
-		Products.Archetypes.interfaces.IObjectEditedEvent"
-		handler=".subscriber.doAfterSave"
-	  />
-
-  <!--  An edit has been canceled: -->
-	<subscriber
-		for=".interfaces.IStepbystep
-		Products.Archetypes.interfaces.IEditCancelledEvent"
-		handler=".subscriber.doAfterCancel"
-	  />
-
   <!--  A stepbystep is in creation, set index-nr as id: -->
 	<subscriber
 		for=".interfaces.IStepbystep

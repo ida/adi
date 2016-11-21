@@ -1,10 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-      metal:use-macro="context/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="plone">
-  <metal:content fill-slot="content">
+<head>
+<link rel="stylesheet" href="
+step_colors.css
+">
+<link rel="stylesheet" href="
+steps_main.css
+">
+<link rel="stylesheet" href="steps_main.css">
+<script src="++resource++plone.app.jquery.js"></script>
+<script src="steps_main.js"></script>
+</head>
     <div id="content" tal:define=" href context/absolute_url;
       children context/getFolderContents;
       hasChildren python: len(children) > 0;
@@ -58,5 +67,4 @@ Child step
 Controls
       </metal:item>
     </div>
-  </metal:content>
 </html>

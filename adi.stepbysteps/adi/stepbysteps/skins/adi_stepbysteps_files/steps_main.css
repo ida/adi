@@ -1,0 +1,82 @@
+body {
+  background: #E1EAB6;
+  color: #444;
+}
+.buttons {
+  background: #b3b3b3;
+}
+#content {
+  background: #E1EAB6;
+}
+.step {
+  border-top: 0.1em solid silver;
+}
+.head {
+  background: #f1f1f1;
+  color: #a1a1a1;
+}
+.start, .state-active {
+  color: #207207;
+}
+.state-closed {
+  color: inherit;
+}
+.close, .state-new {
+  color: #223772;
+}
+.pause, .state-waiting {
+  color: orange;
+}
+body {
+  line-height: 1.61em;
+  font-family: Arial, sans;
+  font-size: 1em;
+  position: relative;
+  top: 0;
+  bottom: 1em;
+  margin-bottom: 3em;
+}
+.stepsHeaderLinks {
+  text-align: right;
+}
+a:focus {
+  outline: 1px dotted;
+}
+a[disabled] {
+  opacity: 0.27;
+}
+.buttons a, .button {
+  display: inline-block;
+  min-width: 1.61em;
+  min-height: 1.61em;
+  text-align: center;
+}
+.showChildren {
+  background: url("arrowRight.png") no-repeat center;
+}
+.hideChildren {
+  background: url("arrowDown.png") no-repeat center;
+}
+.hideText:before {
+  content: '-';
+}
+.showText:before {
+  content: '+';
+}
+.controls {
+  position: fixed;
+  bottom: 1em;
+  right: 0;
+  width: 100%;
+  line-height: 2em;
+  height: 2em;
+}
+.controls:hover {
+  height: auto;
+}
+.controls .buttons {
+  padding: 0 1em;
+}
+.controls .buttons div {
+  display: inline;
+}

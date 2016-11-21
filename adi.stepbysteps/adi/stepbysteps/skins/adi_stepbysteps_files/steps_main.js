@@ -8,14 +8,14 @@ function loadLink(link, loadLinkClass) {
     anchorId = href[1]
     href = href[0]
   }
-// If we have a link with class showChildren; prepend to parent,
-// if link we have a link with class loadText; insert after step-title:
-if( link.hasClass('showText') ) {
-  // Create wrapper to load dest into:
-  link.parent().append('<div class="loadWrapper"></div>')
-  // Grab the newly created wrapper:
-  loadContainer = link.find('~ div.loadWrapper')
-}
+  // If we have a link with class showChildren; prepend to parent,
+  // if link we have a link with class loadText; insert after step-title:
+  if( link.hasClass('showText') ) {
+    // Create wrapper to load dest into:
+    link.parent().append('<div class="loadWrapper"></div>')
+    // Grab the newly created wrapper:
+    loadContainer = link.find('~ div.loadWrapper')
+  }
 else {
   loadContainer = $('<div class="loadWrapper"></div>')
                   .insertAfter( link.parent() )
@@ -41,8 +41,8 @@ function onLoadLinkClick(container, loadLinkClass) {
     var anchorId = link.attr('href').split('#')[1]
     // if #text, we need this:
     var content_container = link.parent()
-    // else for #content-core, we need this:
-    if(anchorId == 'content-core') {
+    // else for #children, we need this:
+    if(anchorId == 'children') {
       content_container = content_container.parent()
     }
     var content = $(content_container.find('#' + anchorId)[0]) // only 1st

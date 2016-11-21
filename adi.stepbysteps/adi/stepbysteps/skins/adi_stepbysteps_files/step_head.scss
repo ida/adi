@@ -1,10 +1,8 @@
 @import 'variables';
 
-body.portaltype-stepbystep .head {
+.head {
     float: right;
     opacity: 0.75;
-    min-height: $border_width_primary;
-    min-width: $line_height_primary;
     div {
         display: inline-block;
     }
@@ -30,8 +28,6 @@ body.portaltype-stepbystep .head {
         }
     }
     // On hover show all fields:
-    /*
-     */
     .fields:hover {
         div {
             display: inline-block;

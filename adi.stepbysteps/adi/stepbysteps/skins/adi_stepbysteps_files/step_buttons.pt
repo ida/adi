@@ -4,7 +4,7 @@ so backwards tab-keying lands on most important button first, after page-load.
 Eliminate spaces rendered by TAL, by putting opening tags rigth after closing
 tags, no linebreak or other space.
 </tal:comment>
-<div class="edit" metal:define-macro="editables"
+<div class="edit" metal:define-macro="step_buttons"
   tal:define="url context/absolute_url">
   <a tal:attributes="href string:${url}/folder_contents"
      title="Change order and more"

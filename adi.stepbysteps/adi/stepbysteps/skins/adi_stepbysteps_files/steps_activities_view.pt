@@ -17,6 +17,9 @@
     margin-right: 0.27em;
   }
   </style>
+    <a title="Go back" href=".">
+  <--
+  </a>
   <div tal:define="html
        context/@@adi_stepbysteps_main_view/getActivitiesReport;"
        tal:content="structure html">

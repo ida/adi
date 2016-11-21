@@ -7,6 +7,9 @@
       i18n:domain="plone">
 <body>
 <metal:content fill-slot="content">
+  <a title="Go back" href=".">
+  <--
+  </a>
   <ul tal:define="overdue_steps
        context/@@adi_stepbysteps_main_view/getStepOverdues;">
     <li tal:repeat="overdue_step overdue_steps">

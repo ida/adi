@@ -17,8 +17,10 @@
     margin-right: 0.27em;
   }
   </style>
+  <div id="content">
   <div tal:define="html context/@@adi_stepbysteps_main_view/getActivityReport;"
        tal:content="structure html">
       activityEntries
+  </div>
   </div>
 </metal:content></body></html>

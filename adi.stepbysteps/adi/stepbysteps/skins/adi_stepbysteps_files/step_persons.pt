@@ -23,7 +23,7 @@ A contributor
     <div class="name" tal:content="string:Reporter">
 Reporter:
     </div><div 
-    class="value" tal:content="owner">
+    class="value" tal:content="string:owner">
 The owner
     </div>
   </div><div

@@ -6,7 +6,8 @@
     <include package="plone.app.contentmenu" />
     <include package="plone.app.registry" />
 
-    <!-- Resolve component-lookup-error triggered of `cmf.setOwnPassword`: -->
+    <!-- Resolve component-lookup-error, triggered of
+         `cmf.SetOwnPassword`, used below: -->
     <include package="Products.CMFCore" file="permissions.zcml" />
 
     <!-- Control panel -->
@@ -40,28 +41,5 @@
         layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
      />
 
-    <browser:page
-        for="*"
-        name="step_activities_view"
-        template="resources/step_activities_view.pt"
-        permission="cmf.SetOwnPassword"
-        layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
-     />
-
-    <browser:page
-        for="*"
-        name="steps_activities_view"
-        template="resources/steps_activities_view.pt"
-        permission="cmf.SetOwnPassword"
-        layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
-     />
-
-    <browser:page
-        for="*"
-        name="step_overdues_view"
-        template="resources/step_overdues_view.pt"
-        permission="cmf.SetOwnPassword"
-        layer="adi.stepbysteps.browser.interfaces.IAdiStepbysteps"
-     />
 
 </configure>

@@ -1,1 +1,32 @@
-body.portaltype-stepbystep{background:#e1eab6;color:#444}body.portaltype-stepbystep a{color:#444 !important}body.portaltype-stepbystep .buttons{background:#b3b3b3}body.portaltype-stepbystep #content{background:#e1eab6}body.portaltype-stepbystep .step{border-top:.1em solid silver}body.portaltype-stepbystep .head{background:#f1f1f1;color:#a1a1a1}.start,.state-active{color:#207207 !important}.block,.state-blocked{color:red !important}.state-closed{color:inherit !important}.close,.state-new{color:#223772 !important}.pause,.state-waiting{color:orange !important}
+body.portaltype-stepbystep {
+  background: #E1EAB6;
+  color: #444;
+}
+body.portaltype-stepbystep .buttons {
+  background: #b3b3b3;
+}
+body.portaltype-stepbystep #content {
+  background: #E1EAB6;
+}
+body.portaltype-stepbystep .step {
+  border-top: 0.1em solid silver;
+}
+body.portaltype-stepbystep .head {
+  background: #f1f1f1;
+  color: #a1a1a1;
+}
+.start, .state-active {
+  color: #207207 !important;
+}
+.block, .state-blocked {
+  color: red !important;
+}
+.state-closed {
+  color: inherit !important;
+}
+.close, .state-new {
+  color: #223772 !important;
+}
+.pause, .state-waiting {
+  color: orange !important;
+}
