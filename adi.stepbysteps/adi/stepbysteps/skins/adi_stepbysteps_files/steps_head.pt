@@ -1,34 +1,25 @@
 <div class="stepsHead" metal:define-macro="steps_head">
   <div class="stepsHeaderLinks">
-  <a href="step_overdues_view"
-     tabindex="-1"
-     title="See steps which have passed their expiration-date">
+    <a href="step_overdues"
+       tabindex="-1"
+       title="See steps which have passed their expiration-date">
 overdues
-  </a>
-  |
-  <a href="steps_activities_view"
-     tabindex="-1"
-     title="Go to full activity-report">
+    </a>
+    |
+    <a href="step_activities"
+       tabindex="-1"
+       title="Go to full activity-report">
 activity
-  </a>
-  |
-  <a href="my_stepbysteps"
-     tabindex="-1"
-     title="See all steps you're responsible of"
-     tal:define="username python:
-                 request.AUTHENTICATED_USER.getUserName();
-                 isAnonymous python: username == 'Anonymous User';"
-     tal:content="username">
+    </a>
+    |
+    <a href="my_stepbysteps"
+       tabindex="-1"
+       title="See all steps you're responsible of"
+       tal:define="username python:
+                   request.AUTHENTICATED_USER.getUserName();
+                   isAnonymous python: username == 'Anonymous User';"
+       tal:content="username">
 username
-  </a>
-</div>
-<!--
-  <h2 tal:define="step python: context;
-    getNrs nocall: context/adi_stepbysteps_main_view/getStepbystepPosNrs;
-    nrs python: getNrs(step)">
-    <span tal:condition="python: nrs == ''" tal:content="string:0" />
-    <span tal:condition="python: nrs != ''" tal:content="nrs" />
-  <span tal:content="context/Title" />
-  </h2>
--->
+    </a>
+  </div>
 </div>

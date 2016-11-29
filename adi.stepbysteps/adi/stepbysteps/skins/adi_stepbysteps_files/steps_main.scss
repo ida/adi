@@ -1,60 +1,3 @@
-/************************************
- *                                  *
- *       COLORS AND BORDERS         *
- *                                  *
- ************************************/
-$bg_primary: lightyellow;
-$bg_primary: #E1EAB6; /* lightgreen */
-$bg_secondary: #f1f1f1;
-$bg_tertiary: #b3b3b3;
-$bg_content: $bg_primary;
-$border_color_regular: silver;
-$border_style_regular: solid;
-$border_width_regular: 0.1em;
-$border_regular: $border_width_regular
-$border_style_regular $border_color_regular;
-$col_primary: #444;
-$col_secondary: #a1a1a1;
-$col_active: #207207; /* green */
-$col_closed: #223772; /* darkblue */
-$col_waiting: orange;
-/* Nightsight, (un-)comment to switch:
-$bg_primary: #011435;
-$bg_secondary: $bg_primary;
-$bg_tertiary: #272727;
-$bg_content: $bg_primary;
-$col_primary: #fff!important;
-*/
-
-body {
-    background: $bg_primary;
-    color: $col_primary;
-}
-.buttons {
-    background: $bg_tertiary;
-}
-#content {
-    background: $bg_content;
-}
-.step {
-    border-top: $border_regular;
-}
-.head {
-    background: $bg_secondary;
-    color: $col_secondary;
-}
-
-// Workflow-states and -transitions:
-.start, .state-active { color: $col_active; }
-.state-closed { color: inherit; }
-.close, .state-new { color: $col_closed; }
-.pause, .state-waiting { color: $col_waiting; }
-
-/************************************
- *                                  *
- *         ANYTHING  ELSE           *
- *                                  *
- ************************************/
 @import 'variables';
 
 body {
@@ -93,6 +36,15 @@ a[disabled] {
 .showText:before {
     content: '+';
 }
+.text.preview {
+    font-size: 0.7em;
+}
+.header {
+    position: relative;
+    .loadLink {
+        position: absolute;
+    }
+}
 //
 // CONTROLS
 //
@@ -106,10 +58,10 @@ a[disabled] {
     &:hover {
         height: auto;
     }
+    & > div {
+        display: inline;
+    }
     .buttons {
         padding: 0 1em;
-        div {
-            display: inline;
-        }
     }
 }

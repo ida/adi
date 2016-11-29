@@ -26,7 +26,7 @@
 	<subscriber
 		for=".interfaces.IStepbystep
 		Products.Archetypes.interfaces.IObjectInitializedEvent"
-		handler=".subscriber.setIndexNumber"
+		handler=".subscriber.setNextId"
 	  />
 
   <!-- Execute the method 'setupVarious()' living in

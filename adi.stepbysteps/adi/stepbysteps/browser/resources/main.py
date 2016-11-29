@@ -1,4 +1,3 @@
-from AccessControl.SecurityManagement import newSecurityManager
 from Acquisition import aq_inner, aq_parent
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
@@ -25,6 +24,11 @@ class View(BrowserView):
 
     def render(self):
         return self.index()
+
+    def getPlainText(self):
+        item = self.context
+        text = item.getRawText()
+        return text
 
     def getActiveTime(self):
         item = self.context

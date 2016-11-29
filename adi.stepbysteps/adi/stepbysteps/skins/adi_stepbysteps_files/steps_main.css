@@ -1,33 +1,4 @@
 body {
-  background: #E1EAB6;
-  color: #444;
-}
-.buttons {
-  background: #b3b3b3;
-}
-#content {
-  background: #E1EAB6;
-}
-.step {
-  border-top: 0.1em solid silver;
-}
-.head {
-  background: #f1f1f1;
-  color: #a1a1a1;
-}
-.start, .state-active {
-  color: #207207;
-}
-.state-closed {
-  color: inherit;
-}
-.close, .state-new {
-  color: #223772;
-}
-.pause, .state-waiting {
-  color: orange;
-}
-body {
   line-height: 1.61em;
   font-family: Arial, sans;
   font-size: 1em;
@@ -63,6 +34,15 @@ a[disabled] {
 .showText:before {
   content: '+';
 }
+.text.preview {
+  font-size: 0.7em;
+}
+.header {
+  position: relative;
+}
+.header .loadLink {
+  position: absolute;
+}
 .controls {
   position: fixed;
   bottom: 1em;
@@ -74,9 +54,9 @@ a[disabled] {
 .controls:hover {
   height: auto;
 }
+.controls > div {
+  display: inline;
+}
 .controls .buttons {
   padding: 0 1em;
-}
-.controls .buttons div {
-  display: inline;
 }

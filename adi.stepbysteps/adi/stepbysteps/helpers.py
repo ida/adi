@@ -4,15 +4,12 @@ from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from adi.devgen.helpers.content import getChildrenOfType
-from adi.devgen.helpers.users import getCurrentUser
+from adi.devgen.helpers.content import idExists 
 from adi.devgen.helpers.times import msToHumanReadable
 from adi.devgen.helpers.times import msToPrettified
 from adi.devgen.helpers.versioning import getWorkflowHistory
 from adi.stepbysteps.interfaces import IStepbystepsSettings
 
-
-def testReturn(item):
-    return getActivityEntriesRecur(item)
 
 def activityEntriesToHtml(entries):
     html = ''
@@ -67,13 +64,17 @@ def computeActiveTimes(item, user=None):
     return time
 
 def getActiveTime(item, user=None):
+    """
+    Get accumulated active-time of item
+    in prettified-format.
+    """
     time = computeActiveTime(item, user)
     time = msToPrettified(time)
     return time
 
 def getActiveTimes(item, user=None):
     """
-    Get accumulated active time of all (grand-)childrens
+    Get accumulated active-time of all (grand-)childrens
     in prettified-format, include self.
     """
     time = computeActiveTimes(item, user)
@@ -81,59 +82,69 @@ def getActiveTimes(item, user=None):
     return time
 
 def getActivityEntries(items):
-    entry = ['Path', 'Title', 'Actor', 'From', 'To', 'Time']
-    entries = [entry]
-    step_deltas = steps_deltas = 0
-    STEPS_STARTED = False
-    now_time = DateTime()
-    now_time_str = str(DateTime.Date(now_time)) + ' ' +\
-                   str(DateTime.Time(now_time))
-    steps_start_str = step_start_str = now_time_str
+    row = ['Path', 'Title', 'Actor', 'From', 'To', 'Time']
+    rows = [row]
+    now_date = DateTime()
+    now_ms = now_date.millis()
+    now_str = str(DateTime.Date(now_date)) + \
+        ' ' + str(DateTime.Time(now_date))
+    steps_end = now_ms
+    steps_end_date = now_date
+    steps_deltas = 0
+    steps_start = now_ms
+    steps_start_str = 'No'#None
     for i, item in enumerate(items):
-        STEP_STARTED = False
-        end_time = DateTime().millis() # now
+        end_time = now_ms
         end_time_str = 'Is still playing'
-        path = '/'.join(item.getPhysicalPath()[2:])
-        title = item.Title()
         history = getWorkflowHistory(item)
+        item_rows = []
+        path = '/'.join(item.getPhysicalPath()[2:])
+        step_deltas = 0
+        title = item.Title()
         for j, story in enumerate(history):
             action = story['transition_title']
             time = story['time']
             time_str = str(DateTime.Date(time)) + ' ' + str(DateTime.Time(time))
+            end_date = time
             time = time.millis()
             delta = end_time - time
             if action == 'Pause' or action == 'Close':
                 end_time = time
                 end_time_str = time_str
+                if steps_end < end_time:
+                    steps_end = end_time
+                    steps_end_date = end_date
             elif action == 'Start':
-                entry = [path] # Path
-                entry.append(title) # Title
-                entry.append(story['actor']['username']) # Actor
-                entry.append(time_str) # From
-                entry.append(end_time_str) # To
-                entry.append(msToPrettified(delta)) # Time
-                entries.append(entry)
+                if time < steps_start:
+                    steps_start = time
+                    steps_start_str = time_str;
+                item_rows.append([path, title, story['actor']['username'], time_str, end_time_str, msToPrettified(delta)])
                 step_deltas += delta 
-                if STEP_STARTED == False:
-                    step_start_str = time_str
-                    STEP_STARTED = True
-                if STEPS_STARTED == False:
-                    steps_start_str = step_start_str
-                    STEPS_STARTED = True
-        if step_deltas > 0 and len(items) > 1:
+
+        if len(item_rows) > 0:
+            end_time_str = item_rows[0][-2]
             if end_time_str == 'Is still playing':
-                end_time_str = now_time_str
-            entries.append([path, title, 'Total activity:',
-                    step_start_str, end_time_str,
-                    '<b>' + ' '.join(msToPrettified(step_deltas)) + '</b>'])
-        steps_deltas += step_deltas
-        step_deltas = 0
-    if steps_deltas > 0:
-        entries.append(['Report created at:', now_time_str, 'Total activities:',
-                    steps_start_str, end_time_str,
-                    '<hr><b>' + ' '.join(msToPrettified(steps_deltas)) + '</b>'])
-    else: entries = [['No activity has happened, yet.']]
-    return entries
+                end_time_str = now_str
+            item_rows.append([
+                path,
+                title,
+                'Total:',
+                item_rows[-1][-3],
+                end_time_str,
+                '<b>' + ' '.join(msToPrettified(step_deltas)) + '</b>'
+            ])
+            steps_deltas += step_deltas
+            rows += item_rows
+
+    rows.append([
+            path,
+            title,
+            'Totals:',
+            steps_start_str,
+            str(DateTime.Date(steps_end_date)) + ' ' + str(DateTime.Time(steps_end_date)),
+            '<b><em>' + ' '.join(msToPrettified(steps_deltas)) + '</em></b>'
+        ])
+    return rows
 
 def getActivitiesReport(item):
     items = getStepsRecur(item)
@@ -146,6 +157,12 @@ def getActivityReport(item):
     entries = getActivityEntries(items)
     html = activityEntriesToHtml(entries)
     return html
+
+def getNextId(item):
+    nr = 0
+    while idExists(item, str(nr)):
+        nr += 1
+    return str(nr)
 
 def getSteps(item):
     """
@@ -209,16 +226,4 @@ def handleUrlParams(item):
     except:
         print 'no request'
     return getActiveTimes(item, user)
-
-def increaseStepbystepsIndex():
-	"""
-    Increase and return index-number of
-	stepbysteps-registry in controlpanel.
-	"""
-	registry = getUtility(IRegistry)
-	settings = registry.forInterface(IStepbystepsSettings)
-	stepbysteps_index = settings.stepbystep_indexer
-	new_index = stepbysteps_index + 1
-	settings.stepbystep_indexer = new_index
-	return new_index
 

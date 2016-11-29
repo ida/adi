@@ -5,7 +5,7 @@
       i18n:domain="plone">
 <head>
 <link rel="stylesheet" href="
-step_colors.css
+steps_colors.css
 ">
 <link rel="stylesheet" href="
 steps_main.css
