@@ -1,24 +1,22 @@
 <span class="text preview" metal:define-macro="text_preview"
 tal:define="
-text context/getText;
-text_preview_max_chars python: 50;
-text_plain context/adi_stepbysteps_main_view/getPlainText;
+max_chars python: 50;
+text_plain text_preview
 ">
   <span class="cropped"
-       tal:condition="python:len(text) > text_preview_max_chars"
-       tal:define="text_cropped python:
-       str(text_plain)[:text_preview_max_chars]">
-    <span class="text"
-       tal:content="text_cropped">
-    Cropped text 
+        tal:condition="python:len(text_plain) > max_chars"
+        tal:define="text_cropped python:
+                    str(text_plain)[:max_chars]">
+    <span class="text" tal:content="text_cropped">
+Cropped text
     </span>
     <span class="elli">
-      (...)
+(...)
     </span>
   </span>
   <span class="fulltext"
-       tal:condition="python:len(text) <= text_preview_max_chars"
+       tal:condition="python:len(text_plain) <= max_chars"
        tal:content="text_plain">
-    Full text
+Full text
   </span>
 </span>

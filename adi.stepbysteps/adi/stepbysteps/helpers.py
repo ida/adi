@@ -1,14 +1,8 @@
-from Acquisition import aq_inner, aq_parent
 from DateTime import DateTime
-from Products.CMFCore.utils import getToolByName
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
 from adi.devgen.helpers.content import getChildrenOfType
 from adi.devgen.helpers.content import idExists 
-from adi.devgen.helpers.times import msToHumanReadable
 from adi.devgen.helpers.times import msToPrettified
 from adi.devgen.helpers.versioning import getWorkflowHistory
-from adi.stepbysteps.interfaces import IStepbystepsSettings
 
 
 def activityEntriesToHtml(entries):
@@ -92,7 +86,7 @@ def getActivityEntries(items):
     steps_end_date = now_date
     steps_deltas = 0
     steps_start = now_ms
-    steps_start_str = 'No'#None
+    steps_start_str = now_str#None
     for i, item in enumerate(items):
         end_time = now_ms
         end_time_str = 'Is still playing'

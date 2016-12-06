@@ -4,6 +4,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from adi.commons.commons import htmlToText
 from adi.devgen.helpers.times import getAge
 from adi.devgen.helpers.users import getCurrentUser
 from adi.stepbysteps.helpers import getActiveTime
@@ -16,19 +17,6 @@ from zope.site.hooks import getSite as portal
 
 
 class View(BrowserView):
-
-    index = ViewPageTemplateFile("main.pt")
-
-    def __call__(self):
-        return self.render()
-
-    def render(self):
-        return self.index()
-
-    def getPlainText(self):
-        item = self.context
-        text = item.getRawText()
-        return text
 
     def getActiveTime(self):
         item = self.context
@@ -54,6 +42,12 @@ class View(BrowserView):
         if not context: context = self.context
         return context.listFolderContents(
             contentFilter={'portal_type':'Stepbystep'})
+
+    def getPlainText(self):
+        item = self.context
+        text = item.getText()
+        text = htmlToText(text)
+        return text
 
     def getStepbystepPosNr(self, step=None):
         """
@@ -107,7 +101,7 @@ class View(BrowserView):
         if len(self.getChildSteps(obj)) > 0: HAS_CHILDSTEPS = True
         return HAS_CHILDSTEPS
 
-    def isRootStepbystep(self):
+    def isRootStep(self):
         """
         A step which is not a child of a step, is ragarded to be a root-step.
         """

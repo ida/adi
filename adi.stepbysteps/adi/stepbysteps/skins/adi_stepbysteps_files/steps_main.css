@@ -37,12 +37,6 @@ a[disabled] {
 .text.preview {
   font-size: 0.7em;
 }
-.header {
-  position: relative;
-}
-.header .loadLink {
-  position: absolute;
-}
 .controls {
   position: fixed;
   bottom: 1em;

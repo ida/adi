@@ -10,14 +10,6 @@
          `cmf.SetOwnPassword`, used below: -->
     <include package="Products.CMFCore" file="permissions.zcml" />
 
-    <!-- Control panel -->
-    <browser:page
-        name="stepbysteps-settings"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        class=".controlpanel.StepbystepsSettingsControlPanel"
-        permission="cmf.ManagePortal"
-        />
-
     <!-- Resource directory -->
     <browser:resourceDirectory
         name="adi.stepbysteps.resources"

@@ -1,6 +1,8 @@
-// On page load:
-(function($) { $(document).ready(function() {
-  var msgs = $('.portalMessage')
+var info_mss_css = ''
+
+
+function handlePortalMsgs(container, msgsClass) {
+  var msgs = $('.' + msgsClass)
   var scnds = 6
   // For each found msg:
   msgs.each(function() {
@@ -36,5 +38,10 @@
       $(this).parent().animate( {opacity:0}, 2777, function() { $(this).remove() } )
     });
   }, 4213);
-
+}
+// On page load:
+(function($) { $(document).ready(function() {
+  var container = $(document.body)
+  var msgsClass = 'portalMessage'
+  handlePortalMsgs(container, msgsClass)
 }); })(jQuery);

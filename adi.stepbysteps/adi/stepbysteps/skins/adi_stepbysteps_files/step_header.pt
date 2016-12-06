@@ -6,6 +6,21 @@
      tal:content="string:&nbsp;">
 Toggle children
   </a>
+  <a tal:attributes="title string:Show children;
+                     href string:${href}/steps_body#children;
+                     class string:loadLink hideChildren button;"
+     tal:condition="python: hasChildSteps and isTopStep"
+     tal:content="string:&nbsp;">
+Toggle children
+  </a>
+  <a disabled class="button"
+     tal:condition="python: not hasChildSteps"
+     tal:content="string:&nbsp;-&nbsp;">
+Toggle children dummy
+  </a>
+  <span class="posnr" tal:condition="isRootStep" tal:content="string:0">
+  0
+  </span>
   <span class="posnr" tal:content="nrs">
   1.2
   </span>
@@ -17,7 +32,7 @@ Title
                    class string:loadLink showText;
                    tabindex string:-1;
                    title string:Show text;"
-   tal:condition="python: text != ''">
+   tal:condition="python: text != '' and not isTopStep">
    <tal:text_preview metal:use-macro="context/text_preview/macros/text_preview">
 Text preview
    </tal:text_preview>

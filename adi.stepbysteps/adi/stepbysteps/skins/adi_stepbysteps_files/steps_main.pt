@@ -7,40 +7,16 @@
 <link rel="stylesheet" href="steps_colors.css">
 <link rel="stylesheet" href="steps_main.css">
 <link rel="stylesheet" href="step_head.css">
+<link rel="stylesheet" href="++resource++adi.info.resources/main.css">
 <script src="++resource++plone.app.jquery.js"></script>
+<script src="++resource++adi.info.resources/main.js"></script>
 <script src="steps_main.js"></script>
-
-
-
-
-
-
-<!--
-file:///home/ida/.buildout/eggs/Products.Archetypes-1.10.15-py2.7.egg/Products/Archetypes/skins/archetypes/jscalendar/reference.pdf
-<style type="text/css">@import url(jscalendar/calendar-win2k-1.css);</style>
-<script type="text/javascript" src="jscalendar/calendar.js"></script>
-<script type="text/javascript" src="jscalendar/calendar-en.js"></script>
-<script type="text/javascript" src="jscalendar/calendar-setup.js"></script>
--->
 </head>
-<div tal:content="context/expires" />
 <!--
-<input type="text" name="date" id="f_date_b"
-/><button type="reset" id="f_trigger_b"
->...</button>
-<script type="text/javascript">
-Calendar.setup({
-  inputField     :    "f_date_b",           //*
-  ifFormat       :    "%m/%d/%Y %I:%M %p",
-  showsTime      :    true,
-  button         :    "f_trigger_b",        //*
-  step           :    1
-});
-</script>
+-->
 <div metal:use-macro="context/global_statusmessage/macros/portal_message">
 Info message
 </div>
--->
 <body tal:define="isTopStep string:isTopStep;">
 <div metal:use-macro="context/steps_head/macros/steps_head">
 Steps-head
