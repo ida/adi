@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<object name="portal_skins">
-     <object name="adi_stepbysteps_files"
-      meta_type="Filesystem Directory View"
-     directory="adi.stepbysteps:skins/adi_stepbysteps_files"/>
-     <skin-path name="*" based-on="Sunburst Theme">
-         <layer name="adi_stepbysteps_files" insert-after="custom"/>
-     </skin-path>
-</object>
