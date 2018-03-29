@@ -1,0 +1,41 @@
+<?xml version ="1.0"?>
+<portlets>
+
+ <!-- Assign Logo-portlet to site-root (key='/'): -->
+ <assignment name="top" category="context" key="/"
+    manager="ContentWellPortlets.InHeaderPortletManager1"
+    type="plone.portlet.static.Static" visible="True">
+
+  <!--
+   Give this portlet a name, so we can recognize it easily in the
+   portlet-management-UI via `[PLONESITE_URL]/manage-portletsinheader`:
+   -->
+  <property name="header">Logo</property>
+
+  <!-- But don't show its header and footer when viewing the portlet: -->
+  <property name="omit_border">True</property>
+
+  <!-- Replace 'Plone' with your site-id here, in case it differs: -->
+  <property name="text">
+     &lt;a href="/Plone">
+       &lt;img src="logo.png" />
+     &lt;/a>
+   </property>
+
+ </assignment>
+
+ <!-- Assign another portlet in next column (InHeaderPortletManager2): -->
+ <assignment name="top" category="context" key="/"
+    manager="ContentWellPortlets.InHeaderPortletManager2"
+    type="plone.portlet.static.Static" visible="True">
+  <property name="header">Some image next to Logo</property>
+  <property name="omit_border">True</property>
+
+  <property name="text">
+    &lt;img src="defaultUser.png"
+        title="Dummy-user-avatar" />
+   </property>
+
+ </assignment>
+
+</portlets>

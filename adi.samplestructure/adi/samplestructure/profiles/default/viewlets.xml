@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object>
+
+  <!-- Hide all viewlets in #portal-header -->
+  <hidden manager="plone.portaltop" skinname="Plone Default">
+    <viewlet name="plone.header"/>
+  </hidden>
+
+</object>
